@@ -1,0 +1,48 @@
+@media only screen and (min-width: 901px) {
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    display: flex;
+  }
+  .post_title {
+    font-size: 4rem;
+  }
+  .post_container {
+    width: 100%;
+    margin-left: 0px;
+    padding-left: 50px;
+    border-left: 1px solid rgb(50, 50, 50);
+  }
+  .votes_container {
+    padding: 20px;
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 100px;
+    height: 100%;
+  }
+  .upvote_icon,
+  .downvote_icon {
+    /* font-size: 20px; */
+    height: 30px;
+    width: 30px;
+    transition: 100ms;
+  }
+  .upvote_icon:hover {
+    cursor: pointer;
+    transition: 100ms;
+    color: orangered;
+  }
+  .downvote_icon:hover {
+    cursor: pointer;
+    transition: 100ms;
+    color: royalblue;
+  }
+}
+@media only screen and (max-width: 900px) {
+}

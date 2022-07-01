@@ -22,8 +22,8 @@ export interface PostInterface {
     authorId: number;
     authorName: string;
     body: string;
-    createdAt: Date;
-    updatedAt: Date;
+    createdAt: string;
+    updatedAt: string;
   };
 }
 
@@ -34,8 +34,8 @@ export interface VoteInterface {
   postId: number;
   upvote: boolean;
   downvote: boolean;
-  createdA: Date;
-  updatedAt: Date;
+  createdA: string;
+  updatedAt: string;
 }
 
 const Home: NextPage = () => {
@@ -65,7 +65,7 @@ const Home: NextPage = () => {
             style={{ marginBottom: "10px" }}
             borderRadius={13}
             count={10}
-            height={100}
+            height={150}
           />
         </>
       );
