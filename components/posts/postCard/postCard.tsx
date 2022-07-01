@@ -26,34 +26,6 @@ const PostCard = ({ post }: Props): JSX.Element => {
     setPostVoteScore(post.voteScore);
   }, [post]);
 
-  const upvote = () => {
-    if (upvoted) {
-      setUpvoted(false);
-      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore - 1));
-    } else if (downvoted) {
-      setUpvoted(true);
-      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore + 2));
-    } else {
-      setUpvoted(true);
-      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore + 1));
-    }
-    setDownvoted(false);
-  };
-
-  const downvote = () => {
-    if (downvoted) {
-      setDownvoted(false);
-      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore + 1));
-    } else if (upvoted) {
-      setDownvoted(true);
-      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore - 2));
-    } else {
-      setDownvoted(true);
-      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore - 1));
-    }
-    setUpvoted(false);
-  };
-
   if (!post) {
     return (
       <div className={styles.container}>
@@ -66,12 +38,30 @@ const PostCard = ({ post }: Props): JSX.Element => {
     <div className={styles.container}>
       <div className={styles.votes_container}>
         <MdKeyboardArrowUp
-          onClick={upvote}
+          onClick={() =>
+            upvotePost({
+              setPostVoteScore,
+              postVoteScore,
+              upvoted,
+              downvoted,
+              setUpvoted,
+              setDownvoted,
+            })
+          }
           className={upvoted ? styles.upvote_icon_active : styles.upvote_icon}
         />
         <span>{postVoteScore}</span>
         <MdKeyboardArrowDown
-          onClick={downvote}
+          onClick={() =>
+            downvotePost({
+              setPostVoteScore,
+              postVoteScore,
+              upvoted,
+              downvoted,
+              setUpvoted,
+              setDownvoted,
+            })
+          }
           className={
             downvoted ? styles.downvote_icon_active : styles.downvote_icon
           }
