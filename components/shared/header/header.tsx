@@ -4,7 +4,7 @@ import styles from "./header.module.css";
 const Header = (): JSX.Element => {
   return (
     <header className={styles.header}>
-      <p>Header</p>
+      <p>Blog</p>
     </header>
   );
 };

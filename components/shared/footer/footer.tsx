@@ -4,7 +4,9 @@ import styles from "./footer.module.css";
 const Footer = (): JSX.Element => {
   return (
     <footer className={styles.footer}>
-      <p>Footer</p>
+      <div className={styles.footer_content}>
+        <p>Footer</p>
+      </div>
     </footer>
   );
 };
