@@ -1,0 +1,20 @@
+@media only screen and (min-width: 901px) {
+  .container {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: auto;
+    max-width: 1200px;
+    background-color: rgb(10, 10, 10);
+  }
+}
+@media only screen and (max-width: 900px) {
+  .container {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin: auto;
+    max-width: 1200px;
+    background-color: rgb(10, 10, 10);
+  }
+}

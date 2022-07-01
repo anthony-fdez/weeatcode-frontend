@@ -1,9 +1,94 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
+import Axios from "axios";
+import Skeleton from "react-loading-skeleton";
+import { Alert } from "react-bootstrap";
+import PostCard from "../components/posts/postCard/postCard";
+
+export interface PostInterface {
+  voteScore: number;
+  upvotes: number;
+  downvotes: number;
+  upvoted: boolean;
+  downvoted: boolean;
+  votes?: VoteInterface[];
+  post: {
+    edited: boolean;
+    id: number;
+    title: string;
+    authorId: number;
+    authorName: string;
+    body: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+}
+
+export interface VoteInterface {
+  id: number;
+  userName: string;
+  userId: number;
+  postId: number;
+  upvote: boolean;
+  downvote: boolean;
+  createdA: Date;
+  updatedAt: Date;
+}
 
 const Home: NextPage = () => {
+  const [posts, setPosts] = useState<PostInterface[] | null>(null);
+  const [isLoadingPosts, setIsLoadingPosts] = useState<boolean>(true);
+
+  useEffect(() => {
+    setIsLoadingPosts(true);
+
+    Axios.get("http://localhost:3001/posts/get_all")
+      .then((response) => {
+        console.log(response);
+        setIsLoadingPosts(false);
+        setPosts(response.data.posts);
+      })
+      .catch((e) => {
+        console.log(e);
+        setIsLoadingPosts(false);
+      });
+  }, []);
+
+  const renderPostsCards = (): JSX.Element => {
+    if (isLoadingPosts) {
+      return (
+        <>
+          <Skeleton
+            style={{ marginBottom: "10px" }}
+            borderRadius={13}
+            count={10}
+            height={100}
+          />
+        </>
+      );
+    }
+
+    if (!posts) {
+      return (
+        <Alert variant="danger">
+          <Alert.Heading>Error.</Alert.Heading>
+          <p>We are unable to load posts at this time</p>
+        </Alert>
+      );
+    }
+
+    return (
+      <>
+        {posts.map((post: PostInterface, index: number) => {
+          return <PostCard key={index} post={post} />;
+        })}
+      </>
+    );
+  };
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,7 +97,11 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}></main>
+      <main className={styles.container}>
+        <h3>Posts</h3>
+        <hr></hr>
+        <div className={styles.posts_container}>{renderPostsCards()}</div>
+      </main>
 
       <footer className={styles.footer}></footer>
     </div>

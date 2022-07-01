@@ -5,14 +5,24 @@
     top: 0px;
     background-color: black;
     border-bottom: 1px solid rgb(40, 40, 40);
+    z-index: 1000;
+  }
+  .header_content {
+    max-width: 1200px;
+    margin: auto;
   }
 }
 @media only screen and (max-width: 900px) {
   .header {
-    padding: 10px;
+    padding: 20px;
     position: sticky;
     top: 0px;
     background-color: black;
     border-bottom: 1px solid rgb(40, 40, 40);
+    z-index: 1000;
+  }
+  .header_content {
+    max-width: 1200px;
+    margin: auto;
   }
 }
