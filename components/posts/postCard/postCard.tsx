@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { PostInterface } from "../../../pages";
 import styles from "./postCard.module.css";
@@ -13,6 +13,47 @@ interface Props {
 }
 
 const PostCard = ({ post }: Props): JSX.Element => {
+  const [upvoted, setUpvoted] = useState<boolean>(false);
+  const [downvoted, setDownvoted] = useState<boolean>(false);
+  const [postVoteScore, setPostVoteScore] = useState<number>(0);
+
+  useEffect(() => {
+    if (!post) return;
+
+    if (post.upvoted) setUpvoted(true);
+    if (post.downvoted) setDownvoted(true);
+
+    setPostVoteScore(post.voteScore);
+  }, [post]);
+
+  const upvote = () => {
+    if (upvoted) {
+      setUpvoted(false);
+      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore - 1));
+    } else if (downvoted) {
+      setUpvoted(true);
+      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore + 2));
+    } else {
+      setUpvoted(true);
+      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore + 1));
+    }
+    setDownvoted(false);
+  };
+
+  const downvote = () => {
+    if (downvoted) {
+      setDownvoted(false);
+      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore + 1));
+    } else if (upvoted) {
+      setDownvoted(true);
+      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore - 2));
+    } else {
+      setDownvoted(true);
+      setPostVoteScore((postVoteScore) => (postVoteScore = postVoteScore - 1));
+    }
+    setUpvoted(false);
+  };
+
   if (!post) {
     return (
       <div className={styles.container}>
@@ -25,13 +66,15 @@ const PostCard = ({ post }: Props): JSX.Element => {
     <div className={styles.container}>
       <div className={styles.votes_container}>
         <MdKeyboardArrowUp
-          onClick={upvotePost}
-          className={styles.upvote_icon}
+          onClick={upvote}
+          className={upvoted ? styles.upvote_icon_active : styles.upvote_icon}
         />
-        <span>{post.voteScore}</span>
+        <span>{postVoteScore}</span>
         <MdKeyboardArrowDown
-          onClick={downvotePost}
-          className={styles.downvote_icon}
+          onClick={downvote}
+          className={
+            downvoted ? styles.downvote_icon_active : styles.downvote_icon
+          }
         />
       </div>
       <Link passHref href={`/post/${post.post.id}`}>
