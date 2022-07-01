@@ -1,5 +1,5 @@
 import { NextPage, NextPageContext, GetServerSideProps } from "next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import styles from "./post.module.css";
 
@@ -18,7 +18,9 @@ interface Props {
 }
 
 const Post: NextPage<Props> = ({ status, post }) => {
-  const router = useRouter();
+  const [upvoted, setUpvoted] = useState<boolean>(post.upvoted);
+  const [downvoted, setDownvoted] = useState<boolean>(post.downvoted);
+  const [postVoteScore, setPostVoteScore] = useState<number>(post.voteScore);
 
   if (!post) {
     return (
@@ -36,13 +38,33 @@ const Post: NextPage<Props> = ({ status, post }) => {
       <main className={styles.container}>
         <div className={styles.votes_container}>
           <MdKeyboardArrowUp
-            onClick={upvotePost}
-            className={styles.upvote_icon}
+            onClick={() =>
+              upvotePost({
+                setPostVoteScore,
+                postVoteScore,
+                upvoted,
+                downvoted,
+                setUpvoted,
+                setDownvoted,
+              })
+            }
+            className={upvoted ? styles.upvote_icon_active : styles.upvote_icon}
           />
-          <span>{post.voteScore}</span>
+          <span>{postVoteScore}</span>
           <MdKeyboardArrowDown
-            onClick={downvotePost}
-            className={styles.downvote_icon}
+            onClick={() =>
+              downvotePost({
+                setPostVoteScore,
+                postVoteScore,
+                upvoted,
+                downvoted,
+                setUpvoted,
+                setDownvoted,
+              })
+            }
+            className={
+              downvoted ? styles.downvote_icon_active : styles.downvote_icon
+            }
           />
         </div>
         <div className={styles.post_container}>

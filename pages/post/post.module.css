@@ -27,11 +27,23 @@
     height: 100%;
   }
   .upvote_icon,
-  .downvote_icon {
+  .downvote_icon,
+  .downvote_icon_active,
+  .upvote_icon_active {
     /* font-size: 20px; */
     height: 30px;
     width: 30px;
     transition: 100ms;
+  }
+  .upvote_icon_active,
+  .downvote_icon_active {
+    cursor: pointer;
+  }
+  .upvote_icon_active {
+    color: orangered;
+  }
+  .downvote_icon_active {
+    color: royalblue;
   }
   .upvote_icon:hover {
     cursor: pointer;
