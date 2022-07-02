@@ -6,12 +6,16 @@ import type { RootState } from "../store";
 interface TokenStateInterface {
   jwtToken: string | null;
   isLogedIn: boolean;
+  name: string | null;
+  userId: number | null;
 }
 
 // Define the initial state using that type
 const initialState: TokenStateInterface = {
   jwtToken: null,
   isLogedIn: false,
+  name: null,
+  userId: null,
 };
 
 export const tokenSlice = createSlice({
@@ -26,10 +30,17 @@ export const tokenSlice = createSlice({
     setIsLogedIn: (state, action: PayloadAction<boolean>) => {
       state.isLogedIn = action.payload;
     },
+    setUserName: (state, action: PayloadAction<string>) => {
+      state.name = action.payload;
+    },
+    setUserId: (state, action: PayloadAction<number>) => {
+      state.userId = action.payload;
+    },
   },
 });
 
-export const { setToken, setIsLogedIn } = tokenSlice.actions;
+export const { setToken, setIsLogedIn, setUserId, setUserName } =
+  tokenSlice.actions;
 
 export const getJwtToken = (state: RootState) => state.user.jwtToken;
 export const getIsLogedIn = (state: RootState) => state.user.isLogedIn;

@@ -5,9 +5,15 @@ import { Button, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import styles from "./login.module.css";
 import Axios from "axios";
-import { setIsLogedIn, setToken } from "../../redux/slices/user";
+import {
+  setIsLogedIn,
+  setToken,
+  setUserId,
+  setUserName,
+} from "../../redux/slices/user";
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { useRouter } from "next/router";
+import { seteuid } from "process";
 
 const LoginPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -29,9 +35,12 @@ const LoginPage: NextPage = () => {
     })
       .then((response) => {
         toast.success("Logged in successfully!");
+        console.log(response);
 
         dispatch(setToken(response.data.token));
         dispatch(setIsLogedIn(true));
+        dispatch(setUserId(response.data.user.userId));
+        dispatch(setUserName(response.data.user.name));
 
         router.push("/");
       })

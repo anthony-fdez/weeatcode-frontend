@@ -7,7 +7,12 @@ import styles from "./signupPage.module.css";
 
 import Axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { setIsLogedIn, setToken } from "../../redux/slices/user";
+import {
+  setIsLogedIn,
+  setToken,
+  setUserId,
+  setUserName,
+} from "../../redux/slices/user";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
@@ -36,6 +41,8 @@ const SignupPage: NextPage = () => {
 
         dispatch(setToken(response.data.token));
         dispatch(setIsLogedIn(true));
+        dispatch(setUserId(response.data.user.userId));
+        dispatch(setUserName(response.data.user.name));
 
         router.push("/");
       })

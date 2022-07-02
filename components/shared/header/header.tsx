@@ -5,7 +5,10 @@ const Header = (): JSX.Element => {
   return (
     <header className={styles.header}>
       <div className={styles.header_content}>
-        <p>Blog</p>
+        <h4>Blog</h4>
+        <div>
+          <h5></h5>
+        </div>
       </div>
     </header>
   );
