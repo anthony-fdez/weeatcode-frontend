@@ -1,15 +1,48 @@
 import { NextPage, NextPageContext } from "next";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
 import styles from "./login.module.css";
+import Axios from "axios";
+import { setIsLogedIn, setToken } from "../../redux/slices/user";
+import { useAppDispatch } from "../../redux/hooks/hooks";
+import { useRouter } from "next/router";
 
 const LoginPage: NextPage = () => {
+  const dispatch = useAppDispatch();
+  const router = useRouter();
+
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const login = (e: React.FormEvent) => {
     e.preventDefault();
+
+    setIsLoading(true);
+
+    Axios.post("http://localhost:3001/users/login", {
+      name,
+      email,
+      password,
+    })
+      .then((response) => {
+        toast.success("Logged in successfully!");
+
+        dispatch(setToken(response.data.token));
+        dispatch(setIsLogedIn(true));
+
+        router.push("/");
+      })
+      .catch((e) => {
+        console.log(e);
+
+        toast.error(e.response.data.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -28,6 +61,7 @@ const LoginPage: NextPage = () => {
                 value={email}
                 required
                 type="email"
+                name="email"
                 placeholder="example@email.com"
                 className={styles.input_box}
               />
@@ -43,13 +77,16 @@ const LoginPage: NextPage = () => {
                 value={password}
                 required
                 type="password"
+                name="password"
                 placeholder="password"
                 className={styles.input_box}
               />
             </div>
             <hr></hr>
             <div className={styles.box_footer}>
-              <Button type="submit">Login</Button>
+              <Button style={{ width: "100px" }} type="submit">
+                {isLoading ? <Spinner animation="border" size="sm" /> : "Login"}
+              </Button>{" "}
             </div>
             <br></br>
             <p className={styles.login_in_text}>
@@ -64,13 +101,5 @@ const LoginPage: NextPage = () => {
     </main>
   );
 };
-
-export async function getStaticProps(context: NextPageContext) {
-  return {
-    props: {
-      protected: true,
-    },
-  };
-}
 
 export default LoginPage;

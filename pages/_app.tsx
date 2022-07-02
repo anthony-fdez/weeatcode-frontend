@@ -52,4 +52,14 @@ const Auth = ({ children, pageProps }: AuthProps) => {
   return children;
 };
 
+// Pute the code below at the end of any page that needs to be protected
+
+// export async function getStaticProps(context: NextPageContext) {
+//   return {
+//     props: {
+//       protected: true,
+//     },
+//   };
+// }
+
 export default MyApp;

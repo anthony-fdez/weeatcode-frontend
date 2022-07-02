@@ -76,6 +76,7 @@ const SignupPage: NextPage = () => {
                 value={email}
                 required
                 type="email"
+                name="email"
                 placeholder="example@email.com"
                 className={styles.input_box}
               />
@@ -91,6 +92,7 @@ const SignupPage: NextPage = () => {
                 value={password}
                 required
                 type="password"
+                name="password"
                 placeholder="password"
                 className={styles.input_box}
               />
