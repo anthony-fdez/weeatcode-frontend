@@ -36,11 +36,22 @@ export const tokenSlice = createSlice({
     setUserId: (state, action: PayloadAction<number>) => {
       state.userId = action.payload;
     },
+    setClearUserData: (state) => {
+      state.userId = null;
+      state.isLogedIn = false;
+      state.name = null;
+      state.jwtToken = null;
+    },
   },
 });
 
-export const { setToken, setIsLogedIn, setUserId, setUserName } =
-  tokenSlice.actions;
+export const {
+  setToken,
+  setIsLogedIn,
+  setUserId,
+  setUserName,
+  setClearUserData,
+} = tokenSlice.actions;
 
 export const getJwtToken = (state: RootState) => state.user.jwtToken;
 export const getIsLogedIn = (state: RootState) => state.user.isLogedIn;

@@ -1,6 +1,6 @@
 @media only screen and (min-width: 901px) {
   .open {
-    position: absolute;
+    position: fixed;
     height: 500px;
     width: 400px;
     background-color: rgb(0, 0, 0);
@@ -17,7 +17,7 @@
   }
 
   .closed {
-    position: absolute;
+    position: fixed;
     height: 500px;
     width: 400px;
     background-color: rgb(0, 0, 0);
