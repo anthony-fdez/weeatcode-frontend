@@ -9,9 +9,11 @@ import Axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { setIsLogedIn, setToken } from "../../redux/slices/user";
 import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const SignupPage: NextPage = () => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -34,6 +36,8 @@ const SignupPage: NextPage = () => {
 
         dispatch(setToken(response.data.token));
         dispatch(setIsLogedIn(true));
+
+        router.push("/");
       })
       .catch((e) => {
         console.log(e);

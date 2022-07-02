@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { persistReducer } from "redux-persist";
 import { persistStore } from "redux-persist";
 import exp from "constants";
+import askToLoginPopup from "./slices/askToLoginPopup";
 
 const persistConfig = {
   key: "blog-node-app-redux-persist-key",
@@ -16,6 +17,7 @@ const userPersisterReducer = persistReducer(persistConfig, tokenSlice.reducer);
 const store = configureStore({
   reducer: {
     user: userPersisterReducer,
+    askToLoginPopup: askToLoginPopup,
   },
 });
 

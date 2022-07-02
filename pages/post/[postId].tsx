@@ -11,6 +11,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { upvotePost } from "../../functions/crud/upvotePost";
 import { downvotePost } from "../../functions/crud/downvotePost";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 
 interface Props {
   status: boolean;
@@ -18,6 +19,9 @@ interface Props {
 }
 
 const Post: NextPage<Props> = ({ status, post }) => {
+  const dispatch = useAppDispatch();
+  const isLogedIn = useAppSelector((state) => state.askToLoginPopup.isOpen);
+
   const [upvoted, setUpvoted] = useState<boolean>(post.upvoted);
   const [downvoted, setDownvoted] = useState<boolean>(post.downvoted);
   const [postVoteScore, setPostVoteScore] = useState<number>(post.voteScore);
@@ -46,6 +50,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
                 downvoted,
                 setUpvoted,
                 setDownvoted,
+                dispatch,
+                isLogedIn,
               })
             }
             className={upvoted ? styles.upvote_icon_active : styles.upvote_icon}
@@ -60,6 +66,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
                 downvoted,
                 setUpvoted,
                 setDownvoted,
+                dispatch,
+                isLogedIn,
               })
             }
             className={

@@ -14,6 +14,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { useAppSelector } from "../redux/hooks/hooks";
 import { NextPage } from "next";
 import AccessDenied from "../components/helperPages/accessDenied/accessDenied";
+import AskToLoginPopup from "../components/helperPages/askToLoginPopup/askToLoginPopup";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -21,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <PersistGate loading={null} persistor={persistor}>
         <SkeletonTheme baseColor="rgb(20,20,20)" highlightColor="rgb(50,50,50)">
           <ToastContainer theme="colored" />
-
+          <AskToLoginPopup />
           <Auth pageProps={pageProps}>
             <MainLayout>
               <Component {...pageProps} />

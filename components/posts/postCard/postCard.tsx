@@ -7,12 +7,16 @@ import { MdKeyboardArrowUp } from "react-icons/md";
 import Link from "next/link";
 import { upvotePost } from "../../../functions/crud/upvotePost";
 import { downvotePost } from "../../../functions/crud/downvotePost";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 
 interface Props {
   post: PostInterface;
 }
 
 const PostCard = ({ post }: Props): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const isLogedIn = useAppSelector((state) => state.askToLoginPopup.isOpen);
+
   const [upvoted, setUpvoted] = useState<boolean>(false);
   const [downvoted, setDownvoted] = useState<boolean>(false);
   const [postVoteScore, setPostVoteScore] = useState<number>(0);
@@ -46,6 +50,8 @@ const PostCard = ({ post }: Props): JSX.Element => {
               downvoted,
               setUpvoted,
               setDownvoted,
+              dispatch,
+              isLogedIn,
             })
           }
           className={upvoted ? styles.upvote_icon_active : styles.upvote_icon}
@@ -60,6 +66,8 @@ const PostCard = ({ post }: Props): JSX.Element => {
               downvoted,
               setUpvoted,
               setDownvoted,
+              dispatch,
+              isLogedIn,
             })
           }
           className={

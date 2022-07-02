@@ -1,3 +1,5 @@
+import { setAskToLoginPopup } from "../../redux/slices/askToLoginPopup";
+
 interface Props {
   setPostVoteScore: Function;
   postVoteScore: number;
@@ -5,6 +7,8 @@ interface Props {
   downvoted: boolean;
   setUpvoted: Function;
   setDownvoted: Function;
+  dispatch: Function;
+  isLogedIn: boolean;
 }
 
 export const upvotePost = ({
@@ -14,7 +18,13 @@ export const upvotePost = ({
   downvoted,
   setUpvoted,
   setDownvoted,
+  dispatch,
+  isLogedIn,
 }: Props) => {
+  if (!isLogedIn) {
+    return dispatch(setAskToLoginPopup(true));
+  }
+
   if (upvoted) {
     setUpvoted(false);
     setPostVoteScore(
