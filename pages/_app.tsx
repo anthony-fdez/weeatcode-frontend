@@ -8,14 +8,22 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import { SkeletonTheme } from "react-loading-skeleton";
 
+import { store, persistor } from "../redux/store";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <SkeletonTheme baseColor="rgb(20,20,20)" highlightColor="rgb(50,50,50)">
-      <MainLayout>
-        <ToastContainer theme="dark" />
-        <Component {...pageProps} />
-      </MainLayout>
-    </SkeletonTheme>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <SkeletonTheme baseColor="rgb(20,20,20)" highlightColor="rgb(50,50,50)">
+          <MainLayout>
+            <ToastContainer theme="dark" />
+            <Component {...pageProps} />
+          </MainLayout>
+        </SkeletonTheme>
+      </PersistGate>
+    </Provider>
   );
 }
 
