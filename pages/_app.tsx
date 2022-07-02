@@ -11,20 +11,45 @@ import { SkeletonTheme } from "react-loading-skeleton";
 import { store, persistor } from "../redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import { useAppSelector } from "../redux/hooks/hooks";
+import { NextPage } from "next";
+import AccessDenied from "../components/helperPages/accessDenied/accessDenied";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <SkeletonTheme baseColor="rgb(20,20,20)" highlightColor="rgb(50,50,50)">
-          <MainLayout>
-            <ToastContainer theme="dark" />
-            <Component {...pageProps} />
-          </MainLayout>
+          <ToastContainer theme="colored" />
+
+          <Auth pageProps={pageProps}>
+            <MainLayout>
+              <Component {...pageProps} />
+            </MainLayout>
+          </Auth>
         </SkeletonTheme>
       </PersistGate>
     </Provider>
   );
 }
+
+interface AuthProps {
+  children: JSX.Element;
+  pageProps: any;
+}
+
+const Auth = ({ children, pageProps }: AuthProps) => {
+  const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
+
+  if (pageProps.protected) {
+    return (
+      <MainLayout>
+        <AccessDenied />
+      </MainLayout>
+    );
+  }
+
+  return children;
+};
 
 export default MyApp;

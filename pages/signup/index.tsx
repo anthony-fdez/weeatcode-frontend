@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 import { NextPage } from "next";
 import Link from "next/link";
-import React, { ChangeEventHandler, useState } from "react";
-import { Button } from "react-bootstrap";
+import React, { ChangeEventHandler, useEffect, useState } from "react";
+import { Button, Spinner } from "react-bootstrap";
 import styles from "./signupPage.module.css";
 
 import Axios from "axios";
-import { useAppDispatch } from "../../redux/hooks/hooks";
-import { setToken } from "../../redux/slices/user";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { setIsLogedIn, setToken } from "../../redux/slices/user";
+import { toast } from "react-toastify";
 
 const SignupPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -16,10 +17,32 @@ const SignupPage: NextPage = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const signup = (e: React.FormEvent) => {
     e.preventDefault();
 
-    dispatch(setToken("token"));
+    setIsLoading(true);
+
+    Axios.post("http://localhost:3001/users/signup", {
+      name,
+      email,
+      password,
+    })
+      .then((response) => {
+        toast.success("Account created!");
+
+        dispatch(setToken(response.data.token));
+        dispatch(setIsLogedIn(true));
+      })
+      .catch((e) => {
+        console.log(e);
+
+        toast.error(e.response.data.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return (
@@ -74,7 +97,13 @@ const SignupPage: NextPage = () => {
             </div>
             <hr></hr>
             <div className={styles.box_footer}>
-              <Button type="submit">Signup</Button>
+              <Button style={{ width: "100px" }} type="submit">
+                {isLoading ? (
+                  <Spinner animation="border" size="sm" />
+                ) : (
+                  "Signup"
+                )}
+              </Button>
             </div>
             <br></br>
             <p className={styles.login_in_text}>

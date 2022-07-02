@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import Link from "next/link";
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
@@ -64,5 +64,13 @@ const LoginPage: NextPage = () => {
     </main>
   );
 };
+
+export async function getStaticProps(context: NextPageContext) {
+  return {
+    props: {
+      protected: true,
+    },
+  };
+}
 
 export default LoginPage;
