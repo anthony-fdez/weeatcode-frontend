@@ -15,7 +15,7 @@ interface Props {
 
 const PostCard = ({ post }: Props): JSX.Element => {
   const dispatch = useAppDispatch();
-  const isLogedIn = useAppSelector((state) => state.askToLoginPopup.isOpen);
+  const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
 
   const [upvoted, setUpvoted] = useState<boolean>(false);
   const [downvoted, setDownvoted] = useState<boolean>(false);

@@ -20,7 +20,7 @@ interface Props {
 
 const Post: NextPage<Props> = ({ status, post }) => {
   const dispatch = useAppDispatch();
-  const isLogedIn = useAppSelector((state) => state.askToLoginPopup.isOpen);
+  const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
 
   const [upvoted, setUpvoted] = useState<boolean>(post.upvoted);
   const [downvoted, setDownvoted] = useState<boolean>(post.downvoted);
