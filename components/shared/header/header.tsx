@@ -29,15 +29,17 @@ const Header = (): JSX.Element => {
 
     Axios.post("http://localhost:3001/users/logout", data, { headers })
       .then((response) => {
-        console.log(response);
-        toast.success("Logged out");
+        setTimeout(() => {
+          toast.success("Logged out");
+          dispatch(setClearUserData());
+        }, 500);
+        setIsMenuPopupOpen(false);
+        setIsLoadingLogout(false);
       })
       .catch((e) => {
         toast.error("Could not log you out at the moment");
-      })
-      .finally(() => {
-        setIsLoadingLogout(false);
         setIsMenuPopupOpen(false);
+        setIsLoadingLogout(false);
         dispatch(setClearUserData());
       });
   };
@@ -95,10 +97,7 @@ const Header = (): JSX.Element => {
     if (userData.isLogedIn) return null;
 
     return (
-      <div
-        onClick={() => setIsMenuPopupOpen(!isMenuPopupOpen)}
-        className={styles.name_container}
-      >
+      <div className={styles.name_container}>
         <Link href="/login" passHref>
           <Button>Login</Button>
         </Link>

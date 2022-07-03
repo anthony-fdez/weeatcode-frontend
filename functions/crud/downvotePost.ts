@@ -1,6 +1,8 @@
 import { setAskToLoginPopup } from "../../redux/slices/askToLoginPopup";
-import { useAppDispatch } from "./../../redux/hooks/hooks";
+import Axios from "axios";
 interface Props {
+  postId: number;
+  token: string | null;
   setPostVoteScore: Function;
   postVoteScore: number;
   upvoted: boolean;
@@ -12,6 +14,8 @@ interface Props {
 }
 
 export const downvotePost = ({
+  postId,
+  token,
   setPostVoteScore,
   postVoteScore,
   upvoted,
@@ -24,6 +28,24 @@ export const downvotePost = ({
   if (!isLogedIn) {
     return dispatch(setAskToLoginPopup(true));
   }
+
+  Axios.post(
+    "http://localhost:3001/posts/downvote",
+    {
+      postId,
+    },
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  )
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
 
   if (downvoted) {
     setDownvoted(false);

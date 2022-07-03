@@ -21,17 +21,32 @@ interface Props {
 const Post: NextPage<Props> = ({ status, post }) => {
   const dispatch = useAppDispatch();
   const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
+  const token = useAppSelector((state) => state.user.jwtToken);
 
-  const [upvoted, setUpvoted] = useState<boolean>(post.upvoted);
-  const [downvoted, setDownvoted] = useState<boolean>(post.downvoted);
-  const [postVoteScore, setPostVoteScore] = useState<number>(post.voteScore);
+  const [postData, setPostData] = useState<PostInterface>();
+  const [upvoted, setUpvoted] = useState<boolean>();
+  const [downvoted, setDownvoted] = useState<boolean>();
+  const [postVoteScore, setPostVoteScore] = useState<number>();
+
+  useEffect(() => {
+    if (!post) return;
+
+    console.log(post);
+
+    setUpvoted(post.upvoted);
+    setDownvoted(post.downvoted);
+    setPostVoteScore(post.voteScore);
+  }, []);
 
   if (!post) {
     return (
-      <main className={styles.container}>
+      <main className={styles.alert_container}>
         <Alert variant="danger">
-          <Alert.Heading>Could not load this post</Alert.Heading>
-          <p>This post does not exist anymore</p>
+          <Alert.Heading>Could not load this post.</Alert.Heading>
+          <p>
+            This post might not exist anymore, or maybe our servers are down.
+            Check again later.
+          </p>
         </Alert>
       </main>
     );
@@ -44,6 +59,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
           <MdKeyboardArrowUp
             onClick={() =>
               upvotePost({
+                postId: post.post.id,
+                token,
                 setPostVoteScore,
                 postVoteScore,
                 upvoted,
@@ -60,6 +77,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
           <MdKeyboardArrowDown
             onClick={() =>
               downvotePost({
+                postId: post.post.id,
+                token,
                 setPostVoteScore,
                 postVoteScore,
                 upvoted,
