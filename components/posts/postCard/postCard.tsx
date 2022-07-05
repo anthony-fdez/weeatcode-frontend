@@ -15,7 +15,9 @@ interface Props {
 
 const PostCard = ({ post }: Props): JSX.Element => {
   const dispatch = useAppDispatch();
+
   const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
+  const token = useAppSelector((state) => state.user.jwtToken);
 
   const [upvoted, setUpvoted] = useState<boolean>(false);
   const [downvoted, setDownvoted] = useState<boolean>(false);
@@ -44,6 +46,8 @@ const PostCard = ({ post }: Props): JSX.Element => {
         <MdKeyboardArrowUp
           onClick={() =>
             upvotePost({
+              postId: post.post.id,
+              token,
               setPostVoteScore,
               postVoteScore,
               upvoted,
@@ -60,6 +64,8 @@ const PostCard = ({ post }: Props): JSX.Element => {
         <MdKeyboardArrowDown
           onClick={() =>
             downvotePost({
+              postId: post.post.id,
+              token,
               setPostVoteScore,
               postVoteScore,
               upvoted,
