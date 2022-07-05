@@ -7,6 +7,7 @@ import Axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import { Alert } from "react-bootstrap";
 import PostCard from "../components/posts/postCard/postCard";
+import { useAppSelector } from "../redux/hooks/hooks";
 
 export interface PostInterface {
   voteScore: number;
@@ -39,13 +40,17 @@ export interface VoteInterface {
 }
 
 const Home: NextPage = () => {
+  const token = useAppSelector((state) => state.user.jwtToken);
+
   const [posts, setPosts] = useState<PostInterface[] | null>(null);
   const [isLoadingPosts, setIsLoadingPosts] = useState<boolean>(true);
 
   useEffect(() => {
     setIsLoadingPosts(true);
 
-    Axios.get("http://localhost:3001/posts/get_all")
+    Axios.get("http://localhost:3001/posts/get_all", {
+      headers: { Authorization: token || "" },
+    })
       .then((response) => {
         console.log(response);
         setIsLoadingPosts(false);

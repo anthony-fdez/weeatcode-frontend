@@ -6,7 +6,7 @@ import styles from "./post.module.css";
 import Axios from "axios";
 import { PostInterface } from "..";
 import { Alert } from "react-bootstrap";
-import { parseDate } from "../../functions/parseDate";
+import { parseDate } from "../../functions/helpers/parseDate";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
 import { upvotePost } from "../../functions/crud/upvotePost";
@@ -23,19 +23,38 @@ const Post: NextPage<Props> = ({ status, post }) => {
   const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
   const token = useAppSelector((state) => state.user.jwtToken);
 
-  const [postData, setPostData] = useState<PostInterface>();
-  const [upvoted, setUpvoted] = useState<boolean>();
-  const [downvoted, setDownvoted] = useState<boolean>();
-  const [postVoteScore, setPostVoteScore] = useState<number>();
+  const [postWithUserData, setPostWithUserData] =
+    useState<PostInterface | null>(null);
+  const [upvoted, setUpvoted] = useState<boolean>(false);
+  const [downvoted, setDownvoted] = useState<boolean>(false);
+  const [postVoteScore, setPostVoteScore] = useState<number>(0);
 
   useEffect(() => {
     if (!post) return;
 
-    console.log(post);
-
-    setUpvoted(post.upvoted);
-    setDownvoted(post.downvoted);
     setPostVoteScore(post.voteScore);
+
+    Axios.post(
+      "http://localhost:3001/posts/get_by_id",
+      {
+        postId: post.post.id,
+      },
+      {
+        headers: {
+          authorization: token || "",
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+
+        setPostWithUserData(response.data);
+        setUpvoted(response.data.upvoted);
+        setDownvoted(response.data.downvoted);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }, []);
 
   if (!post) {
