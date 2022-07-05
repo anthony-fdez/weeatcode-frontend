@@ -19,7 +19,7 @@ const Header = (): JSX.Element => {
     setIsLoadingLogout(true);
 
     const headers = {
-      Authorization: userData.jwtToken || null,
+      Authorization: userData.jwtToken || "",
     };
 
     let data = {
@@ -65,7 +65,7 @@ const Header = (): JSX.Element => {
                 Profile
               </li>
             </Link>
-            <Link passHref href="/createPost">
+            <Link passHref href="/post/createPost">
               <li
                 className={styles.popup_menu_item}
                 onClick={() => setIsMenuPopupOpen(false)}

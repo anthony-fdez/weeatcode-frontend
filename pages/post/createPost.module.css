@@ -1,0 +1,32 @@
+@media only screen and (min-width: 901px) {
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+  .content_container {
+    display: flex;
+  }
+  .input {
+    min-height: 100%;
+    max-width: 600px;
+    flex: 1;
+    margin-right: 10px;
+    padding: 10px;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    border: 1px solid rgb(50, 50, 50);
+    border-radius: 13px;
+  }
+  .input:focus {
+    outline: none;
+  }
+  .post_preview {
+    flex: 1;
+    padding: 15px;
+  }
+}
+@media only screen and (max-width: 900px) {
+}
