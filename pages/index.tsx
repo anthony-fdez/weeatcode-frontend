@@ -13,8 +13,8 @@ export interface PostInterface {
   voteScore: number;
   upvotes: number;
   downvotes: number;
-  upvoted: boolean;
-  downvoted: boolean;
+  upvoted?: boolean;
+  downvoted?: boolean;
   votes?: VoteInterface[];
   post: {
     edited: boolean;
@@ -25,6 +25,7 @@ export interface PostInterface {
     body: string;
     createdAt: string;
     updatedAt: string;
+    votes?: VoteInterface[];
   };
 }
 

@@ -84,6 +84,19 @@
   .logout_button {
     width: 100%;
   }
+  .popup_menu_items {
+    list-style-type: none;
+    padding: 0px;
+  }
+  .popup_menu_item {
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+  .popup_menu_item:hover {
+    border: 1px solid rgb(50, 50, 50);
+  }
 }
 @media only screen and (max-width: 900px) {
   .header {

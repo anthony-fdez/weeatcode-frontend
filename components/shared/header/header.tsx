@@ -56,7 +56,25 @@ const Header = (): JSX.Element => {
         <div
           className={isMenuPopupOpen ? styles.popup_open : styles.popup_closed}
         >
-          <p>See my profile</p>
+          <ul className={styles.popup_menu_items}>
+            <Link passHref href="/me">
+              <li
+                className={styles.popup_menu_item}
+                onClick={() => setIsMenuPopupOpen(false)}
+              >
+                Profile
+              </li>
+            </Link>
+            <Link passHref href="/createPost">
+              <li
+                className={styles.popup_menu_item}
+                onClick={() => setIsMenuPopupOpen(false)}
+              >
+                New Post
+              </li>
+            </Link>
+          </ul>
+
           <hr></hr>
           <Button
             onClick={logout}
