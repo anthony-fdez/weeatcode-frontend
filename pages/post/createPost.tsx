@@ -26,10 +26,11 @@ SyntaxHighlighter.registerLanguage("json", json);
 const Post: NextPage = () => {
   const syntaxTheme = oneDark;
 
-  const [text, setText] = useState<string | null>(null);
+  const [title, setTitle] = useState<string | null>(null);
+  const [markdownText, setMarkDownText] = useState<string | null>(null);
 
   const MarkdownComponents: object = {
-    code({ node, inline, className, ...props }) {
+    code({ node, inline, className, ...props }: any) {
       const match = /language-(\w+)/.exec(className || "");
       const hasMeta = node?.data?.meta;
 
@@ -75,22 +76,38 @@ const Post: NextPage = () => {
         <h1>Create new post</h1>
         <hr></hr>
         <div className={styles.content_container}>
-          <textarea
-            onChange={(e) => setText(e.target.value)}
-            placeholder="Write your post here"
-            rows={30}
-            className={styles.input}
-          />
+          <div className={styles.input_container}>
+            <input
+              type="text"
+              value={title || ""}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="Enter the title of your post here"
+              className={styles.title_input}
+            />
+            <textarea
+              value={markdownText || ""}
+              onChange={(e) => setMarkDownText(e.target.value)}
+              placeholder="Write your post here"
+              rows={30}
+              className={styles.input}
+            />
+          </div>
+
           <div className={styles.post_preview}>
             <h4>Post Preview:</h4>
             <hr></hr>
-            {text ? (
-              <ReactMarkdown
-                components={MarkdownComponents}
-                remarkPlugins={[remarkGfm]}
-              >
-                {text}
-              </ReactMarkdown>
+
+            {markdownText ? (
+              <>
+                <h1>{title || "'Title'"}</h1>
+                <br></br>
+                <ReactMarkdown
+                  components={MarkdownComponents}
+                  remarkPlugins={[remarkGfm]}
+                >
+                  {markdownText}
+                </ReactMarkdown>
+              </>
             ) : (
               <Alert>Your post preview will appear here.</Alert>
             )}

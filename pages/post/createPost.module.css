@@ -9,9 +9,22 @@
   .content_container {
     display: flex;
   }
+  .input_container {
+    display: flex;
+    flex-direction: column;
+  }
+  .title_input {
+    padding: 10px;
+    background-color: rgb(20, 20, 20);
+    color: white;
+    border: 1px solid rgb(50, 50, 50);
+    border-radius: 13px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+  }
   .input {
-    min-height: 100%;
-    max-width: 600px;
+    /* min-height: 100%; */
+    width: 600px;
     flex: 1;
     margin-right: 10px;
     padding: 10px;
