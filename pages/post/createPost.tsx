@@ -15,6 +15,7 @@ import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 
 import rangeParser from "parse-numeric-range";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import MarkdownTutorial from "../../components/posts/markdownTutorial/markdownTutorial";
 
 SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -113,9 +114,10 @@ const Post: NextPage = () => {
             )}
             <br></br>
             <hr></hr>
-            <h5>How to write a bad ass post?</h5>
+            <h5>Scroll down to learn how to write a bad ass post!</h5>
           </div>
         </div>
+        <MarkdownTutorial />
       </main>
     </>
   );
