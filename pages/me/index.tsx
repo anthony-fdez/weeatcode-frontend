@@ -9,7 +9,8 @@ import Skeleton from "react-loading-skeleton";
 import { PostInterface } from "../../pages/index";
 import { parseDate } from "../../functions/helpers/parseDate";
 import PostCard from "../../components/posts/postCard/postCard";
-import { Alert } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const user = useAppSelector((state) => state.user);
@@ -43,7 +44,7 @@ const Home: NextPage = () => {
     setTimeout(() => {
       setIsLoadingUserData(false);
     }, 3000);
-  }, []);
+  }, [user.jwtToken, user.userId]);
 
   const loadingSkeleton = (): JSX.Element => {
     return (
@@ -68,7 +69,23 @@ const Home: NextPage = () => {
     if (!posts || posts.length === 0) {
       return (
         <>
-          <Alert>You don&apos;t have any posts yet!</Alert>
+          <Alert variant="secondary">
+            <Alert.Heading>You don&apos;t have any posts yet!</Alert.Heading>
+            <hr></hr>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <p>Start writing your first post now!</p>
+
+              <Link href="/post/createPost" passHref={true}>
+                <Button>Create Post</Button>
+              </Link>
+            </div>
+          </Alert>
         </>
       );
     }

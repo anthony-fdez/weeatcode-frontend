@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NextPage, NextPageContext } from "next";
 import styles from "./createPost.module.css";
 import ReactMarkdown from "react-markdown";
-import { Alert } from "react-bootstrap";
+import { Alert, Button, Spinner } from "react-bootstrap";
 import remarkGfm from "remark-gfm";
 
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -16,6 +16,10 @@ import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 import rangeParser from "parse-numeric-range";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import MarkdownTutorial from "../../components/posts/markdownTutorial/markdownTutorial";
+import { toast } from "react-toastify";
+import Axios from "axios";
+import { useAppSelector } from "../../redux/hooks/hooks";
+import { useRouter } from "next/router";
 
 SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -25,10 +29,14 @@ SyntaxHighlighter.registerLanguage("markdown", markdown);
 SyntaxHighlighter.registerLanguage("json", json);
 
 const Post: NextPage = () => {
-  const syntaxTheme = oneDark;
+  const router = useRouter();
+
+  const token = useAppSelector((state) => state.user.jwtToken);
 
   const [title, setTitle] = useState<string | null>(null);
   const [markdownText, setMarkDownText] = useState<string | null>(null);
+  const [loadingCreatingPost, setLoadingCreatingPost] =
+    useState<boolean>(false);
 
   const MarkdownComponents: object = {
     code({ node, inline, className, ...props }: any) {
@@ -55,7 +63,7 @@ const Post: NextPage = () => {
 
       return match ? (
         <SyntaxHighlighter
-          style={syntaxTheme}
+          style={oneDark}
           language={match[1]}
           PreTag="div"
           className="codeStyle"
@@ -71,11 +79,47 @@ const Post: NextPage = () => {
     },
   };
 
+  const submitPost = () => {
+    if (!title) return toast.error("Please add a title to your post");
+    if (!markdownText) return toast.error("Please add the body of your post");
+
+    setLoadingCreatingPost(true);
+
+    Axios.post(
+      "http://localhost:3001/posts/create_post",
+      { title: title, body: markdownText },
+      {
+        headers: {
+          Authorization: token || "",
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+        toast.success("Post created");
+
+        router.push(`/post/${response.data.post.id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setLoadingCreatingPost(false));
+  };
+
   return (
     <>
       <main className={styles.container}>
-        <h1>Create new post</h1>
-        <hr></hr>
+        <div className={styles.header}>
+          <h5>Create new post</h5>
+          <Button style={{ width: "120px" }} onClick={() => submitPost()}>
+            {loadingCreatingPost ? (
+              <Spinner animation="border" size="sm" />
+            ) : (
+              "Create Post"
+            )}
+          </Button>
+        </div>
+        <br></br>
         <div className={styles.content_container}>
           <div className={styles.input_container}>
             <input
