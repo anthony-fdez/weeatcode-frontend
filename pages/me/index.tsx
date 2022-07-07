@@ -92,7 +92,23 @@ const Home: NextPage = () => {
 
     return (
       <>
-        <p>Posts</p>
+        <br></br>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <h3>My posts:</h3>
+          <Link href="/post/createPost" passHref={true}>
+            <Button>Create New Post</Button>
+          </Link>
+        </div>
+        <br></br>
+        {posts.map((post, index) => {
+          return <PostCard key={index} post={post} />;
+        })}
       </>
     );
   };
@@ -125,7 +141,7 @@ const Home: NextPage = () => {
         <h1>{user.name}</h1>
         <br></br>
         <p>{userData.email}</p>
-        <p>Memger since: {parseDate({ date: userData.createdAt })}</p>
+        <p>Member since: {parseDate({ date: userData.createdAt })}</p>
         <hr></hr>
 
         {renderPosts()}
