@@ -36,7 +36,7 @@ export const downvotePost = ({
     },
     {
       headers: {
-        Authorization: token,
+        Authorization: token || "",
       },
     }
   )

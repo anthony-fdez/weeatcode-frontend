@@ -19,6 +19,7 @@ import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 import rangeParser from "parse-numeric-range";
 import { upvoteComment } from "../../../../functions/crud/upvoteComment";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks/hooks";
+import { downvoteComment } from "../../../../functions/crud/downvoteComment";
 
 SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -45,7 +46,7 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
 
     setUpvoted(comment.upvoted);
     setDownvoted(comment.downvoted);
-    setCommentVoteScore(commentVoteScore);
+    setCommentVoteScore(comment.voteScore);
   }, [comment]);
 
   const MarkdownComponents: object = {
@@ -110,6 +111,19 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
         />
         <span>{commentVoteScore}</span>
         <MdKeyboardArrowDown
+          onClick={() =>
+            downvoteComment({
+              commentId: comment.comment.id,
+              token: user.jwtToken,
+              setCommentVoteScore,
+              upvoted,
+              downvoted,
+              setUpvoted,
+              setDownvoted,
+              dispatch,
+              isLogedIn: user.isLogedIn,
+            })
+          }
           className={
             downvoted ? styles.downvote_icon_active : styles.downvote_icon
           }
