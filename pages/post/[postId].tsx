@@ -24,6 +24,7 @@ import bash from "react-syntax-highlighter/dist/cjs/languages/prism/bash";
 import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
 import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 import rangeParser from "parse-numeric-range";
+import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
 
 SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -184,6 +185,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
           >
             {post.post.body}
           </ReactMarkdown>
+          <br></br>
+          <PostCommentSection postId={post.post.id} />
         </div>
       </main>
     </>
