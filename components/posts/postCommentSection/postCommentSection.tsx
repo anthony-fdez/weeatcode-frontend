@@ -14,6 +14,8 @@ interface Props {
 export interface CommentWithVotesInterface {
   upvotes: number;
   downvotes: number;
+  upvoted: boolean;
+  downvoted: boolean;
   voteScore: number;
   comment: CommentInterface;
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { parseDate } from "../../../../functions/helpers/parseDate";
 import { CommentWithVotesInterface } from "../postCommentSection";
 import styles from "./comment.module.css";
@@ -17,6 +17,8 @@ import bash from "react-syntax-highlighter/dist/cjs/languages/prism/bash";
 import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
 import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
 import rangeParser from "parse-numeric-range";
+import { upvoteComment } from "../../../../functions/crud/upvoteComment";
+import { useAppDispatch, useAppSelector } from "../../../../redux/hooks/hooks";
 
 SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -31,8 +33,20 @@ interface Props {
 }
 
 const Comment = ({ comment, allComments }: Props): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.user);
+
   const [upvoted, setUpvoted] = useState<boolean>(false);
   const [downvoted, setDownvoted] = useState<boolean>(false);
+  const [commentVoteScore, setCommentVoteScore] = useState<number>(0);
+
+  useEffect(() => {
+    if (!comment) return;
+
+    setUpvoted(comment.upvoted);
+    setDownvoted(comment.downvoted);
+    setCommentVoteScore(commentVoteScore);
+  }, [comment]);
 
   const MarkdownComponents: object = {
     code({ node, inline, className, ...props }: any) {
@@ -79,9 +93,22 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
     <div className={styles.container}>
       <div className={styles.votes_container}>
         <MdKeyboardArrowUp
+          onClick={() =>
+            upvoteComment({
+              commentId: comment.comment.id,
+              token: user.jwtToken,
+              setCommentVoteScore,
+              upvoted,
+              downvoted,
+              setUpvoted,
+              setDownvoted,
+              dispatch,
+              isLogedIn: user.isLogedIn,
+            })
+          }
           className={upvoted ? styles.upvote_icon_active : styles.upvote_icon}
         />
-        <span>{comment.voteScore}</span>
+        <span>{commentVoteScore}</span>
         <MdKeyboardArrowDown
           className={
             downvoted ? styles.downvote_icon_active : styles.downvote_icon

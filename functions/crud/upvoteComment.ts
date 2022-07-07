@@ -2,10 +2,9 @@ import { setAskToLoginPopup } from "../../redux/slices/askToLoginPopup";
 import Axios from "axios";
 
 interface Props {
-  postId: number;
+  commentId: number;
   token: string | null;
-  setPostVoteScore: Function;
-  postVoteScore: number;
+  setCommentVoteScore: Function;
   upvoted: boolean;
   downvoted: boolean;
   setUpvoted: Function;
@@ -14,11 +13,10 @@ interface Props {
   isLogedIn: boolean;
 }
 
-export const upvotePost = ({
-  postId,
+export const upvoteComment = ({
+  commentId,
   token,
-  setPostVoteScore,
-  postVoteScore,
+  setCommentVoteScore,
   upvoted,
   downvoted,
   setUpvoted,
@@ -31,9 +29,9 @@ export const upvotePost = ({
   }
 
   Axios.post(
-    "http://localhost:3001/posts/upvote",
+    "http://localhost:3001/posts/comment/upvote",
     {
-      postId,
+      commentId,
     },
     {
       headers: {
@@ -50,18 +48,18 @@ export const upvotePost = ({
 
   if (upvoted) {
     setUpvoted(false);
-    setPostVoteScore(
-      (postVoteScore: number) => (postVoteScore = postVoteScore - 1)
+    setCommentVoteScore(
+      (commentVoteScore: number) => (commentVoteScore = commentVoteScore - 1)
     );
   } else if (downvoted) {
     setUpvoted(true);
-    setPostVoteScore(
-      (postVoteScore: number) => (postVoteScore = postVoteScore + 2)
+    setCommentVoteScore(
+      (commentVoteScore: number) => (commentVoteScore = commentVoteScore + 2)
     );
   } else {
     setUpvoted(true);
-    setPostVoteScore(
-      (postVoteScore: number) => (postVoteScore = postVoteScore + 1)
+    setCommentVoteScore(
+      (commentVoteScore: number) => (commentVoteScore = commentVoteScore + 1)
     );
   }
   setDownvoted(false);
