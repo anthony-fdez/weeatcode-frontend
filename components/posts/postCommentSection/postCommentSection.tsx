@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./postCommentSection.module.css";
 import Axios from "axios";
 import Skeleton from "react-loading-skeleton";
-import { useAppSelector } from "../../../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import { toast } from "react-toastify";
 import { Alert, Button, Spinner } from "react-bootstrap";
 import Comment from "./comment/comment";
+import { setAskToLoginPopup } from "../../../redux/slices/askToLoginPopup";
 
 interface Props {
   postId: number;
@@ -36,7 +37,9 @@ export interface CommentInterface {
 }
 
 const PostCommentSection = ({ postId }: Props): JSX.Element => {
+  const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.user.jwtToken);
+  const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
 
   const [isLoadingComments, setIsLoadingComments] = useState(true);
   const [comments, setComments] = useState<CommentWithVotesInterface[] | null>(
@@ -83,6 +86,7 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
       )
         .then((response) => {
           setComments(response.data.comments);
+          console.log(response);
         })
         .catch((e) => {
           console.log(e);
@@ -114,6 +118,16 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
       );
     }
 
+    if (comments.length === 0) {
+      return (
+        <>
+          <p style={{ textAlign: "center" }}>
+            There are no comments yet. Be the first to comment!
+          </p>
+        </>
+      );
+    }
+
     return (
       <>
         {comments.map((comment: CommentWithVotesInterface, index: number) => {
@@ -138,7 +152,13 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
         />
 
         <Button
-          onClick={() => postComment()}
+          onClick={() => {
+            if (isLogedIn) {
+              return postComment();
+            }
+
+            dispatch(setAskToLoginPopup(true));
+          }}
           className={
             postCommentText.length >= 1
               ? styles.post_comment_button
