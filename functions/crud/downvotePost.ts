@@ -5,32 +5,32 @@ interface Props {
   token: string | null;
   setPostVoteScore: Function;
   postVoteScore: number;
-  upvoted: boolean;
-  downvoted: boolean;
-  setUpvoted: Function;
-  setDownvoted: Function;
+  upVoted: boolean;
+  downVoted: boolean;
+  setUpVoted: Function;
+  setDownVoted: Function;
   dispatch: Function;
-  isLogedIn: boolean;
+  isLoggedIn: boolean;
 }
 
-export const downvotePost = ({
+export const downVotePost = ({
   postId,
   token,
   setPostVoteScore,
   postVoteScore,
-  upvoted,
-  downvoted,
-  setUpvoted,
-  setDownvoted,
+  upVoted,
+  downVoted,
+  setUpVoted,
+  setDownVoted,
   dispatch,
-  isLogedIn,
+  isLoggedIn,
 }: Props) => {
-  if (!isLogedIn) {
+  if (!isLoggedIn) {
     return dispatch(setAskToLoginPopup(true));
   }
 
   Axios.post(
-    "http://localhost:3001/posts/downvote",
+    "http://localhost:3001/posts/downVote",
     {
       postId,
     },
@@ -47,21 +47,21 @@ export const downvotePost = ({
       console.log(e);
     });
 
-  if (downvoted) {
-    setDownvoted(false);
+  if (downVoted) {
+    setDownVoted(false);
     setPostVoteScore(
       (postVoteScore: number) => (postVoteScore = postVoteScore + 1)
     );
-  } else if (upvoted) {
-    setDownvoted(true);
+  } else if (upVoted) {
+    setDownVoted(true);
     setPostVoteScore(
       (postVoteScore: number) => (postVoteScore = postVoteScore - 2)
     );
   } else {
-    setDownvoted(true);
+    setDownVoted(true);
     setPostVoteScore(
       (postVoteScore: number) => (postVoteScore = postVoteScore - 1)
     );
   }
-  setUpvoted(false);
+  setUpVoted(false);
 };

@@ -5,7 +5,7 @@ import type { RootState } from "../store";
 // Define a type for the slice state
 interface TokenStateInterface {
   jwtToken: string | null;
-  isLogedIn: boolean;
+  isLoggedIn: boolean;
   name: string | null;
   userId: number | null;
 }
@@ -13,7 +13,7 @@ interface TokenStateInterface {
 // Define the initial state using that type
 const initialState: TokenStateInterface = {
   jwtToken: null,
-  isLogedIn: false,
+  isLoggedIn: false,
   name: null,
   userId: null,
 };
@@ -27,8 +27,8 @@ export const tokenSlice = createSlice({
     setToken: (state, action: PayloadAction<string>) => {
       state.jwtToken = action.payload;
     },
-    setIsLogedIn: (state, action: PayloadAction<boolean>) => {
-      state.isLogedIn = action.payload;
+    setisLoggedIn: (state, action: PayloadAction<boolean>) => {
+      state.isLoggedIn = action.payload;
     },
     setUserName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
@@ -38,7 +38,7 @@ export const tokenSlice = createSlice({
     },
     setClearUserData: (state) => {
       state.userId = null;
-      state.isLogedIn = false;
+      state.isLoggedIn = false;
       state.name = null;
       state.jwtToken = null;
     },
@@ -47,13 +47,13 @@ export const tokenSlice = createSlice({
 
 export const {
   setToken,
-  setIsLogedIn,
+  setisLoggedIn,
   setUserId,
   setUserName,
   setClearUserData,
 } = tokenSlice.actions;
 
 export const getJwtToken = (state: RootState) => state.user.jwtToken;
-export const getIsLogedIn = (state: RootState) => state.user.isLogedIn;
+export const getisLoggedIn = (state: RootState) => state.user.isLoggedIn;
 
 export default tokenSlice.reducer;

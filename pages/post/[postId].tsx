@@ -9,8 +9,8 @@ import { Alert } from "react-bootstrap";
 import { parseDate } from "../../functions/helpers/parseDate";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
-import { upvotePost } from "../../functions/crud/upvotePost";
-import { downvotePost } from "../../functions/crud/downvotePost";
+import { upVotePost } from "../../functions/crud/upVotePost";
+import { downVotePost } from "../../functions/crud/downVotePost";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 
 import ReactMarkdown from "react-markdown";
@@ -40,13 +40,13 @@ interface Props {
 
 const Post: NextPage<Props> = ({ status, post }) => {
   const dispatch = useAppDispatch();
-  const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
   const token = useAppSelector((state) => state.user.jwtToken);
 
   const [postWithUserData, setPostWithUserData] =
     useState<PostInterface | null>(null);
-  const [upvoted, setUpvoted] = useState<boolean>(false);
-  const [downvoted, setDownvoted] = useState<boolean>(false);
+  const [upVoted, setupVoted] = useState<boolean>(false);
+  const [downVoted, setdownVoted] = useState<boolean>(false);
   const [postVoteScore, setPostVoteScore] = useState<number>(0);
 
   useEffect(() => {
@@ -69,8 +69,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
         console.log(response);
 
         setPostWithUserData(response.data);
-        setUpvoted(response.data.upvoted);
-        setDownvoted(response.data.downvoted);
+        setupVoted(response.data.upVoted);
+        setdownVoted(response.data.downVoted);
       })
       .catch((e) => {
         console.log(e);
@@ -138,39 +138,39 @@ const Post: NextPage<Props> = ({ status, post }) => {
         <div className={styles.votes_container}>
           <MdKeyboardArrowUp
             onClick={() =>
-              upvotePost({
+              upVotePost({
                 postId: post.post.id,
                 token,
                 setPostVoteScore,
                 postVoteScore,
-                upvoted,
-                downvoted,
-                setUpvoted,
-                setDownvoted,
+                upVoted,
+                downVoted,
+                setupVoted,
+                setdownVoted,
                 dispatch,
-                isLogedIn,
+                isLoggedIn,
               })
             }
-            className={upvoted ? styles.upvote_icon_active : styles.upvote_icon}
+            className={upVoted ? styles.upVote_icon_active : styles.upVote_icon}
           />
           <span>{postVoteScore}</span>
           <MdKeyboardArrowDown
             onClick={() =>
-              downvotePost({
+              downVotePost({
                 postId: post.post.id,
                 token,
                 setPostVoteScore,
                 postVoteScore,
-                upvoted,
-                downvoted,
-                setUpvoted,
-                setDownvoted,
+                upVoted,
+                downVoted,
+                setupVoted,
+                setdownVoted,
                 dispatch,
-                isLogedIn,
+                isLoggedIn,
               })
             }
             className={
-              downvoted ? styles.downvote_icon_active : styles.downvote_icon
+              downVoted ? styles.downVote_icon_active : styles.downVote_icon
             }
           />
         </div>

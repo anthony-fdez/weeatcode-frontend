@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 import styles from "./login.module.css";
 import Axios from "axios";
 import {
-  setIsLogedIn,
+  setisLoggedIn,
   setToken,
   setUserId,
   setUserName,
@@ -38,7 +38,7 @@ const LoginPage: NextPage = () => {
         console.log(response);
 
         dispatch(setToken(response.data.token));
-        dispatch(setIsLogedIn(true));
+        dispatch(setisLoggedIn(true));
         dispatch(setUserId(response.data.user.userId));
         dispatch(setUserName(response.data.user.name));
 

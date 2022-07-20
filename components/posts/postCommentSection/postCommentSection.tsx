@@ -13,10 +13,10 @@ interface Props {
 }
 
 export interface CommentWithVotesInterface {
-  upvotes: number;
-  downvotes: number;
-  upvoted: boolean;
-  downvoted: boolean;
+  upVotes: number;
+  downVotes: number;
+  upVoted: boolean;
+  downVoted: boolean;
   voteScore: number;
   comment: CommentInterface;
 }
@@ -39,7 +39,7 @@ export interface CommentInterface {
 const PostCommentSection = ({ postId }: Props): JSX.Element => {
   const dispatch = useAppDispatch();
   const token = useAppSelector((state) => state.user.jwtToken);
-  const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   const [isLoadingComments, setIsLoadingComments] = useState(true);
   const [comments, setComments] = useState<CommentWithVotesInterface[] | null>(
@@ -153,7 +153,7 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
 
         <Button
           onClick={() => {
-            if (isLogedIn) {
+            if (isLoggedIn) {
               return postComment();
             }
 

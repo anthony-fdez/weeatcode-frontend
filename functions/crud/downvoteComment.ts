@@ -5,31 +5,31 @@ interface Props {
   commentId: number;
   token: string | null;
   setCommentVoteScore: Function;
-  upvoted: boolean;
-  downvoted: boolean;
-  setUpvoted: Function;
-  setDownvoted: Function;
+  upVoted: boolean;
+  downVoted: boolean;
+  setUpVoted: Function;
+  setDownVoted: Function;
   dispatch: Function;
-  isLogedIn: boolean;
+  isLoggedIn: boolean;
 }
 
-export const downvoteComment = ({
+export const downVoteComment = ({
   commentId,
   token,
   setCommentVoteScore,
-  upvoted,
-  downvoted,
-  setUpvoted,
-  setDownvoted,
+  upVoted,
+  downVoted,
+  setUpVoted,
+  setDownVoted,
   dispatch,
-  isLogedIn,
+  isLoggedIn,
 }: Props) => {
-  if (!isLogedIn) {
+  if (!isLoggedIn) {
     return dispatch(setAskToLoginPopup(true));
   }
 
   Axios.post(
-    "http://localhost:3001/posts/comment/downvote",
+    "http://localhost:3001/posts/comment/downVote",
     {
       commentId,
     },
@@ -46,21 +46,21 @@ export const downvoteComment = ({
       console.log(e);
     });
 
-  if (downvoted) {
-    setDownvoted(false);
+  if (downVoted) {
+    setDownVoted(false);
     setCommentVoteScore(
       (commentVoteScore: number) => (commentVoteScore = commentVoteScore + 1)
     );
-  } else if (upvoted) {
-    setDownvoted(true);
+  } else if (upVoted) {
+    setDownVoted(true);
     setCommentVoteScore(
       (commentVoteScore: number) => (commentVoteScore = commentVoteScore - 2)
     );
   } else {
-    setDownvoted(true);
+    setDownVoted(true);
     setCommentVoteScore(
       (commentVoteScore: number) => (commentVoteScore = commentVoteScore - 1)
     );
   }
-  setUpvoted(false);
+  setUpVoted(false);
 };

@@ -11,10 +11,10 @@ import { useAppSelector } from "../redux/hooks/hooks";
 
 export interface PostInterface {
   voteScore: number;
-  upvotes: number;
-  downvotes: number;
-  upvoted?: boolean;
-  downvoted?: boolean;
+  upVotes: number;
+  downVotes: number;
+  upVoted?: boolean;
+  downVoted?: boolean;
   votes?: VoteInterface[];
   post: {
     edited: boolean;
@@ -34,8 +34,8 @@ export interface VoteInterface {
   userName: string;
   userId: number;
   postId: number;
-  upvote: boolean;
-  downvote: boolean;
+  upVote: boolean;
+  downVote: boolean;
   createdA: string;
   updatedAt: string;
 }

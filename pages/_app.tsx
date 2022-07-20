@@ -40,9 +40,9 @@ interface AuthProps {
 }
 
 const Auth = ({ children, pageProps }: AuthProps) => {
-  const isLogedIn = useAppSelector((state) => state.user.isLogedIn);
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
-  if (!isLogedIn && pageProps.protected) {
+  if (!isLoggedIn && pageProps.protected) {
     return (
       <MainLayout>
         <AccessDenied />

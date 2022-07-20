@@ -93,7 +93,7 @@ const Header = (): JSX.Element => {
   };
 
   const logedInComponent = (): JSX.Element | null => {
-    if (!userData.isLogedIn) return null;
+    if (!userData.isLoggedIn) return null;
 
     return (
       <div className={styles.name_container}>
@@ -112,7 +112,7 @@ const Header = (): JSX.Element => {
   };
 
   const notLogedInComponent = (): JSX.Element | null => {
-    if (userData.isLogedIn) return null;
+    if (userData.isLoggedIn) return null;
 
     return (
       <div className={styles.name_container}>

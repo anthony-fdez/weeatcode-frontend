@@ -16,35 +16,41 @@
     flex-direction: column;
     align-items: center;
   }
-  .upvote_icon,
-  .downvote_icon,
-  .downvote_icon_active,
-  .upvote_icon_active {
+  .upVote_icon,
+  .downVote_icon,
+  .downVote_icon_active,
+  .upVote_icon_active {
     /* font-size: 20px; */
     height: 30px;
     width: 30px;
     transition: 100ms;
   }
-  .upvote_icon_active,
-  .downvote_icon_active {
+  .upVote_icon_active,
+  .downVote_icon_active {
     cursor: pointer;
   }
-  .upvote_icon_active {
+  .upVote_icon_active {
     color: orangered;
   }
-  .downvote_icon_active {
+  .downVote_icon_active {
     color: royalblue;
   }
-  .upvote_icon:hover {
+  .upVote_icon:hover {
     cursor: pointer;
     transition: 100ms;
     color: orangered;
   }
-  .downvote_icon:hover {
+  .downVote_icon:hover {
     cursor: pointer;
     transition: 100ms;
     color: royalblue;
   }
+  .content_container {
+    width: calc(100% - 50px);
+  }
+  /* .markdown_container {
+    width: 100%;
+  } */
 }
 @media only screen and (max-width: 900px) {
 }

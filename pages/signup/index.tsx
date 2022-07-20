@@ -8,7 +8,7 @@ import styles from "./signupPage.module.css";
 import Axios from "axios";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import {
-  setIsLogedIn,
+  setisLoggedIn,
   setToken,
   setUserId,
   setUserName,
@@ -40,7 +40,7 @@ const SignupPage: NextPage = () => {
         toast.success("Account created!");
 
         dispatch(setToken(response.data.token));
-        dispatch(setIsLogedIn(true));
+        dispatch(setisLoggedIn(true));
         dispatch(setUserId(response.data.user.userId));
         dispatch(setUserName(response.data.user.name));
 
