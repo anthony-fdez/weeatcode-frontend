@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert } from "react-bootstrap";
 import { PostInterface } from "../../../pages";
 import styles from "./postCard.module.css";
@@ -8,6 +8,7 @@ import Link from "next/link";
 import { upVotePost } from "../../../functions/crud/upvotePost";
 import { downVotePost } from "../../../functions/crud/downvotePost";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
+import Markdown from "../../markdown/markdown";
 
 interface Props {
   post: PostInterface;
@@ -15,13 +16,23 @@ interface Props {
 
 const PostCard = ({ post }: Props): JSX.Element => {
   const dispatch = useAppDispatch();
+  const ref = useRef(null);
 
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
   const token = useAppSelector((state) => state.user.jwtToken);
 
+  const [height, setHeight] = useState(0);
+
   const [upVoted, setUpVoted] = useState<boolean>(false);
   const [downVoted, setDownVoted] = useState<boolean>(false);
   const [postVoteScore, setPostVoteScore] = useState<number>(0);
+
+  useEffect(() => {
+    // @ts-ignore
+    setHeight(ref.current.clientHeight);
+  }, []);
+
+  console.log(height);
 
   useEffect(() => {
     if (!post) return;
@@ -41,7 +52,7 @@ const PostCard = ({ post }: Props): JSX.Element => {
   }
 
   return (
-    <div className={styles.container}>
+    <div ref={ref} className={styles.container}>
       <div className={styles.votes_container}>
         <MdKeyboardArrowUp
           onClick={() =>
@@ -86,11 +97,13 @@ const PostCard = ({ post }: Props): JSX.Element => {
           <div className={styles.post_header}>
             <h4>{post.post.title}</h4>
           </div>
-          <div className={styles.post_}>
-            <p className="clamped-text">{post.post.body}</p>
+          <div>
+            <Markdown markdownText={post.post.body} />
+            {/* <p className="clamped-text">{post.post.body}</p> */}
           </div>
         </div>
       </Link>
+      {height === 500 && <div className={styles.bottom_fade}></div>}
     </div>
   );
 };

@@ -5,6 +5,7 @@
     margin-bottom: 10px;
     border-radius: 13px;
     display: flex;
+    position: relative;
   }
   .container:hover {
     border: 1px solid rgb(70, 70, 70);
@@ -13,6 +14,8 @@
     width: 100%;
     padding: 20px;
     padding-left: 0px;
+    max-height: 500px;
+    overflow: hidden;
   }
   .post_body {
     margin-top: 10px;
@@ -55,6 +58,13 @@
     cursor: pointer;
     transition: 100ms;
     color: royalblue;
+  }
+  .bottom_fade {
+    width: 100%;
+    position: absolute;
+    height: 250px;
+    background-image: linear-gradient(rgb(0, 0, 0, 0), black);
+    bottom: 0px;
   }
 }
 @media only screen and (max-width: 900px) {
