@@ -1,29 +1,24 @@
-import { NextPage, NextPageContext, GetServerSideProps } from "next";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { NextPage, NextPageContext } from "next";
+import { useEffect, useState } from "react";
 import styles from "./post.module.css";
 
 import Axios from "axios";
-import { PostInterface } from "..";
 import { Alert } from "react-bootstrap";
+import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
+import { PostInterface } from "..";
+import { downVotePost } from "../../functions/crud/downvotePost";
+import { upVotePost } from "../../functions/crud/upvotePost";
 import { parseDate } from "../../functions/helpers/parseDate";
-import { MdKeyboardArrowDown } from "react-icons/md";
-import { MdKeyboardArrowUp } from "react-icons/md";
-import { upVotePost } from "../../functions/crud/upVotePost";
-import { downVotePost } from "../../functions/crud/downVotePost";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
-import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import bash from "react-syntax-highlighter/dist/cjs/languages/prism/bash";
+import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
+import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
+import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
 import tsx from "react-syntax-highlighter/dist/cjs/languages/prism/tsx";
 import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
-import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
-import bash from "react-syntax-highlighter/dist/cjs/languages/prism/bash";
-import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
-import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
-import rangeParser from "parse-numeric-range";
+import Markdown from "../../components/markdown/markdown";
 import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
 
 SyntaxHighlighter.registerLanguage("tsx", tsx);
@@ -45,8 +40,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
 
   const [postWithUserData, setPostWithUserData] =
     useState<PostInterface | null>(null);
-  const [upVoted, setupVoted] = useState<boolean>(false);
-  const [downVoted, setdownVoted] = useState<boolean>(false);
+  const [upVoted, setUpVoted] = useState<boolean>(false);
+  const [downVoted, setDownVoted] = useState<boolean>(false);
   const [postVoteScore, setPostVoteScore] = useState<number>(0);
 
   useEffect(() => {
@@ -69,54 +64,13 @@ const Post: NextPage<Props> = ({ status, post }) => {
         console.log(response);
 
         setPostWithUserData(response.data);
-        setupVoted(response.data.upVoted);
-        setdownVoted(response.data.downVoted);
+        setUpVoted(response.data.upVoted);
+        setDownVoted(response.data.downVoted);
       })
       .catch((e) => {
         console.log(e);
       });
   }, []);
-
-  const MarkdownComponents: object = {
-    code({ node, inline, className, ...props }: any) {
-      const match = /language-(\w+)/.exec(className || "");
-      const hasMeta = node?.data?.meta;
-
-      const applyHighlights: object = (applyHighlights: number) => {
-        if (hasMeta) {
-          const RE = /{([\d,-]+)}/;
-          const metadata = node.data.meta?.replace(/\s/g, "");
-          const strlineNumbers = RE?.test(metadata)
-            ? RE?.exec(metadata)[1]
-            : "0";
-          const highlightLines = rangeParser(strlineNumbers);
-          const highlight = highlightLines;
-          const data: string = highlight.includes(applyHighlights)
-            ? "highlight"
-            : null;
-          return { data };
-        } else {
-          return {};
-        }
-      };
-
-      return match ? (
-        <SyntaxHighlighter
-          style={oneDark}
-          language={match[1]}
-          PreTag="div"
-          className="codeStyle"
-          showLineNumbers={true}
-          wrapLines={hasMeta ? true : false}
-          useInlineStyles={true}
-          lineProps={applyHighlights}
-          {...props}
-        />
-      ) : (
-        <code className={className} {...props} />
-      );
-    },
-  };
 
   if (!post) {
     return (
@@ -145,8 +99,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
                 postVoteScore,
                 upVoted,
                 downVoted,
-                setupVoted,
-                setdownVoted,
+                setUpVoted,
+                setDownVoted,
                 dispatch,
                 isLoggedIn,
               })
@@ -163,8 +117,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
                 postVoteScore,
                 upVoted,
                 downVoted,
-                setupVoted,
-                setdownVoted,
+                setUpVoted,
+                setDownVoted,
                 dispatch,
                 isLoggedIn,
               })
@@ -179,12 +133,7 @@ const Post: NextPage<Props> = ({ status, post }) => {
           <p>By: {post.post.authorName}</p>
           <p>{parseDate({ date: post.post.updatedAt })}</p>
           <hr></hr>
-          <ReactMarkdown
-            components={MarkdownComponents}
-            remarkPlugins={[remarkGfm]}
-          >
-            {post.post.body}
-          </ReactMarkdown>
+          <Markdown markdownText={post.post.body} />
           <br></br>
           <PostCommentSection postId={post.post.id} />
         </div>

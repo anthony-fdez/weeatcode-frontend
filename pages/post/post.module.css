@@ -18,7 +18,7 @@
     font-size: 4rem;
   }
   .post_container {
-    width: 100%;
+    width: calc(100% - 120px);
     margin-left: 0px;
     padding-left: 50px;
     border-left: 1px solid rgb(50, 50, 50);
