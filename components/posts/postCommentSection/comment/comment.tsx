@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { parseDate } from "../../../../functions/helpers/parseDate";
 import { CommentWithVotesInterface } from "../postCommentSection";
 import styles from "./comment.module.css";
+import { BsReply } from "react-icons/bs";
 
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
@@ -9,6 +10,10 @@ import { downVoteComment } from "../../../../functions/crud/downvoteComment";
 import { upVoteComment } from "../../../../functions/crud/upvoteComment";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks/hooks";
 import Markdown from "../../../markdown/markdown";
+import moment from "moment";
+import { Button, Spinner } from "react-bootstrap";
+import Axios from "axios";
+import { toast } from "react-toastify";
 
 interface Props {
   comment: CommentWithVotesInterface;
@@ -23,6 +28,10 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
   const [downVoted, setDownVoted] = useState<boolean>(false);
   const [commentVoteScore, setCommentVoteScore] = useState<number>(0);
 
+  const [replyingToComment, setReplyingToComment] = useState(false);
+  const [replyText, setReplyText] = useState("");
+  const [loadingPostReply, setLoadingPostReply] = useState(false);
+
   useEffect(() => {
     if (!comment) return;
 
@@ -30,6 +39,102 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
     setDownVoted(comment.downVoted);
     setCommentVoteScore(comment.voteScore);
   }, [comment]);
+
+  const postReply = () => {
+    setLoadingPostReply(true);
+
+    Axios.post(
+      "http://localhost:3001/posts/comment/create",
+      {
+        postId: comment.comment.postId,
+        comment: replyText,
+        replyCommentId: comment.comment.id,
+        replyUserName: comment.comment.userName,
+        replyUserId: comment.comment.userId,
+      },
+      {
+        headers: {
+          Authorization: user.jwtToken || "",
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+        setReplyingToComment(false);
+        toast.success("Reply posted.");
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.error("Could not post reply.");
+      })
+      .finally(() => {
+        setLoadingPostReply(false);
+      });
+  };
+
+  const commentReply = () => {
+    if (!replyingToComment) {
+      return (
+        <div
+          onClick={() => setReplyingToComment(true)}
+          className={styles.reply_button}
+        >
+          <BsReply className={styles.reply_icon} />
+          <span>Reply</span>
+        </div>
+      );
+    }
+
+    return (
+      <div className={styles.write_reply}>
+        <textarea
+          onChange={(e) => setReplyText(e.target.value)}
+          placeholder={`Reply to ${comment.comment.userName}`}
+          rows={1}
+          className={styles.reply_text_area}
+        />
+        <Button
+          onClick={() => postReply()}
+          className={styles.post_reply_button}
+        >
+          {loadingPostReply ? (
+            <Spinner size="sm" animation="border" />
+          ) : (
+            <>
+              <BsReply className={styles.reply_icon} />
+              <span>Reply</span>
+            </>
+          )}
+        </Button>
+      </div>
+    );
+  };
+
+  const RenderCommentReplies = (): JSX.Element | null => {
+    if (!allComments) return null;
+
+    const replies: CommentWithVotesInterface[] = [];
+
+    allComments.forEach((reply: CommentWithVotesInterface, index: number) => {
+      if (reply.comment.replyCommentId === comment.comment.id) {
+        replies.push(reply);
+      }
+    });
+
+    if (replies.length <= 0) return null;
+
+    console.log(replies);
+
+    return (
+      <div style={{ marginTop: "20px" }}>
+        {replies.map((reply, index) => {
+          return (
+            <Comment comment={reply} key={index} allComments={allComments} />
+          );
+        })}
+      </div>
+    );
+  };
 
   return (
     <div className={styles.container}>
@@ -73,11 +178,13 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
       <div className={styles.content_container}>
         <p className={styles.comment_header}>
           {comment.comment.userName} -{" "}
-          {parseDate({ date: comment.comment.createdAt })}
+          {moment(comment.comment.createdAt).fromNow()}
         </p>
         <div className={styles.markdown_container}>
           <Markdown markdownText={comment.comment.comment} />
         </div>
+        {commentReply()}
+        <RenderCommentReplies />
       </div>
     </div>
   );

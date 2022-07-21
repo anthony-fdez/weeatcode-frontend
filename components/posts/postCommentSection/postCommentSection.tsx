@@ -131,9 +131,11 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
     return (
       <>
         {comments.map((comment: CommentWithVotesInterface, index: number) => {
-          return (
-            <Comment comment={comment} allComments={comments} key={index} />
-          );
+          if (!comment.comment.replyUserId) {
+            return (
+              <Comment comment={comment} allComments={comments} key={index} />
+            );
+          }
         })}
       </>
     );

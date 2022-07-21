@@ -48,3 +48,6 @@ a {
   -webkit-line-clamp: 2; /* number of lines to show */
   -webkit-box-orient: vertical;
 }
+.modal-content {
+  background-color: rgb(30, 30, 30) !important;
+}

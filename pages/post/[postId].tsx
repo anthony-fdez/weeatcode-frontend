@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { NextPage, NextPageContext } from "next";
 import { useEffect, useState } from "react";
 import styles from "./post.module.css";
@@ -16,6 +17,7 @@ import Markdown from "../../components/markdown/markdown";
 import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
 import { setPostToEdit } from "../../redux/slices/postToEdit";
 import { useRouter } from "next/router";
+import ConfirmDeletePostModal from "../../components/posts/confirmDeleteModal/confirmDeletePostModal";
 
 interface Props {
   status: boolean;
@@ -35,6 +37,9 @@ const Post: NextPage<Props> = ({ status, post }) => {
   const [upVoted, setUpVoted] = useState<boolean>(false);
   const [downVoted, setDownVoted] = useState<boolean>(false);
   const [postVoteScore, setPostVoteScore] = useState<number>(0);
+
+  const [isConfirmDeletePostModalOpen, setIsConfirmDeletePostModalOpen] =
+    useState(false);
 
   useEffect(() => {
     if (!post) return;
@@ -84,19 +89,27 @@ const Post: NextPage<Props> = ({ status, post }) => {
   if (!post) {
     return (
       <main className={styles.alert_container}>
-        <Alert variant="danger">
-          <Alert.Heading>Could not load this post.</Alert.Heading>
-          <p>
-            This post might not exist anymore, or maybe our servers are down.
-            Check again later.
-          </p>
-        </Alert>
+        <div>
+          <img
+            alt="Error"
+            className={styles.error_image}
+            src="/illustrations/404.svg"
+          />
+        </div>
+        <br></br>
+        <h2>There was an error loading the post.</h2>
+        <p>This post might not exist anymore.</p>
       </main>
     );
   }
 
   return (
     <>
+      <ConfirmDeletePostModal
+        isOpen={isConfirmDeletePostModalOpen}
+        postId={post.post.id}
+        handleClose={() => setIsConfirmDeletePostModalOpen(false)}
+      />
       <main className={styles.container}>
         <div className={styles.votes_container}>
           <MdKeyboardArrowUp
@@ -153,14 +166,24 @@ const Post: NextPage<Props> = ({ status, post }) => {
               {post.post.edited && editedTag()}
             </div>
             {post.post.authorId === userId && (
-              <Button
-                onClick={() => {
-                  dispatch(setPostToEdit(post.post.id));
-                  router.push("/post/edit");
-                }}
-              >
-                Edit Post
-              </Button>
+              <div className={styles.delete_edit_button}>
+                <Button
+                  variant="danger"
+                  onClick={() => {
+                    setIsConfirmDeletePostModalOpen(true);
+                  }}
+                >
+                  Delete
+                </Button>
+                <Button
+                  onClick={() => {
+                    dispatch(setPostToEdit(post.post.id));
+                    router.push("/post/edit");
+                  }}
+                >
+                  Edit Post
+                </Button>
+              </div>
             )}
           </div>
           <hr></hr>
