@@ -14,12 +14,13 @@ const persistConfig = {
 };
 
 const userPersisterReducer = persistReducer(persistConfig, tokenSlice.reducer);
+const persistedPostToEdit = persistReducer(persistConfig, postToEdit);
 
 const store = configureStore({
   reducer: {
     user: userPersisterReducer,
     askToLoginPopup: askToLoginPopup,
-    postToEdit,
+    postToEdit: persistedPostToEdit,
   },
 });
 

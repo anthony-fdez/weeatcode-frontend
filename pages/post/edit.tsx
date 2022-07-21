@@ -9,16 +9,34 @@ import { toast } from "react-toastify";
 import Markdown from "../../components/markdown/markdown";
 import MarkdownTutorial from "../../components/posts/markdownTutorial/markdownTutorial";
 import { useAppSelector } from "../../redux/hooks/hooks";
+import { kMaxLength } from "buffer";
 
 const Post: NextPage = () => {
   const router = useRouter();
 
   const token = useAppSelector((state) => state.user.jwtToken);
+  const postToEdit = useAppSelector((state) => state.postToEdit.postId);
 
   const [title, setTitle] = useState<string | null>(null);
   const [markdownText, setMarkDownText] = useState<string | null>(null);
   const [loadingCreatingPost, setLoadingCreatingPost] =
     useState<boolean>(false);
+  const [loadingGettingPost, setLoadingGettingPost] = useState(false);
+
+  useEffect(() => {
+    if (!postToEdit) {
+      console.log("No post to edit");
+      return;
+    }
+
+    Axios.post("http://localhost:3001/posts/get_by_id", { postId: postToEdit })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, [postToEdit]);
 
   const submitPost = () => {
     if (!title) return toast.error("Please add a title to your post");
@@ -51,12 +69,12 @@ const Post: NextPage = () => {
     <>
       <main className={styles.container}>
         <div className={styles.header}>
-          <h5>Create new post</h5>
+          <h5>Edit your post</h5>
           <Button style={{ width: "120px" }} onClick={() => submitPost()}>
             {loadingCreatingPost ? (
               <Spinner animation="border" size="sm" />
             ) : (
-              "Create Post"
+              "Edit Post"
             )}
           </Button>
         </div>
