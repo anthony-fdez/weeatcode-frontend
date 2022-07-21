@@ -1,17 +1,18 @@
 @media only screen and (min-width: 901px) {
   .container {
-    border-radius: 13px;
-    border: 1px solid rgb(50, 50, 50);
+    border-left: 1px solid rgb(50, 50, 50);
     padding: 20px;
-    margin-bottom: 10px;
+    padding-left: 10px;
+    /* margin-bottom: 10px; */
     display: flex;
+    padding-right: 0px;
   }
   .comment_header {
     color: rgb(200, 200, 200);
     font-size: 14px;
   }
   .votes_container {
-    margin-right: 20px;
+    margin-right: 5px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -46,7 +47,7 @@
     color: royalblue;
   }
   .content_container {
-    width: calc(100% - 50px);
+    width: calc(100%);
   }
   .reply_button {
     margin-top: 10px;

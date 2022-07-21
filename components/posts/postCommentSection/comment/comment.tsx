@@ -36,6 +36,7 @@ const Comment = ({
   const [replyingToComment, setReplyingToComment] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [loadingPostReply, setLoadingPostReply] = useState(false);
+  const [showReplies, setShowReplies] = useState(false);
 
   useMemo(() => {
     if (!comment) return;
@@ -129,7 +130,13 @@ const Comment = ({
 
     if (replies.length <= 0) return null;
 
-    console.log(replies);
+    // if (!showReplies) {
+    //   return (
+    //     <div onClick={() => setShowReplies(true)}>
+    //       <span>See replies</span>
+    //     </div>
+    //   );
+    // }
 
     return (
       <div style={{ marginTop: "20px" }}>
