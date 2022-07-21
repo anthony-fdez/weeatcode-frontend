@@ -12,6 +12,7 @@ import PostCard from "../../components/posts/postCard/postCard";
 import { Alert, Button } from "react-bootstrap";
 import Link from "next/link";
 import moment from "moment";
+import Avatar from "react-avatar";
 
 const Home: NextPage = () => {
   const user = useAppSelector((state) => state.user);
@@ -51,7 +52,7 @@ const Home: NextPage = () => {
           <Skeleton borderRadius={13} height={50} width={700} />
           <br></br>
           <Skeleton borderRadius={13} count={2} width={400} />
-          <hr></hr>
+          <br></br>
           <Skeleton
             count={7}
             borderRadius={13}
@@ -136,14 +137,19 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.container}>
-        <h1>{user.name}</h1>
+        <div className={styles.avatar_name_container}>
+          <Avatar round={true} name={user.name || "AA"} />
+          <div className={styles.name_header}>
+            <h1>{user.name}</h1>
+            <p>{userData.email}</p>
+          </div>
+        </div>
         <br></br>
-        <p>{userData.email}</p>
         <p>
           Member since: {parseDate({ date: userData.createdAt })} -{" "}
           {moment(userData.createdAt).fromNow()}
         </p>
-        <hr></hr>
+        <br></br>
 
         {renderPosts()}
       </main>

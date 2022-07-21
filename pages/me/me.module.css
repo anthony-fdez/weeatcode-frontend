@@ -6,6 +6,13 @@
     padding-top: 50px;
     padding-bottom: 20px;
   }
+  .avatar_name_container {
+    display: flex;
+    align-items: center;
+  }
+  .name_header {
+    margin-left: 20px !important;
+  }
 }
 @media only screen and (max-width: 900px) {
 }

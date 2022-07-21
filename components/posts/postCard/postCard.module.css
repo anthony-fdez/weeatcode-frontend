@@ -67,6 +67,18 @@
     border-radius: 20px;
     bottom: 0px;
   }
+  .edited_tag {
+    background-color: rgb(30, 30, 30);
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  .card_header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
 }
 @media only screen and (max-width: 900px) {
 }

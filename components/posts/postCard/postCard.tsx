@@ -44,6 +44,12 @@ const PostCard = ({ post }: Props): JSX.Element => {
     setPostVoteScore(post.voteScore);
   }, [post]);
 
+  const EditedTag = (): JSX.Element | null => {
+    if (!post.post.edited) return null;
+
+    return <div className={styles.edited_tag}>Edited</div>;
+  };
+
   if (!post) {
     return (
       <div className={styles.container}>
@@ -96,9 +102,13 @@ const PostCard = ({ post }: Props): JSX.Element => {
       <Link passHref href={`/post/${post.post.id}`}>
         <div className={styles.post_content}>
           <div className={styles.post_header}>
-            <p>
-              {post.post.authorName} - {moment(post.post.createdAt).fromNow()}
-            </p>
+            <div className={styles.card_header}>
+              <p>
+                {post.post.authorName} - {moment(post.post.createdAt).fromNow()}
+              </p>
+              <EditedTag />
+            </div>
+
             <h2>{post.post.title}</h2>
           </div>
           <div>
