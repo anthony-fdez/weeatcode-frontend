@@ -152,7 +152,7 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
 
   return (
     <div className={styles.container}>
-      <h3>Comments:</h3>
+      <h3>{comments?.length || 0} Comments</h3>
       <hr></hr>
       <div className={styles.input_container}>
         <textarea
