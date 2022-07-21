@@ -20,6 +20,7 @@ import tsx from "react-syntax-highlighter/dist/cjs/languages/prism/tsx";
 import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
 import Markdown from "../../components/markdown/markdown";
 import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
+import moment from "moment";
 
 SyntaxHighlighter.registerLanguage("tsx", tsx);
 SyntaxHighlighter.registerLanguage("typescript", typescript);
@@ -61,11 +62,23 @@ const Post: NextPage<Props> = ({ status, post }) => {
       }
     )
       .then((response) => {
-        console.log(response);
-
         setPostWithUserData(response.data);
         setUpVoted(response.data.upVoted);
         setDownVoted(response.data.downVoted);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!post) return;
+
+    Axios.post("http://localhost:3001/posts/views/add", {
+      postId: post.post.id,
+    })
+      .then((response) => {
+        console.log(response);
       })
       .catch((e) => {
         console.log(e);
@@ -131,7 +144,12 @@ const Post: NextPage<Props> = ({ status, post }) => {
         <div className={styles.post_container}>
           <h1 className={styles.post_title}>{post.post.title}</h1>
           <p>By: {post.post.authorName}</p>
-          <p>{parseDate({ date: post.post.updatedAt })}</p>
+          <p>
+            {parseDate({ date: post.post.createdAt })} -{" "}
+            {moment(post.post.createdAt).fromNow()}
+          </p>
+          <br></br>
+          <p>{post.views} views.</p>
           <hr></hr>
           <Markdown markdownText={post.post.body} />
           <br></br>

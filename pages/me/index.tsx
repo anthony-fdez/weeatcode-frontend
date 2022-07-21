@@ -11,6 +11,7 @@ import { parseDate } from "../../functions/helpers/parseDate";
 import PostCard from "../../components/posts/postCard/postCard";
 import { Alert, Button } from "react-bootstrap";
 import Link from "next/link";
+import moment from "moment";
 
 const Home: NextPage = () => {
   const user = useAppSelector((state) => state.user);
@@ -36,14 +37,11 @@ const Home: NextPage = () => {
         console.log(response);
         setPosts(response.data.data.posts);
         setUserData(response.data.data.user);
+        setIsLoadingUserData(false);
       })
       .catch((e) => {
         console.log(e);
       });
-
-    setTimeout(() => {
-      setIsLoadingUserData(false);
-    }, 3000);
   }, [user.jwtToken, user.userId]);
 
   const loadingSkeleton = (): JSX.Element => {
@@ -141,7 +139,10 @@ const Home: NextPage = () => {
         <h1>{user.name}</h1>
         <br></br>
         <p>{userData.email}</p>
-        <p>Member since: {parseDate({ date: userData.createdAt })}</p>
+        <p>
+          Member since: {parseDate({ date: userData.createdAt })} -{" "}
+          {moment(userData.createdAt).fromNow()}
+        </p>
         <hr></hr>
 
         {renderPosts()}

@@ -9,6 +9,7 @@ import { upVotePost } from "../../../functions/crud/upvotePost";
 import { downVotePost } from "../../../functions/crud/downvotePost";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import Markdown from "../../markdown/markdown";
+import moment from "moment";
 
 interface Props {
   post: PostInterface;
@@ -95,7 +96,10 @@ const PostCard = ({ post }: Props): JSX.Element => {
       <Link passHref href={`/post/${post.post.id}`}>
         <div className={styles.post_content}>
           <div className={styles.post_header}>
-            <h4>{post.post.title}</h4>
+            <p>
+              {post.post.authorName} - {moment(post.post.createdAt).fromNow()}
+            </p>
+            <h2>{post.post.title}</h2>
           </div>
           <div>
             <Markdown markdownText={post.post.body} />

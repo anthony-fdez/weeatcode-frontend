@@ -15,6 +15,7 @@ export interface PostInterface {
   downVotes: number;
   upVoted?: boolean;
   downVoted?: boolean;
+  views: number;
   votes?: VoteInterface[];
   post: {
     edited: boolean;

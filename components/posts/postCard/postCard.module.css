@@ -62,8 +62,9 @@
   .bottom_fade {
     width: 100%;
     position: absolute;
-    height: 250px;
-    background-image: linear-gradient(rgb(0, 0, 0, 0), black);
+    height: 200px;
+    background-image: linear-gradient(rgb(0, 0, 0, 0), rgb(10, 10, 10));
+    border-radius: 20px;
     bottom: 0px;
   }
 }
