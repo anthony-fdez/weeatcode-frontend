@@ -67,6 +67,17 @@
     justify-content: space-between;
     align-items: center;
   }
+  .edited_tag {
+    background-color: rgb(30, 30, 30);
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+  }
+  .views_edit {
+    display: flex;
+    align-items: center;
+  }
 }
 @media only screen and (max-width: 900px) {
 }

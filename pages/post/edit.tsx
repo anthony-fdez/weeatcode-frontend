@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { NextPage, NextPageContext } from "next";
 import { useEffect, useState } from "react";
 import { Alert, Button, Spinner } from "react-bootstrap";
@@ -10,6 +11,7 @@ import Markdown from "../../components/markdown/markdown";
 import MarkdownTutorial from "../../components/posts/markdownTutorial/markdownTutorial";
 import { useAppSelector } from "../../redux/hooks/hooks";
 import { kMaxLength } from "buffer";
+import Skeleton from "react-loading-skeleton";
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -22,19 +24,26 @@ const Post: NextPage = () => {
   const [loadingCreatingPost, setLoadingCreatingPost] =
     useState<boolean>(false);
   const [loadingGettingPost, setLoadingGettingPost] = useState(false);
+  const [errorLoadingData, setErrorLoadingData] = useState(false);
 
   useEffect(() => {
-    if (!postToEdit) {
-      console.log("No post to edit");
-      return;
-    }
+    if (!postToEdit) return;
+
+    setLoadingGettingPost(true);
 
     Axios.post("http://localhost:3001/posts/get_by_id", { postId: postToEdit })
       .then((response) => {
         console.log(response);
+        setTitle(response.data.post.title);
+        setMarkDownText(response.data.post.body);
+        setErrorLoadingData(false);
       })
       .catch((e) => {
         console.log(e);
+        setErrorLoadingData(true);
+      })
+      .finally(() => {
+        setLoadingGettingPost(false);
       });
   }, [postToEdit]);
 
@@ -45,8 +54,8 @@ const Post: NextPage = () => {
     setLoadingCreatingPost(true);
 
     Axios.post(
-      "http://localhost:3001/posts/create_post",
-      { title: title, body: markdownText },
+      "http://localhost:3001/posts/edit",
+      { postId: postToEdit, title: title, body: markdownText },
       {
         headers: {
           Authorization: token || "",
@@ -55,15 +64,41 @@ const Post: NextPage = () => {
     )
       .then((response) => {
         console.log(response);
-        toast.success("Post created");
+        toast.success("Post edited");
 
-        router.push(`/post/${response.data.post.id}`);
+        router.push(`/post/${postToEdit}`);
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => setLoadingCreatingPost(false));
   };
+
+  if (loadingGettingPost) {
+    return (
+      <main className={styles.container}>
+        <Skeleton height={70} borderRadius={13} />
+        <br></br>
+      </main>
+    );
+  }
+
+  if (errorLoadingData) {
+    return (
+      <main className={styles.container}>
+        <div>
+          <img
+            alt="Error"
+            className={styles.error_image}
+            src="/illustrations/server_error.svg"
+          />
+        </div>
+        <br></br>
+        <h2>There was an error loading the post to edit.</h2>
+        <p>Please try again in a few minutes</p>
+      </main>
+    );
+  }
 
   return (
     <>

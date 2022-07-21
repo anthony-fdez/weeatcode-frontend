@@ -54,6 +54,9 @@
     flex: 1;
     padding: 15px;
   }
+  .error_image {
+    height: 200px;
+  }
 }
 @media only screen and (max-width: 900px) {
 }

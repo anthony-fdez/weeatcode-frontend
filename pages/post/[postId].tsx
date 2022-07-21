@@ -53,6 +53,7 @@ const Post: NextPage<Props> = ({ status, post }) => {
       }
     )
       .then((response) => {
+        console.log(response);
         setPostWithUserData(response.data);
         setUpVoted(response.data.upVoted);
         setDownVoted(response.data.downVoted);
@@ -71,6 +72,14 @@ const Post: NextPage<Props> = ({ status, post }) => {
         console.log(e);
       });
   }, []);
+
+  const editedTag = () => {
+    return (
+      <div className={styles.edited_tag}>
+        <p>Edited {moment(post.post.updatedAt).fromNow()}</p>
+      </div>
+    );
+  };
 
   if (!post) {
     return (
@@ -132,12 +141,17 @@ const Post: NextPage<Props> = ({ status, post }) => {
           <h1 className={styles.post_title}>{post.post.title}</h1>
           <p>By: {post.post.authorName}</p>
           <p>
-            {parseDate({ date: post.post.createdAt })} -{" "}
+            Posted: {parseDate({ date: post.post.createdAt })} -{" "}
             {moment(post.post.createdAt).fromNow()}
           </p>
           <br></br>
+
           <div className={styles.views_container}>
-            <p>{post.views} views.</p>
+            <div className={styles.views_edit}>
+              <p>{post.views} views.</p>
+
+              {post.post.edited && editedTag()}
+            </div>
             {post.post.authorId === userId && (
               <Button
                 onClick={() => {
