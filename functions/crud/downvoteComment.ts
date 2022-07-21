@@ -11,6 +11,7 @@ interface Props {
   setDownVoted: Function;
   dispatch: Function;
   isLoggedIn: boolean;
+  getNewComments: Function;
 }
 
 export const downVoteComment = ({
@@ -23,6 +24,7 @@ export const downVoteComment = ({
   setDownVoted,
   dispatch,
   isLoggedIn,
+  getNewComments,
 }: Props) => {
   if (!isLoggedIn) {
     return dispatch(setAskToLoginPopup(true));
@@ -41,6 +43,7 @@ export const downVoteComment = ({
   )
     .then((response) => {
       console.log(response);
+      getNewComments();
     })
     .catch((e) => {
       console.log(e);

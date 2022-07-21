@@ -75,25 +75,29 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
     if (!loadingPostComment) {
       setIsLoadingComments(true);
 
-      Axios.post(
-        "http://localhost:3001/posts/comment/get_comments",
-        { postId },
-        {
-          headers: {
-            Authorization: token || "",
-          },
-        }
-      )
-        .then((response) => {
-          setComments(response.data.comments);
-          console.log(response);
-        })
-        .catch((e) => {
-          console.log(e);
-        })
-        .finally(() => setIsLoadingComments(false));
+      getNewComments();
     }
   }, [postId, token, loadingPostComment]);
+
+  const getNewComments = () => {
+    Axios.post(
+      "http://localhost:3001/posts/comment/get_comments",
+      { postId },
+      {
+        headers: {
+          Authorization: token || "",
+        },
+      }
+    )
+      .then((response) => {
+        setComments(response.data.comments);
+        console.log(response);
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+      .finally(() => setIsLoadingComments(false));
+  };
 
   const renderComments = () => {
     if (isLoadingComments)
@@ -133,7 +137,12 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
         {comments.map((comment: CommentWithVotesInterface, index: number) => {
           if (!comment.comment.replyUserId) {
             return (
-              <Comment comment={comment} allComments={comments} key={index} />
+              <Comment
+                getNewComments={getNewComments}
+                comment={comment}
+                allComments={comments}
+                key={index}
+              />
             );
           }
         })}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { parseDate } from "../../../../functions/helpers/parseDate";
 import { CommentWithVotesInterface } from "../postCommentSection";
 import styles from "./comment.module.css";
@@ -18,9 +18,14 @@ import { toast } from "react-toastify";
 interface Props {
   comment: CommentWithVotesInterface;
   allComments: CommentWithVotesInterface[];
+  getNewComments: Function;
 }
 
-const Comment = ({ comment, allComments }: Props): JSX.Element => {
+const Comment = ({
+  comment,
+  allComments,
+  getNewComments,
+}: Props): JSX.Element => {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user);
 
@@ -32,7 +37,7 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
   const [replyText, setReplyText] = useState("");
   const [loadingPostReply, setLoadingPostReply] = useState(false);
 
-  useEffect(() => {
+  useMemo(() => {
     if (!comment) return;
 
     setUpVoted(comment.upVoted);
@@ -62,6 +67,7 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
         console.log(response);
         setReplyingToComment(false);
         toast.success("Reply posted.");
+        getNewComments();
       })
       .catch((e) => {
         console.log(e);
@@ -129,7 +135,12 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
       <div style={{ marginTop: "20px" }}>
         {replies.map((reply, index) => {
           return (
-            <Comment comment={reply} key={index} allComments={allComments} />
+            <Comment
+              getNewComments={getNewComments}
+              comment={reply}
+              key={index}
+              allComments={allComments}
+            />
           );
         })}
       </div>
@@ -151,6 +162,7 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
               setDownVoted,
               dispatch,
               isLoggedIn: user.isLoggedIn,
+              getNewComments,
             })
           }
           className={upVoted ? styles.upVote_icon_active : styles.upVote_icon}
@@ -168,6 +180,7 @@ const Comment = ({ comment, allComments }: Props): JSX.Element => {
               setDownVoted,
               dispatch,
               isLoggedIn: user.isLoggedIn,
+              getNewComments,
             })
           }
           className={
