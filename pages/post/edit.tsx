@@ -1,16 +1,14 @@
 import { NextPage, NextPageContext } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert, Button, Spinner } from "react-bootstrap";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import styles from "./createPost.module.css";
 
 import Axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import Markdown from "../../components/markdown/markdown";
 import MarkdownTutorial from "../../components/posts/markdownTutorial/markdownTutorial";
 import { useAppSelector } from "../../redux/hooks/hooks";
-import Markdown from "../../components/markdown/markdown";
 
 const Post: NextPage = () => {
   const router = useRouter();

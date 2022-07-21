@@ -6,6 +6,7 @@ import { persistReducer } from "redux-persist";
 import { persistStore } from "redux-persist";
 import exp from "constants";
 import askToLoginPopup from "./slices/askToLoginPopup";
+import postToEdit from "./slices/postToEdit";
 
 const persistConfig = {
   key: "blog-node-app-redux-persist-key",
@@ -18,6 +19,7 @@ const store = configureStore({
   reducer: {
     user: userPersisterReducer,
     askToLoginPopup: askToLoginPopup,
+    postToEdit,
   },
 });
 

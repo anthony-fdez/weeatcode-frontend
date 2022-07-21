@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./post.module.css";
 
 import Axios from "axios";
-import { Alert } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { PostInterface } from "..";
 import { downVotePost } from "../../functions/crud/downvotePost";
@@ -11,23 +11,11 @@ import { upVotePost } from "../../functions/crud/upvotePost";
 import { parseDate } from "../../functions/helpers/parseDate";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import bash from "react-syntax-highlighter/dist/cjs/languages/prism/bash";
-import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
-import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
-import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
-import tsx from "react-syntax-highlighter/dist/cjs/languages/prism/tsx";
-import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
+import moment from "moment";
 import Markdown from "../../components/markdown/markdown";
 import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
-import moment from "moment";
-
-SyntaxHighlighter.registerLanguage("tsx", tsx);
-SyntaxHighlighter.registerLanguage("typescript", typescript);
-SyntaxHighlighter.registerLanguage("scss", scss);
-SyntaxHighlighter.registerLanguage("bash", bash);
-SyntaxHighlighter.registerLanguage("markdown", markdown);
-SyntaxHighlighter.registerLanguage("json", json);
+import { setPostToEdit } from "../../redux/slices/postToEdit";
+import { useRouter } from "next/router";
 
 interface Props {
   status: boolean;
@@ -36,8 +24,11 @@ interface Props {
 
 const Post: NextPage<Props> = ({ status, post }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
+
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
   const token = useAppSelector((state) => state.user.jwtToken);
+  const userId = useAppSelector((state) => state.user.userId);
 
   const [postWithUserData, setPostWithUserData] =
     useState<PostInterface | null>(null);
@@ -69,10 +60,6 @@ const Post: NextPage<Props> = ({ status, post }) => {
       .catch((e) => {
         console.log(e);
       });
-  }, []);
-
-  useEffect(() => {
-    if (!post) return;
 
     Axios.post("http://localhost:3001/posts/views/add", {
       postId: post.post.id,
@@ -149,7 +136,19 @@ const Post: NextPage<Props> = ({ status, post }) => {
             {moment(post.post.createdAt).fromNow()}
           </p>
           <br></br>
-          <p>{post.views} views.</p>
+          <div className={styles.views_container}>
+            <p>{post.views} views.</p>
+            {post.post.authorId === userId && (
+              <Button
+                onClick={() => {
+                  dispatch(setPostToEdit(post.post.id));
+                  router.push("/post/edit");
+                }}
+              >
+                Edit Post
+              </Button>
+            )}
+          </div>
           <hr></hr>
           <Markdown markdownText={post.post.body} />
           <br></br>
