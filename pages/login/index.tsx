@@ -47,7 +47,11 @@ const LoginPage: NextPage = () => {
       .catch((e) => {
         console.log(e);
 
-        toast.error(e.response.data.message);
+        if (e.response.data) {
+          return toast.error(e.response.data.message || "Server error");
+        }
+
+        toast.error("Server error");
       })
       .finally(() => {
         setIsLoading(false);
