@@ -92,7 +92,7 @@ const Header = (): JSX.Element => {
     );
   };
 
-  const logedInComponent = (): JSX.Element | null => {
+  const loggedInComponent = (): JSX.Element | null => {
     if (!userData.isLoggedIn) return null;
 
     return (
@@ -111,7 +111,7 @@ const Header = (): JSX.Element => {
     );
   };
 
-  const notLogedInComponent = (): JSX.Element | null => {
+  const notLoggedInComponent = (): JSX.Element | null => {
     if (userData.isLoggedIn) return null;
 
     return (
@@ -126,9 +126,11 @@ const Header = (): JSX.Element => {
   return (
     <header className={styles.header}>
       <div className={styles.header_content}>
-        <h4>Blog</h4>
-        {logedInComponent()}
-        {notLogedInComponent()}
+        <Link style={{ cursor: "pointer" }} passHref href={"/"}>
+          <h4>THE BLOG</h4>
+        </Link>
+        {loggedInComponent()}
+        {notLoggedInComponent()}
       </div>
     </header>
   );
