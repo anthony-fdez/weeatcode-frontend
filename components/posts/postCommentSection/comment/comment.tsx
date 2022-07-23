@@ -42,6 +42,7 @@ const Comment = ({
 
   const [editingComment, setEditingComment] = useState(false);
   const [newComment, setNewComment] = useState("");
+  const [loadingEdit, setLoadingEdit] = useState(false);
 
   useMemo(() => {
     if (!comment) return;
@@ -49,6 +50,8 @@ const Comment = ({
     setUpVoted(comment.upVoted);
     setDownVoted(comment.downVoted);
     setCommentVoteScore(comment.voteScore);
+
+    setNewComment(comment.comment.comment);
   }, [comment]);
 
   const postReply = () => {
@@ -84,7 +87,39 @@ const Comment = ({
       });
   };
 
+  const postEdit = () => {
+    setLoadingEdit(true);
+
+    Axios.post(
+      "http://localhost:3001/posts/comment/edit",
+      {
+        newComment,
+        commentId: comment.comment.id,
+      },
+      {
+        headers: {
+          Authorization: user.jwtToken || "",
+        },
+      }
+    )
+      .then((response) => {
+        console.log(response);
+        setLoadingEdit(false);
+        toast.success("Comment edited.");
+        getNewComments();
+      })
+      .catch((e) => {
+        console.log(e);
+        toast.error("Could not edit comment.");
+      })
+      .finally(() => {
+        setLoadingEdit(false);
+      });
+  };
+
   const commentReply = () => {
+    if (editingComment) return null;
+
     if (!replyingToComment) {
       return (
         <div
@@ -105,7 +140,10 @@ const Comment = ({
           {comment.comment.userId === user.userId &&
             comment.comment.deleted === false && (
               <>
-                <div className={styles.reply_button}>
+                <div
+                  onClick={() => setEditingComment(true)}
+                  className={styles.reply_button}
+                >
                   <AiFillEdit className={styles.reply_icon} />
                   <span>Edit</span>
                 </div>
@@ -238,9 +276,41 @@ const Comment = ({
             <a>{comment.comment.userName}</a>
           </Link>{" "}
           - {moment(comment.comment.createdAt).fromNow()}
+          {comment.comment.edited && (
+            <span className={styles.edited_tag}>
+              Edited {moment(comment.comment.updatedAt).fromNow()}
+            </span>
+          )}
         </p>
-        <div className={styles.markdown_container}>
-          <Markdown markdownText={comment.comment.comment} />
+        <div
+          style={comment.comment.edited ? { marginTop: "20px" } : {}}
+          className={styles.markdown_container}
+        >
+          {editingComment ? (
+            <div className={styles.write_reply}>
+              <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder={`Reply to ${comment.comment.userName}`}
+                rows={1}
+                className={styles.reply_text_area}
+              />
+              <Button
+                onClick={() => postEdit()}
+                className={styles.post_reply_button}
+              >
+                {loadingEdit ? (
+                  <Spinner size="sm" animation="border" />
+                ) : (
+                  <>
+                    <span>Confirm Edit</span>
+                  </>
+                )}
+              </Button>
+            </div>
+          ) : (
+            <Markdown markdownText={comment.comment.comment} />
+          )}
         </div>
         {commentReply()}
         <RenderCommentReplies />
