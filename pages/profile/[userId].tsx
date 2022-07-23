@@ -54,10 +54,7 @@ const Post: NextPage<Props> = ({ status, userData }) => {
             alignItems: "center",
           }}
         >
-          <h3>My posts:</h3>
-          <Link href="/post/createPost" passHref={true}>
-            <Button>Create New Post</Button>
-          </Link>
+          <h3>Posts:</h3>
         </div>
         <br></br>
         {posts.map((post, index) => {

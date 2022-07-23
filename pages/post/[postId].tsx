@@ -6,7 +6,7 @@ import styles from "./post.module.css";
 import Axios from "axios";
 import { Alert, Button } from "react-bootstrap";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { PostInterface } from "..";
+import { PostInterface } from "../../interfaces/PostInterface";
 import { downVotePost } from "../../functions/crud/downvotePost";
 import { upVotePost } from "../../functions/crud/upvotePost";
 import { parseDate } from "../../functions/helpers/parseDate";
@@ -18,6 +18,7 @@ import PostCommentSection from "../../components/posts/postCommentSection/postCo
 import { setPostToEdit } from "../../redux/slices/postToEdit";
 import { useRouter } from "next/router";
 import ConfirmDeletePostModal from "../../components/posts/confirmDeleteModal/confirmDeletePostModal";
+import Link from "next/link";
 
 interface Props {
   status: boolean;
@@ -152,7 +153,12 @@ const Post: NextPage<Props> = ({ status, post }) => {
         </div>
         <div className={styles.post_container}>
           <h1 className={styles.post_title}>{post.post.title}</h1>
-          <p>By: {post.post.authorName}</p>
+          <p>
+            By:{" "}
+            <Link passHref href={`/profile/${post.post.authorId}`}>
+              <a>{post.post.authorName}</a>
+            </Link>{" "}
+          </p>
           <p>
             Posted: {parseDate({ date: post.post.createdAt })} -{" "}
             {moment(post.post.createdAt).fromNow()}

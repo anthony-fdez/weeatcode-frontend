@@ -14,6 +14,7 @@ import moment from "moment";
 import { Button, Spinner } from "react-bootstrap";
 import Axios from "axios";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 interface Props {
   comment: CommentWithVotesInterface;
@@ -197,8 +198,10 @@ const Comment = ({
       </div>
       <div className={styles.content_container}>
         <p className={styles.comment_header}>
-          {comment.comment.userName} -{" "}
-          {moment(comment.comment.createdAt).fromNow()}
+          <Link passHref href={`/profile/${comment.comment.userId}`}>
+            <a>{comment.comment.userName}</a>
+          </Link>{" "}
+          - {moment(comment.comment.createdAt).fromNow()}
         </p>
         <div className={styles.markdown_container}>
           <Markdown markdownText={comment.comment.comment} />
