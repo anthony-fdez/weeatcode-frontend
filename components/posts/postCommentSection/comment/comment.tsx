@@ -114,6 +114,7 @@ const Comment = ({
       })
       .finally(() => {
         setLoadingEdit(false);
+        setEditingComment(false);
       });
   };
 
