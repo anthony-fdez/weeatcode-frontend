@@ -17,6 +17,14 @@
     flex-direction: column;
     align-items: center;
   }
+  .votes_disabled {
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.5;
+    pointer-events: none;
+  }
   .upVote_icon,
   .downVote_icon,
   .downVote_icon_active,
@@ -55,6 +63,7 @@
     align-items: center;
     cursor: pointer;
     transition: 200ms;
+    margin-right: 20px;
   }
   .reply_button:hover {
     opacity: 0.7;
@@ -87,6 +96,14 @@
     display: flex;
     align-items: center;
     margin-top: 10px;
+  }
+  .comment_buttons {
+    display: flex;
+    align-items: center;
+  }
+  .comment_buttons_disabled {
+    opacity: 0.5;
+    pointer-events: none;
   }
 }
 @media only screen and (max-width: 900px) {

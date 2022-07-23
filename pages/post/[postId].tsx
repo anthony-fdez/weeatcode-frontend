@@ -17,7 +17,7 @@ import Markdown from "../../components/markdown/markdown";
 import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
 import { setPostToEdit } from "../../redux/slices/postToEdit";
 import { useRouter } from "next/router";
-import ConfirmDeletePostModal from "../../components/posts/confirmDeleteModal/confirmDeletePostModal";
+import ConfirmDeletePostModal from "../../components/posts/confirmDeletePostModal/confirmDeletePostModal";
 import Link from "next/link";
 
 interface Props {

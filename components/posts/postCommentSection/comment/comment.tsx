@@ -1,20 +1,21 @@
-import { useEffect, useMemo, useState } from "react";
-import { parseDate } from "../../../../functions/helpers/parseDate";
+import { useMemo, useState } from "react";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import { BsReply } from "react-icons/bs";
 import { CommentWithVotesInterface } from "../postCommentSection";
 import styles from "./comment.module.css";
-import { BsReply } from "react-icons/bs";
 
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 
+import Axios from "axios";
+import moment from "moment";
+import Link from "next/link";
+import { Button, Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
 import { downVoteComment } from "../../../../functions/crud/downvoteComment";
 import { upVoteComment } from "../../../../functions/crud/upvoteComment";
 import { useAppDispatch, useAppSelector } from "../../../../redux/hooks/hooks";
 import Markdown from "../../../markdown/markdown";
-import moment from "moment";
-import { Button, Spinner } from "react-bootstrap";
-import Axios from "axios";
-import { toast } from "react-toastify";
-import Link from "next/link";
+import ConfirmDeleteCommentModal from "../../confirmDeleteCommentModal/confirmDeleteCommentModal";
 
 interface Props {
   comment: CommentWithVotesInterface;
@@ -37,7 +38,10 @@ const Comment = ({
   const [replyingToComment, setReplyingToComment] = useState(false);
   const [replyText, setReplyText] = useState("");
   const [loadingPostReply, setLoadingPostReply] = useState(false);
-  const [showReplies, setShowReplies] = useState(false);
+  const [isDeleteCommentOpen, setIsDeleteCommentOpen] = useState(false);
+
+  const [editingComment, setEditingComment] = useState(false);
+  const [newComment, setNewComment] = useState("");
 
   useMemo(() => {
     if (!comment) return;
@@ -84,11 +88,39 @@ const Comment = ({
     if (!replyingToComment) {
       return (
         <div
-          onClick={() => setReplyingToComment(true)}
-          className={styles.reply_button}
+          className={
+            comment.comment.deleted
+              ? styles.comment_buttons_disabled
+              : styles.comment_buttons
+          }
         >
-          <BsReply className={styles.reply_icon} />
-          <span>Reply</span>
+          <div
+            onClick={() => setReplyingToComment(true)}
+            className={styles.reply_button}
+          >
+            <BsReply className={styles.reply_icon} />
+            <span>Reply</span>
+          </div>
+
+          {comment.comment.userId === user.userId &&
+            comment.comment.deleted === false && (
+              <>
+                <div className={styles.reply_button}>
+                  <AiFillEdit className={styles.reply_icon} />
+                  <span>Edit</span>
+                </div>
+
+                <div
+                  onClick={() => {
+                    setIsDeleteCommentOpen(true);
+                  }}
+                  className={styles.reply_button}
+                >
+                  <AiFillDelete className={styles.reply_icon} />
+                  <span>Delete</span>
+                </div>
+              </>
+            )}
         </div>
       );
     }
@@ -131,14 +163,6 @@ const Comment = ({
 
     if (replies.length <= 0) return null;
 
-    // if (!showReplies) {
-    //   return (
-    //     <div onClick={() => setShowReplies(true)}>
-    //       <span>See replies</span>
-    //     </div>
-    //   );
-    // }
-
     return (
       <div style={{ marginTop: "20px" }}>
         {replies.map((reply, index) => {
@@ -157,7 +181,19 @@ const Comment = ({
 
   return (
     <div className={styles.container}>
-      <div className={styles.votes_container}>
+      <ConfirmDeleteCommentModal
+        commentId={comment.comment.id}
+        isOpen={isDeleteCommentOpen}
+        handleClose={() => setIsDeleteCommentOpen(false)}
+        getNewComments={getNewComments}
+      />
+      <div
+        className={
+          comment.comment.deleted
+            ? styles.votes_disabled
+            : styles.votes_container
+        }
+      >
         <MdKeyboardArrowUp
           onClick={() =>
             upVoteComment({
