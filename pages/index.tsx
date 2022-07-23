@@ -8,38 +8,7 @@ import Skeleton from "react-loading-skeleton";
 import { Alert } from "react-bootstrap";
 import PostCard from "../components/posts/postCard/postCard";
 import { useAppSelector } from "../redux/hooks/hooks";
-
-export interface PostInterface {
-  voteScore: number;
-  upVotes: number;
-  downVotes: number;
-  upVoted?: boolean;
-  downVoted?: boolean;
-  views: number;
-  votes?: VoteInterface[];
-  post: {
-    edited: boolean;
-    id: number;
-    title: string;
-    authorId: number;
-    authorName: string;
-    body: string;
-    createdAt: string;
-    updatedAt: string;
-    votes?: VoteInterface[];
-  };
-}
-
-export interface VoteInterface {
-  id: number;
-  userName: string;
-  userId: number;
-  postId: number;
-  upVote: boolean;
-  downVote: boolean;
-  createdA: string;
-  updatedAt: string;
-}
+import { PostInterface } from "../interfaces/PostInterface";
 
 const Home: NextPage = () => {
   const token = useAppSelector((state) => state.user.jwtToken);

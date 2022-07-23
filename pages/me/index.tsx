@@ -6,13 +6,13 @@ import styles from "./me.module.css";
 import Axios from "axios";
 import Skeleton from "react-loading-skeleton";
 
-import { PostInterface } from "../../pages/index";
 import { parseDate } from "../../functions/helpers/parseDate";
 import PostCard from "../../components/posts/postCard/postCard";
 import { Alert, Button } from "react-bootstrap";
 import Link from "next/link";
 import moment from "moment";
 import Avatar from "react-avatar";
+import { PostInterface } from "../../interfaces/PostInterface";
 
 const Home: NextPage = () => {
   const user = useAppSelector((state) => state.user);
