@@ -24,8 +24,11 @@ interface Props {
 }
 
 const Post: NextPage<Props> = ({ status, userData }) => {
-  const posts = userData.posts;
+  let posts: PostInterface[];
 
+  if (userData) {
+    posts = userData.posts;
+  }
   console.log(userData);
 
   const renderPosts = () => {
@@ -68,12 +71,15 @@ const Post: NextPage<Props> = ({ status, userData }) => {
     return (
       <>
         <main className={styles.container}>
-          <Alert variant="danger">
-            <Alert.Heading>
-              There was an error getting the information
-            </Alert.Heading>
+          <div className={styles.not_found_container}>
+            <img
+              className={styles.no_posts_image}
+              alt="Not found ballon"
+              src="/illustrations/server.svg"
+            />
+            <h4>There was an error.</h4>
             <p>Please try again later.</p>
-          </Alert>
+          </div>
         </main>
       </>
     );

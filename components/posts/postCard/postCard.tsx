@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Alert } from "react-bootstrap";
-import { PostInterface } from "../../../pages";
+import { PostInterface } from "../../../interfaces/PostInterface";
 import styles from "./postCard.module.css";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowUp } from "react-icons/md";
@@ -104,7 +104,10 @@ const PostCard = ({ post }: Props): JSX.Element => {
           <div className={styles.post_header}>
             <div className={styles.card_header}>
               <p>
-                {post.post.authorName} - {moment(post.post.createdAt).fromNow()}
+                <Link href={`/profile/${post.post.authorId}`}>
+                  <a>{post.post.authorName}</a>
+                </Link>{" "}
+                - {moment(post.post.createdAt).fromNow()}
               </p>
               <EditedTag />
             </div>
