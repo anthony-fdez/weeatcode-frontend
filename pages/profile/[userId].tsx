@@ -1,15 +1,22 @@
 /* eslint-disable @next/next/no-img-element */
 import { NextPage, NextPageContext } from "next";
-import styles from "./post.module.css";
+import styles from "./profile.module.css";
 
 import Axios from "axios";
+import { UserInterface } from "../../interfaces/UserInterface";
+import { PostInterface } from "../../interfaces/PostInterface";
 
 interface Props {
   status: boolean;
-  userData: null;
+  userData: {
+    totalPosts: number;
+    user: UserInterface;
+    posts: PostInterface[];
+  };
 }
 
 const Post: NextPage<Props> = ({ status, userData }) => {
+  console.log(userData);
   return (
     <>
       <main className={styles.container}></main>
