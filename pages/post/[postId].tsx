@@ -68,9 +68,17 @@ const Post: NextPage<Props> = ({ status, post }) => {
         console.log(e);
       });
 
-    Axios.post(`${process.env.SERVER_HOST}/posts/views/add`, {
-      postId: post.post.id,
-    })
+    Axios.post(
+      `${process.env.SERVER_HOST}/posts/views/add`,
+      {
+        postId: post.post.id,
+      },
+      {
+        headers: {
+          authorization: token || "",
+        },
+      }
+    )
       .then((response) => {
         console.log(response);
       })
@@ -205,7 +213,7 @@ const Post: NextPage<Props> = ({ status, post }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { postId } = context.query;
 
-  const res = await Axios.post( `${process.env.SERVER_HOST}/posts/get_by_id`, {
+  const res = await Axios.post(`${process.env.SERVER_HOST}/posts/get_by_id`, {
     postId,
   })
     .then((response) => {
