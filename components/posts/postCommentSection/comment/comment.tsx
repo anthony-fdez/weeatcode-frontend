@@ -55,6 +55,8 @@ const Comment = ({
   }, [comment]);
 
   const postReply = () => {
+    if (replyText === "") return toast.error("Empty comment");
+
     setLoadingPostReply(true);
 
     Axios.post(
@@ -203,7 +205,7 @@ const Comment = ({
     if (replies.length <= 0) return null;
 
     return (
-      <div style={{ marginTop: "20px" }}>
+      <div className={styles.comment_body}>
         {replies.map((reply, index) => {
           return (
             <Comment
@@ -284,8 +286,9 @@ const Comment = ({
           )}
         </p>
         <div
-          style={comment.comment.edited ? { marginTop: "20px" } : {}}
-          className={styles.markdown_container}
+          className={
+            comment.comment.edited ? styles.edited_margin_top : styles.test
+          }
         >
           {editingComment ? (
             <div className={styles.write_reply}>

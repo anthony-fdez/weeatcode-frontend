@@ -9,4 +9,12 @@
   }
 }
 @media only screen and (max-width: 900px) {
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

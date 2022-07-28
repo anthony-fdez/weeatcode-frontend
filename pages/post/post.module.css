@@ -87,4 +87,93 @@
   }
 }
 @media only screen and (max-width: 900px) {
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+  }
+  .alert_container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 10px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+  .post_title {
+    font-size: 3rem;
+  }
+  .post_container {
+    width: calc(100% - 50px);
+    margin-left: 0px;
+    padding-left: 20px;
+    border-left: 1px solid rgb(50, 50, 50);
+  }
+  .votes_container {
+    padding: 0px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky;
+    top: 100px;
+    height: 100%;
+  }
+  .upVote_icon,
+  .downVote_icon,
+  .downVote_icon_active,
+  .upVote_icon_active {
+    /* font-size: 20px; */
+    height: 30px;
+    width: 30px;
+    transition: 100ms;
+  }
+  .upVote_icon_active,
+  .downVote_icon_active {
+    cursor: pointer;
+  }
+  .upVote_icon_active {
+    color: orangered;
+  }
+  .downVote_icon_active {
+    color: royalblue;
+  }
+  .upVote_icon:hover {
+    cursor: pointer;
+    transition: 100ms;
+    color: orangered;
+  }
+  .downVote_icon:hover {
+    cursor: pointer;
+    transition: 100ms;
+    color: royalblue;
+  }
+  .views_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .edited_tag {
+    background-color: rgb(30, 30, 30);
+    width: fit-content;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .views_edit {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .delete_edit_button > button {
+    width: fit-content;
+    margin-right: 10px;
+  }
+  .error_image {
+    height: 200px;
+  }
 }

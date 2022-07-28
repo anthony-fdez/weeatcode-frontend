@@ -1,7 +1,43 @@
+.container {
+  margin-top: 50px;
+  border-radius: 13px;
+  /* border: 1px solid rgb(50, 50, 50); */
+}
+.text_input {
+  margin-bottom: 20px;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  padding: 15px;
+  width: 100%;
+  border-radius: 13px;
+  color: white;
+}
+.text_input:focus {
+  outline: 1px solid gray;
+}
+.input_container {
+  display: flex;
+  flex-direction: column;
+}
+.post_comment_button_hidden {
+  opacity: 0;
+  height: 0px;
+  transition: 200ms;
+  pointer-events: none;
+}
+.post_comment_button {
+  opacity: 1;
+  height: 40px;
+  transition: 200ms;
+}
+
 @media only screen and (min-width: 901px) {
+}
+@media only screen and (max-width: 900px) {
   .container {
     margin-top: 50px;
-    border-radius: 13px;
+    border-radius: 5px;
+    margin-bottom: 70px;
     /* border: 1px solid rgb(50, 50, 50); */
   }
   .text_input {
@@ -10,27 +46,8 @@
     border: none;
     padding: 15px;
     width: 100%;
-    border-radius: 13px;
+    border-radius: 5px;
     color: white;
+    min-height: 150px;
   }
-  .text_input:focus {
-    outline: 1px solid gray;
-  }
-  .input_container {
-    display: flex;
-    flex-direction: column;
-  }
-  .post_comment_button_hidden {
-    opacity: 0;
-    height: 0px;
-    transition: 200ms;
-    pointer-events: none;
-  }
-  .post_comment_button {
-    opacity: 1;
-    height: 40px;
-    transition: 200ms;
-  }
-}
-@media only screen and (max-width: 900px) {
 }

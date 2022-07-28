@@ -111,6 +111,122 @@
     padding: 10px;
     border-radius: 5px;
   }
+  .edited_margin_top {
+    margin-top: 20px;
+  }
 }
 @media only screen and (max-width: 900px) {
+  .container {
+    border-left: 1px solid rgb(50, 50, 50);
+    padding: 0px;
+    display: flex;
+    padding-right: 0px;
+    margin-left: -10px;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+  .comment_header {
+    color: rgb(200, 200, 200);
+    font-size: 10px;
+    display: flex;
+  }
+  .votes_container {
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .votes_disabled {
+    margin-right: 5px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .upVote_icon,
+  .downVote_icon,
+  .downVote_icon_active,
+  .upVote_icon_active {
+    /* font-size: 20px; */
+    height: 30px;
+    width: 30px;
+    transition: 100ms;
+  }
+  .upVote_icon_active,
+  .downVote_icon_active {
+    cursor: pointer;
+  }
+  .upVote_icon_active {
+    color: orangered;
+  }
+  .downVote_icon_active {
+    color: royalblue;
+  }
+  .upVote_icon:hover {
+    cursor: pointer;
+    transition: 100ms;
+    color: orangered;
+  }
+  .downVote_icon:hover {
+    cursor: pointer;
+    transition: 100ms;
+    color: royalblue;
+  }
+  .content_container {
+    width: calc(100%);
+  }
+  .reply_button {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: 200ms;
+    margin-right: 10px;
+  }
+  .reply_icon {
+    font-size: 15px;
+    margin-right: 5px;
+  }
+  .reply_text_area {
+    background-color: rgb(30, 30, 30);
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    padding: 10px;
+    min-height: 60px;
+    width: calc(100%);
+  }
+  .post_reply_button {
+    float: right;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    margin-top: 10px;
+    font-size: 12px;
+  }
+  .write_reply {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    flex-direction: column;
+  }
+  .comment_buttons {
+    display: flex;
+    align-items: center;
+  }
+  .comment_buttons_disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .edited_tag {
+    background-color: rgb(30, 30, 30);
+    padding: 10px;
+    border-radius: 5px;
+    width: fit-content;
+    display: none;
+  }
 }

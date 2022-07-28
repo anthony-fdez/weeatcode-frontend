@@ -1,84 +1,93 @@
-@media only screen and (min-width: 901px) {
-  .container {
-    padding: 0px;
-    border: 1px solid rgb(50, 50, 50);
-    margin-bottom: 10px;
-    border-radius: 13px;
-    display: flex;
-    position: relative;
-  }
-  .container:hover {
-    border: 1px solid rgb(70, 70, 70);
-  }
-  .post_content {
-    width: 100%;
-    padding: 20px;
-    padding-left: 0px;
-    max-height: 500px;
-    overflow: hidden;
-  }
-  .post_body {
-    margin-top: 10px;
-  }
-  .votes_container {
-    /* width: 50px; */
-    padding: 20px;
-    padding-right: 0px;
-    margin-right: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+.container {
+  padding: 0px;
+  border: 1px solid rgb(50, 50, 50);
+  margin-bottom: 10px;
+  border-radius: 13px;
+  display: flex;
+  position: relative;
+}
+.container:hover {
+  border: 1px solid rgb(70, 70, 70);
+}
+.post_content {
+  width: 100%;
+  padding: 20px;
+  padding-left: 0px;
+  max-height: 500px;
+  overflow: hidden;
+}
+.post_body {
+  margin-top: 10px;
+}
+.votes_container {
+  /* width: 50px; */
+  padding: 20px;
+  padding-right: 0px;
+  margin-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .upVote_icon,
-  .downVote_icon,
-  .downVote_icon_active,
-  .upVote_icon_active {
-    /* font-size: 20px; */
-    height: 30px;
-    width: 30px;
-    transition: 100ms;
-  }
-  .upVote_icon_active,
-  .downVote_icon_active {
-    cursor: pointer;
-  }
-  .upVote_icon_active {
-    color: orangered;
-  }
-  .downVote_icon_active {
-    color: royalblue;
-  }
-  .upVote_icon:hover {
-    cursor: pointer;
-    transition: 100ms;
-    color: orangered;
-  }
-  .downVote_icon:hover {
-    cursor: pointer;
-    transition: 100ms;
-    color: royalblue;
-  }
-  .bottom_fade {
-    width: 100%;
-    position: absolute;
-    height: 200px;
-    background-image: linear-gradient(rgb(0, 0, 0, 0), rgb(10, 10, 10));
-    border-radius: 20px;
-    bottom: 0px;
-  }
-  .edited_tag {
-    background-color: rgb(30, 30, 30);
-    width: fit-content;
-    padding: 10px;
-    border-radius: 5px;
-    margin-left: 10px;
-  }
-  .card_header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
+.upVote_icon,
+.downVote_icon,
+.downVote_icon_active,
+.upVote_icon_active {
+  /* font-size: 20px; */
+  height: 30px;
+  width: 30px;
+  transition: 100ms;
+}
+.upVote_icon_active,
+.downVote_icon_active {
+  cursor: pointer;
+}
+.upVote_icon_active {
+  color: orangered;
+}
+.downVote_icon_active {
+  color: royalblue;
+}
+.upVote_icon:hover {
+  cursor: pointer;
+  transition: 100ms;
+  color: orangered;
+}
+.downVote_icon:hover {
+  cursor: pointer;
+  transition: 100ms;
+  color: royalblue;
+}
+.bottom_fade {
+  width: 100%;
+  position: absolute;
+  height: 200px;
+  background-image: linear-gradient(rgb(0, 0, 0, 0), rgb(10, 10, 10));
+  border-radius: 20px;
+  bottom: 0px;
+}
+.edited_tag {
+  background-color: rgb(30, 30, 30);
+  width: fit-content;
+  padding: 10px;
+  border-radius: 5px;
+  margin-left: 10px;
+}
+.card_header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 901px) {
 }
 @media only screen and (max-width: 900px) {
+  .post_content {
+    padding: 10px;
+  }
+  .votes_container {
+    padding: 10px;
+    padding-right: 0px;
+    margin-right: 0px;
+  }
 }
