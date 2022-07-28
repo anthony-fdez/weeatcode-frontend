@@ -161,13 +161,13 @@ const Post: NextPage<Props> = ({ status, post }) => {
         </div>
         <div className={styles.post_container}>
           <h1 className={styles.post_title}>{post.post.title}</h1>
-          <p>
+          <p className={styles.by}>
             By:{" "}
             <Link passHref href={`/profile/${post.post.authorId}`}>
               <a>{post.post.authorName}</a>
             </Link>{" "}
           </p>
-          <p>
+          <p className={styles.posted}>
             Posted: {parseDate({ date: post.post.createdAt })} -{" "}
             {moment(post.post.createdAt).fromNow()}
           </p>

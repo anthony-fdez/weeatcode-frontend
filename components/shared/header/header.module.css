@@ -116,8 +116,14 @@
     justify-content: space-between;
     align-items: center;
   }
+  .header_content > h4 {
+    font-size: 14px;
+  }
   .name_container {
     position: relative;
+  }
+  .name_container_name > h5 {
+    font-size: 14px;
   }
   .name_container_name {
     cursor: pointer;

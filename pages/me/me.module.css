@@ -15,4 +15,19 @@
   }
 }
 @media only screen and (max-width: 900px) {
+  .container {
+    margin: auto;
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .avatar_name_container {
+    display: flex;
+    align-items: center;
+  }
+  .name_header {
+    margin-left: 20px !important;
+  }
 }
