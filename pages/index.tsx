@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
@@ -19,7 +20,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     setIsLoadingPosts(true);
 
-    Axios.get("http://localhost:3001/posts/get_all", {
+    Axios.get(`${process.env.SERVER_HOST}/posts/get_all`, {
       headers: { Authorization: token || "" },
     })
       .then((response) => {
@@ -56,6 +57,20 @@ const Home: NextPage = () => {
       );
     }
 
+    if (posts.length <= 0) {
+      return (
+        <div className={styles.empty}>
+          <img
+            className={styles.image}
+            src="/illustrations/empty.svg"
+            alt="Empty"
+          />
+          <h1>So empty...</h1>
+          <p>Check back later for more posts or post your own one!</p>
+        </div>
+      );
+    }
+
     return (
       <>
         {posts.map((post: PostInterface, index: number) => {
@@ -78,8 +93,6 @@ const Home: NextPage = () => {
         <hr></hr>
         <div className={styles.posts_container}>{renderPostsCards()}</div>
       </main>
-
-      <footer className={styles.footer}></footer>
     </div>
   );
 };
