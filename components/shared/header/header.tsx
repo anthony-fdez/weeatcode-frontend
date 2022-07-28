@@ -27,7 +27,7 @@ const Header = (): JSX.Element => {
       HTTP_CONTENT_LANGUAGE: self.language,
     };
 
-    Axios.post("http://localhost:3001/users/logout", data, { headers })
+    Axios.post(`${process.env.SERVER_HOST}/users/logout`, data, { headers })
       .then((response) => {
         setTimeout(() => {
           toast.success("Logged out");

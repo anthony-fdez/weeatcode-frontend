@@ -31,7 +31,9 @@ const Post: NextPage = () => {
 
     setLoadingGettingPost(true);
 
-    Axios.post("http://localhost:3001/posts/get_by_id", { postId: postToEdit })
+    Axios.post(`${process.env.SERVER_HOST}/posts/get_by_id`, {
+      postId: postToEdit,
+    })
       .then((response) => {
         console.log(response);
         setTitle(response.data.post.title);
@@ -54,7 +56,7 @@ const Post: NextPage = () => {
     setLoadingCreatingPost(true);
 
     Axios.post(
-      "http://localhost:3001/posts/edit",
+      `${process.env.SERVER_HOST}/posts/edit`,
       { postId: postToEdit, title: title, body: markdownText },
       {
         headers: {

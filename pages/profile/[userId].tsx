@@ -121,7 +121,7 @@ const Post: NextPage<Props> = ({ status, userData }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { userId } = context.query;
 
-  const res = await Axios.post("http://localhost:3001/users/user_data", {
+  const res = await Axios.post( `${process.env.SERVER_HOST}/users/user_data`, {
     userId,
   })
     .then((response) => {

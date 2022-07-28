@@ -29,7 +29,7 @@ const ConfirmDeletePostModal = ({
     setLoadingDeletingPost(true);
 
     Axios.post(
-      "http://localhost:3001/posts/delete",
+      `${process.env.SERVER_HOST}/posts/delete`,
       { postId },
       {
         headers: {

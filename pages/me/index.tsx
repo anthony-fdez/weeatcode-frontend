@@ -26,7 +26,7 @@ const Home: NextPage = () => {
     setIsLoadingUserData(true);
 
     Axios.post(
-      "http://localhost:3001/users/user_data",
+      `${process.env.SERVER_HOST}/users/user_data`,
       { userId: user.userId },
       {
         headers: {

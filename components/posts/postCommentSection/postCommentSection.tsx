@@ -52,7 +52,7 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
     setLoadingPostComment(true);
 
     Axios.post(
-      "http://localhost:3001/posts/comment/create",
+      `${process.env.SERVER_HOST}/posts/comment/create`,
       { postId, comment: postCommentText },
       {
         headers: {
@@ -81,7 +81,7 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
 
   const getNewComments = () => {
     Axios.post(
-      "http://localhost:3001/posts/comment/get_comments",
+      `${process.env.SERVER_HOST}/posts/comment/get_comments`,
       { postId },
       {
         headers: {

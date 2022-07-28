@@ -30,7 +30,7 @@ export const downVotePost = ({
   }
 
   Axios.post(
-    "http://localhost:3001/posts/downVote",
+    `${process.env.SERVER_HOST}/posts/downVote`,
     {
       postId,
     },

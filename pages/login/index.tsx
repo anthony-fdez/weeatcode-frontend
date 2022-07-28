@@ -28,7 +28,7 @@ const LoginPage: NextPage = () => {
 
     setIsLoading(true);
 
-    Axios.post("http://localhost:3001/users/login", {
+    Axios.post( `${process.env.SERVER_HOST}/users/login`, {
       name,
       email,
       password,

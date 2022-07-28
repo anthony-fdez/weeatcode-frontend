@@ -25,7 +25,7 @@ const ConfirmDeleteCommentModal = ({
     setLoadingDeletingComment(true);
 
     Axios.post(
-      "http://localhost:3001/posts/comment/delete",
+      `${process.env.SERVER_HOST}/posts/comment/delete`,
       {
         commentId: commentId,
       },

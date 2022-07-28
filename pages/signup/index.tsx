@@ -31,7 +31,7 @@ const SignupPage: NextPage = () => {
 
     setIsLoading(true);
 
-    Axios.post("http://localhost:3001/users/signup", {
+    Axios.post( `${process.env.SERVER_HOST}/users/signup`, {
       name,
       email,
       password,

@@ -48,7 +48,7 @@ const Post: NextPage<Props> = ({ status, post }) => {
     setPostVoteScore(post.voteScore);
 
     Axios.post(
-      "http://localhost:3001/posts/get_by_id",
+      `${process.env.SERVER_HOST}/posts/get_by_id`,
       {
         postId: post.post.id,
       },
@@ -68,7 +68,7 @@ const Post: NextPage<Props> = ({ status, post }) => {
         console.log(e);
       });
 
-    Axios.post("http://localhost:3001/posts/views/add", {
+    Axios.post(`${process.env.SERVER_HOST}/posts/views/add`, {
       postId: post.post.id,
     })
       .then((response) => {
@@ -205,7 +205,7 @@ const Post: NextPage<Props> = ({ status, post }) => {
 export async function getServerSideProps(context: NextPageContext) {
   const { postId } = context.query;
 
-  const res = await Axios.post("http://localhost:3001/posts/get_by_id", {
+  const res = await Axios.post( `${process.env.SERVER_HOST}/posts/get_by_id`, {
     postId,
   })
     .then((response) => {

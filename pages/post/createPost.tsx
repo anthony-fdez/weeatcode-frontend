@@ -29,7 +29,7 @@ const Post: NextPage = () => {
     setLoadingCreatingPost(true);
 
     Axios.post(
-      "http://localhost:3001/posts/create_post",
+      `${process.env.SERVER_HOST}/posts/create_post`,
       { title: title, body: markdownText },
       {
         headers: {

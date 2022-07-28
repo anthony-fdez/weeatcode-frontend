@@ -58,7 +58,7 @@ const Comment = ({
     setLoadingPostReply(true);
 
     Axios.post(
-      "http://localhost:3001/posts/comment/create",
+      `${process.env.SERVER_HOST}/posts/comment/create`,
       {
         postId: comment.comment.postId,
         comment: replyText,
@@ -91,7 +91,7 @@ const Comment = ({
     setLoadingEdit(true);
 
     Axios.post(
-      "http://localhost:3001/posts/comment/edit",
+      `${process.env.SERVER_HOST}/posts/comment/edit`,
       {
         newComment,
         commentId: comment.comment.id,

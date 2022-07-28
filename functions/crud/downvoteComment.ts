@@ -31,7 +31,7 @@ export const downVoteComment = ({
   }
 
   Axios.post(
-    "http://localhost:3001/posts/comment/downVote",
+    `${process.env.SERVER_HOST}/posts/comment/downVote`,
     {
       commentId,
     },

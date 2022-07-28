@@ -9,6 +9,7 @@ import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown
 import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
 import tsx from "react-syntax-highlighter/dist/cjs/languages/prism/tsx";
 import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
+// @ts-ignore
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import remarkGfm from "remark-gfm";
 
@@ -34,10 +35,12 @@ const Markdown = ({ markdownText }: Props): JSX.Element => {
           const RE = /{([\d,-]+)}/;
           const metadata = node.data.meta?.replace(/\s/g, "");
           const strlineNumbers = RE?.test(metadata)
-            ? RE?.exec(metadata)[1]
+            ? // @ts-ignore
+              RE?.exec(metadata)[1]
             : "0";
           const highlightLines = rangeParser(strlineNumbers);
           const highlight = highlightLines;
+          // @ts-ignore
           const data: string = highlight.includes(applyHighlights)
             ? "highlight"
             : null;
