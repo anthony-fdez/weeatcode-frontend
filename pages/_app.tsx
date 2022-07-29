@@ -7,6 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { SkeletonTheme } from "react-loading-skeleton";
+import NextNProgress from "nextjs-progressbar";
 
 import { store, persistor } from "../redux/store";
 import { Provider } from "react-redux";
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <NextNProgress color="#FF4500" />
         <SkeletonTheme baseColor="rgb(20,20,20)" highlightColor="rgb(50,50,50)">
           <ToastContainer theme="colored" />
           <AskToLoginPopup />
