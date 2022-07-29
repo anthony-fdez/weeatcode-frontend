@@ -7,6 +7,7 @@ import Axios from "axios";
 import { toast } from "react-toastify";
 import { setClearUserData } from "../../../redux/slices/user";
 import Link from "next/link";
+import { AiOutlineSearch } from "react-icons/ai";
 
 const Header = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -123,12 +124,31 @@ const Header = (): JSX.Element => {
     );
   };
 
+  const searchBar = () => {
+    return (
+      <div className={styles.search_bar_container}>
+        <input
+          placeholder="Search posts"
+          type="text"
+          className={styles.search_bar}
+        />
+        <button className={styles.search_submit_button} type="submit">
+          <AiOutlineSearch />
+        </button>
+      </div>
+    );
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.header_content}>
-        <Link style={{ cursor: "pointer" }} passHref href={"/"}>
-          <h4>THE BLOG</h4>
-        </Link>
+        <div className={styles.header_left_container}>
+          <Link passHref href={"/"}>
+            <h4 style={{ cursor: "pointer" }}>THE BLOG</h4>
+          </Link>
+          {searchBar()}
+        </div>
+
         {loggedInComponent()}
         {notLoggedInComponent()}
       </div>

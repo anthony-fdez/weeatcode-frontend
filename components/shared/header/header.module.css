@@ -98,6 +98,38 @@
   .popup_menu_item:hover {
     border: 1px solid rgb(50, 50, 50);
   }
+  .header_left_container {
+    display: flex;
+    align-items: center;
+  }
+  .search_bar_container {
+    margin-left: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .search_bar {
+    background-color: rgb(50, 50, 50);
+    outline: none;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    flex: 1;
+    width: 600px;
+    max-width: 600px;
+    /* margin-right: 50px; */
+    color: white;
+    padding-right: 50px;
+  }
+  .search_submit_button {
+    border: none;
+    background-color: transparent;
+    color: white;
+    font-size: 25px;
+    margin: none;
+    margin-left: -50px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
 @media only screen and (max-width: 900px) {
   .header {
