@@ -1,28 +1,45 @@
 /* eslint-disable @next/next/no-img-element */
-import type { NextPage } from "next";
+import type { NextPage, NextPageContext } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import styles from "../styles/Home.module.css";
+import styles from "./search.module.css";
 import Axios from "axios";
-import Skeleton from "react-loading-skeleton";
+import { PostInterface } from "../../interfaces/PostInterface";
 import { Alert } from "react-bootstrap";
-import PostCard from "../components/posts/postCard/postCard";
-import { useAppSelector } from "../redux/hooks/hooks";
-import { PostInterface } from "../interfaces/PostInterface";
+import PostCard from "../../components/posts/postCard/postCard";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { useRouter } from "next/router";
+import Skeleton from "react-loading-skeleton";
 
-const Home: NextPage = () => {
+const Search: NextPage = () => {
+  const router = useRouter();
+
+  const { query } = router.query;
+
+  console.log(query);
+
   const token = useAppSelector((state) => state.user.jwtToken);
 
   const [posts, setPosts] = useState<PostInterface[] | null>(null);
-  const [isLoadingPosts, setIsLoadingPosts] = useState<boolean>(true);
+  const [isLoadingPosts, setIsLoadingPosts] = useState(true);
 
   useEffect(() => {
+    if (!query) {
+      setIsLoadingPosts(false);
+      setPosts([]);
+      return;
+    }
+
     setIsLoadingPosts(true);
 
-    Axios.get(`${process.env.SERVER_HOST}/posts/get_all?page=1`, {
-      headers: { Authorization: token || "" },
-    })
+    Axios.post(
+      `${process.env.SERVER_HOST}/posts/search`,
+      { text: query },
+      {
+        headers: { Authorization: token || "" },
+      }
+    )
       .then((response) => {
         console.log(response);
         setIsLoadingPosts(false);
@@ -32,7 +49,7 @@ const Home: NextPage = () => {
         console.log(e);
         setIsLoadingPosts(false);
       });
-  }, []);
+  }, [query]);
 
   const renderPostsCards = (): JSX.Element => {
     if (isLoadingPosts) {
@@ -66,7 +83,9 @@ const Home: NextPage = () => {
             alt="Empty"
           />
           <h1>So empty...</h1>
-          <p>Check back later for more posts or post your own one!</p>
+          <p>
+            We could not find any posts that contained &rdquo;{query}&rdquo;
+          </p>
         </div>
       );
     }
@@ -89,7 +108,7 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.container}>
-        <h3>Posts</h3>
+        <h3>Posts for &rdquo;{query}&rdquo;</h3>
         <hr></hr>
         <div className={styles.posts_container}>{renderPostsCards()}</div>
       </main>
@@ -97,4 +116,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default Search;

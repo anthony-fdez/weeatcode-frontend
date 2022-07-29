@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import styles from "./header.module.css";
 import { BiChevronDown } from "react-icons/bi";
@@ -9,13 +9,25 @@ import { setClearUserData } from "../../../redux/slices/user";
 import Link from "next/link";
 import { AiOutlineSearch } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { useRouter } from "next/router";
 
 const Header = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const userData = useAppSelector((state) => state.user);
+  const router = useRouter();
+
+  const { query } = router.query;
 
   const [isMenuPopupOpen, setIsMenuPopupOpen] = useState<boolean>(false);
   const [isLoadingLogout, setIsLoadingLogout] = useState<boolean>(false);
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    if (!query) return;
+
+    // @ts-ignore
+    setSearchText(query);
+  }, [query]);
 
   const logout = () => {
     setIsLoadingLogout(true);
@@ -128,16 +140,25 @@ const Header = (): JSX.Element => {
 
   const searchBar = () => {
     return (
-      <div className={styles.search_bar_container}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          router.push(`/search?query=${searchText}`);
+        }}
+        className={styles.search_bar_container}
+      >
         <input
           placeholder="Search posts"
           type="text"
           className={styles.search_bar}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
         <button className={styles.search_submit_button} type="submit">
           <AiOutlineSearch />
         </button>
-      </div>
+      </form>
     );
   };
 
