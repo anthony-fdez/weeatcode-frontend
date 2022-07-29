@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import { setClearUserData } from "../../../redux/slices/user";
 import Link from "next/link";
 import { AiOutlineSearch } from "react-icons/ai";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 const Header = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -104,6 +105,7 @@ const Header = (): JSX.Element => {
           onClick={() => setIsMenuPopupOpen(!isMenuPopupOpen)}
         >
           <h5>{userData.name}</h5>
+          <GiHamburgerMenu className={styles.burger_button} />
           <BiChevronDown
             className={isMenuPopupOpen ? styles.up_arrow : styles.down_arrow}
           />
