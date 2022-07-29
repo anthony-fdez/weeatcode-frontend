@@ -2,7 +2,7 @@
 import { NextPage, NextPageContext } from "next";
 import { useEffect, useState } from "react";
 import styles from "./post.module.css";
-
+import { AiFillEye } from "react-icons/ai";
 import Axios from "axios";
 import { Alert, Button } from "react-bootstrap";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
@@ -175,7 +175,10 @@ const Post: NextPage<Props> = ({ status, post }) => {
 
           <div className={styles.views_container}>
             <div className={styles.views_edit}>
-              <p>{post.views} views.</p>
+              <p className={styles.views_text_container}>
+                <AiFillEye />
+                {post.views}
+              </p>
 
               {post.post.edited && editedTag()}
             </div>
