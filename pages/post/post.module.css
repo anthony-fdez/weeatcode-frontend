@@ -73,6 +73,7 @@
     border-radius: 5px;
     margin-left: 10px;
   }
+
   .views_edit {
     display: flex;
     align-items: center;
@@ -90,6 +91,9 @@
   }
   .views_text_container > svg {
     margin-right: 5px;
+  }
+  .percent_upVoted {
+    padding-left: 20px;
   }
 }
 @media only screen and (max-width: 900px) {
@@ -202,5 +206,9 @@
   .posted {
     font-size: 12px;
     color: rgb(201, 201, 201);
+  }
+  .percent_upVoted {
+    font-size: 12px;
+    padding-top: 5px;
   }
 }

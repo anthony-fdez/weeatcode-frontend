@@ -19,6 +19,7 @@ import { setPostToEdit } from "../../redux/slices/postToEdit";
 import { useRouter } from "next/router";
 import ConfirmDeletePostModal from "../../components/posts/confirmDeletePostModal/confirmDeletePostModal";
 import Link from "next/link";
+import { getPercentUpVoted } from "../../functions/helpers/getPercentUpvoted";
 
 interface Props {
   status: boolean;
@@ -178,6 +179,13 @@ const Post: NextPage<Props> = ({ status, post }) => {
               <p className={styles.views_text_container}>
                 <AiFillEye />
                 {post.views}
+              </p>
+              <p className={styles.percent_upVoted}>
+                {getPercentUpVoted({
+                  upVotes: post.upVotes,
+                  downVotes: post.downVotes,
+                })}
+                % UpVoted
               </p>
 
               {post.post.edited && editedTag()}
