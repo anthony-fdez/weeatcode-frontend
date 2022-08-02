@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import MainLayout from "../components/layouts/mainLayout/mainLayout";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,10 +12,19 @@ import NextNProgress from "nextjs-progressbar";
 import { store, persistor } from "../redux/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { useAppSelector } from "../redux/hooks/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { NextPage } from "next";
 import AccessDenied from "../components/helperPages/accessDenied/accessDenied";
 import AskToLoginPopup from "../components/helperPages/askToLoginPopup/askToLoginPopup";
+import { useEffect } from "react";
+import Axios from "axios";
+import {
+  setClearUserData,
+  setisLoggedIn,
+  setToken,
+  setUserId,
+  setUserName,
+} from "../redux/slices/user";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -42,7 +51,27 @@ interface AuthProps {
 }
 
 const Auth = ({ children, pageProps }: AuthProps) => {
+  const dispatch = useAppDispatch();
+
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
+  const token = useAppSelector((state) => state.user.jwtToken);
+
+  useEffect(() => {
+    Axios.post(`${process.env.SERVER_HOST}/users/test-auth`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then(() => {
+        // all good
+      })
+      .catch(() => {
+        if (isLoggedIn) {
+          dispatch(setClearUserData());
+          toast.info("You have been logged out. Please log in again.");
+        }
+      });
+  }, []);
 
   if (!isLoggedIn && pageProps.protected) {
     return (
