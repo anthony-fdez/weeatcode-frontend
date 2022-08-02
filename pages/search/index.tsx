@@ -6,11 +6,15 @@ import { useEffect, useState } from "react";
 import styles from "./search.module.css";
 import Axios from "axios";
 import { PostInterface } from "../../interfaces/PostInterface";
-import { Alert } from "react-bootstrap";
+import { Alert, Tab, Tabs } from "react-bootstrap";
 import PostCard from "../../components/posts/postCard/postCard";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { useRouter } from "next/router";
 import Skeleton from "react-loading-skeleton";
+import { UserInterface } from "../../interfaces/UserInterface";
+import Avatar from "react-avatar";
+import moment from "moment";
+import { parseDate } from "../../functions/helpers/parseDate";
 
 const Search: NextPage = () => {
   const router = useRouter();
@@ -22,16 +26,17 @@ const Search: NextPage = () => {
   const token = useAppSelector((state) => state.user.jwtToken);
 
   const [posts, setPosts] = useState<PostInterface[] | null>(null);
-  const [isLoadingPosts, setIsLoadingPosts] = useState(true);
+  const [isLoadingData, setIsLoadingData] = useState(true);
+  const [users, setUsers] = useState<UserInterface[] | null>(null);
 
   useEffect(() => {
     if (!query) {
-      setIsLoadingPosts(false);
+      setIsLoadingData(false);
       setPosts([]);
       return;
     }
 
-    setIsLoadingPosts(true);
+    setIsLoadingData(true);
 
     Axios.post(
       `${process.env.SERVER_HOST}/posts/search`,
@@ -42,17 +47,18 @@ const Search: NextPage = () => {
     )
       .then((response) => {
         console.log(response);
-        setIsLoadingPosts(false);
+        setIsLoadingData(false);
         setPosts(response.data.posts);
+        setUsers(response.data.users);
       })
       .catch((e) => {
         console.log(e);
-        setIsLoadingPosts(false);
+        setIsLoadingData(false);
       });
   }, [query]);
 
   const renderPostsCards = (): JSX.Element => {
-    if (isLoadingPosts) {
+    if (isLoadingData) {
       return (
         <>
           <Skeleton
@@ -76,24 +82,95 @@ const Search: NextPage = () => {
 
     if (posts.length <= 0) {
       return (
-        <div className={styles.empty}>
-          <img
-            className={styles.image}
-            src="/illustrations/empty.svg"
-            alt="Empty"
-          />
-          <h1>So empty...</h1>
-          <p>
-            We could not find any posts that contained &rdquo;{query}&rdquo;
-          </p>
-        </div>
+        <>
+          <h1>Posts</h1>
+          <hr></hr>
+          <div className={styles.empty}>
+            <img
+              className={styles.image}
+              src="/illustrations/empty.svg"
+              alt="Empty"
+            />
+            <h1>So empty...</h1>
+            <p>
+              We could not find any posts that contained &rdquo;{query}&rdquo;
+            </p>
+          </div>
+        </>
       );
     }
 
     return (
       <>
+        <br></br>
+        <h1>Posts</h1>
+        <br></br>
         {posts.map((post: PostInterface, index: number) => {
           return <PostCard key={index} post={post} />;
+        })}
+      </>
+    );
+  };
+
+  const renderUserCards = (): JSX.Element => {
+    if (isLoadingData) {
+      return (
+        <>
+          <Skeleton
+            style={{ marginBottom: "10px" }}
+            borderRadius={13}
+            count={3}
+            height={150}
+          />
+        </>
+      );
+    }
+
+    if (!users) {
+      return (
+        <Alert variant="danger">
+          <Alert.Heading>Error.</Alert.Heading>
+          <p>We are unable to load users at this time.</p>
+        </Alert>
+      );
+    }
+
+    if (users.length <= 0) {
+      return (
+        <>
+          <h1>Users</h1>
+          <hr></hr>
+          <div className={styles.empty}>
+            <h1>No users found...</h1>
+            <p>
+              We could not find any user that contained &rdquo;{query}&rdquo;
+            </p>
+          </div>
+        </>
+      );
+    }
+
+    return (
+      <>
+        <h1>Users</h1>
+        <br></br>
+        {users.map((user: any, index: number) => {
+          console.log(user);
+          return (
+            <div className={styles.user_card_container} key={index}>
+              <Avatar size="50px" round={true} name={user.user.name || "AA"} />
+              <div className={styles.user_card_content}>
+                <div className={styles.user_card_header}>
+                  <h5>{user.user.name}</h5>
+                  {user.following && <span>following</span>}
+                </div>
+                <p>
+                  Member since: {parseDate({ date: user.user.createdAt })} -{" "}
+                  {moment(user.user.createdAt).fromNow()}
+                </p>
+              </div>
+            </div>
+          );
         })}
       </>
     );
@@ -108,8 +185,10 @@ const Search: NextPage = () => {
       </Head>
 
       <main className={styles.container}>
-        <h3>Posts for &rdquo;{query}&rdquo;</h3>
+        <h4>Results for &rdquo;{query}&rdquo;</h4>
         <hr></hr>
+        <br></br>
+        <div className={styles.users_container}>{renderUserCards()} </div>
         <div className={styles.posts_container}>{renderPostsCards()}</div>
       </main>
     </div>

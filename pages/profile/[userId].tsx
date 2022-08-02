@@ -3,21 +3,19 @@ import { NextPage, NextPageContext } from "next";
 import styles from "./profile.module.css";
 
 import Axios from "axios";
-import { UserInterface } from "../../interfaces/UserInterface";
-import { PostInterface } from "../../interfaces/PostInterface";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
-import { Alert, Button, Spinner } from "react-bootstrap";
-import Link from "next/link";
-import PostCard from "../../components/posts/postCard/postCard";
-import Avatar from "react-avatar";
-import Head from "next/head";
 import moment from "moment";
-import { parseDate } from "../../functions/helpers/parseDate";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { setisLoggedIn } from "../../redux/slices/user";
-import { setAskToLoginPopup } from "../../redux/slices/askToLoginPopup";
+import Head from "next/head";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import Avatar from "react-avatar";
+import { Button, Spinner } from "react-bootstrap";
+import { toast } from "react-toastify";
+import PostCard from "../../components/posts/postCard/postCard";
+import { parseDate } from "../../functions/helpers/parseDate";
+import { PostInterface } from "../../interfaces/PostInterface";
+import { UserInterface } from "../../interfaces/UserInterface";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import { setAskToLoginPopup } from "../../redux/slices/askToLoginPopup";
 
 interface Props {
   status: boolean;
