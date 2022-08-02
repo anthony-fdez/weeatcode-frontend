@@ -57,11 +57,15 @@ const Auth = ({ children, pageProps }: AuthProps) => {
   const token = useAppSelector((state) => state.user.jwtToken);
 
   useEffect(() => {
-    Axios.post(`${process.env.SERVER_HOST}/users/test-auth`, {
-      headers: {
-        Authorization: token,
-      },
-    })
+    Axios.post(
+      `${process.env.SERVER_HOST}/users/test-auth`,
+      {},
+      {
+        headers: {
+          Authorization: token || "",
+        },
+      }
+    )
       .then(() => {
         // all good
       })

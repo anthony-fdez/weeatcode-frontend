@@ -24,6 +24,11 @@
   margin-top: 50px;
 }
 
+.follow_button {
+  margin-top: 10px;
+  min-width: 100px;
+}
+
 @media only screen and (min-width: 901px) {
 }
 @media only screen and (max-width: 900px) {
