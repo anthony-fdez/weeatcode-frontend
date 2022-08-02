@@ -21,6 +21,7 @@ const Home: NextPage = () => {
 
   const [posts, setPosts] = useState<PostInterface[] | null>(null);
   const [userData, setUserData] = useState<any | null>(null);
+  const [followers, setFollowers] = useState(0);
 
   useEffect(() => {
     setIsLoadingUserData(true);
@@ -38,6 +39,7 @@ const Home: NextPage = () => {
         console.log(response);
         setPosts(response.data.data.posts);
         setUserData(response.data.data.user);
+        setFollowers(response.data.data.followers);
         setIsLoadingUserData(false);
       })
       .catch((e) => {
@@ -142,6 +144,7 @@ const Home: NextPage = () => {
           <div className={styles.name_header}>
             <h1>{user.name}</h1>
             <p>{userData.email}</p>
+            <p>{followers || "Not available;"} followers.</p>
           </div>
         </div>
         <br></br>

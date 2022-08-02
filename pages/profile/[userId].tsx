@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { setisLoggedIn } from "../../redux/slices/user";
 import { setAskToLoginPopup } from "../../redux/slices/askToLoginPopup";
+import { useRouter } from "next/router";
 
 interface Props {
   status: boolean;
@@ -31,16 +32,22 @@ interface Props {
 
 const Post: NextPage<Props> = ({ status, userData }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const token = useAppSelector((state) => state.user.jwtToken);
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
   const userName = useAppSelector((state) => state.user.name);
+  const userId = useAppSelector((state) => state.user.userId);
 
   const [posts, setPosts] = useState<PostInterface[]>();
   const [following, setFollowing] = useState(false);
   const [loadingFollow, setLoadingFollow] = useState(false);
 
   useEffect(() => {
+    if (userData.user.id === userId) {
+      router.push("/me");
+    }
+
     if (userData) {
       setPosts(userData.posts);
     }
