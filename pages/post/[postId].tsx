@@ -1,25 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
+import Axios from "axios";
 import { NextPage, NextPageContext } from "next";
 import { useEffect, useState } from "react";
-import styles from "./post.module.css";
+import { Button } from "react-bootstrap";
 import { AiFillEye } from "react-icons/ai";
-import Axios from "axios";
-import { Alert, Button } from "react-bootstrap";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-import { PostInterface } from "../../interfaces/PostInterface";
 import { downVotePost } from "../../functions/crud/downvotePost";
 import { upVotePost } from "../../functions/crud/upvotePost";
 import { parseDate } from "../../functions/helpers/parseDate";
+import { PostInterface } from "../../interfaces/PostInterface";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
+import styles from "./post.module.css";
 
 import moment from "moment";
-import Markdown from "../../components/markdown/markdown";
-import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
-import { setPostToEdit } from "../../redux/slices/postToEdit";
-import { useRouter } from "next/router";
-import ConfirmDeletePostModal from "../../components/posts/confirmDeletePostModal/confirmDeletePostModal";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Markdown from "../../components/markdown/markdown";
+import ConfirmDeletePostModal from "../../components/posts/confirmDeletePostModal/confirmDeletePostModal";
+import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
 import { getPercentUpVoted } from "../../functions/helpers/getPercentUpvoted";
+import { setPostToEdit } from "../../redux/slices/postToEdit";
 
 interface Props {
   status: boolean;
