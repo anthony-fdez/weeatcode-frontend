@@ -125,7 +125,7 @@
     background-color: transparent;
     color: white;
     font-size: 25px;
-    margin: none;
+    margin: 0px;
     margin-left: -50px;
     padding-left: 10px;
     padding-right: 10px;
@@ -274,7 +274,7 @@
     background-color: transparent;
     color: white;
     font-size: 25px;
-    margin: none;
+    margin: 0px;
     margin-left: -70px;
     padding-left: 10px;
     padding-right: 10px;
