@@ -6,23 +6,39 @@ import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 import Axios from "axios";
 import Skeleton from "react-loading-skeleton";
-import { Alert } from "react-bootstrap";
+import { Alert, Button } from "react-bootstrap";
 import PostCard from "../components/posts/postCard/postCard";
 import { useAppSelector } from "../redux/hooks/hooks";
 import { PostInterface } from "../interfaces/PostInterface";
+import { setisLoggedIn } from "../redux/slices/user";
+import { toast } from "react-toastify";
 
 const Home: NextPage = () => {
   const token = useAppSelector((state) => state.user.jwtToken);
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   const [posts, setPosts] = useState<PostInterface[] | null>(null);
   const [isLoadingPosts, setIsLoadingPosts] = useState<boolean>(true);
+  const [selectedTab, setSelectedTab] = useState("all");
+  const [selectedPage, setSelectedPage] = useState(1);
 
   useEffect(() => {
     setIsLoadingPosts(true);
+    window.scrollTo(0, 0);
 
-    Axios.get(`${process.env.SERVER_HOST}/posts/get_all?page=1`, {
-      headers: { Authorization: token || "" },
-    })
+    if (selectedTab === "following" && !isLoggedIn) {
+      setIsLoadingPosts(false);
+      return;
+    }
+
+    Axios.get(
+      selectedTab === "all"
+        ? `${process.env.SERVER_HOST}/posts/get_all?page=${selectedPage}`
+        : `${process.env.SERVER_HOST}/posts/get_all_following?page=${selectedPage}`,
+      {
+        headers: { Authorization: token || "" },
+      }
+    )
       .then((response) => {
         console.log(response);
         setIsLoadingPosts(false);
@@ -31,10 +47,33 @@ const Home: NextPage = () => {
       .catch((e) => {
         console.log(e);
         setIsLoadingPosts(false);
+        toast.error("There was an error getting the posts at the moment.");
       });
-  }, []);
+  }, [selectedTab, selectedPage]);
+
+  useEffect(() => {
+    setIsLoadingPosts(true);
+    setSelectedPage(1);
+  }, [selectedTab]);
+
+  useEffect(() => {
+    if (!posts) return;
+
+    if (posts.length <= 0 && selectedPage !== 1) {
+      setSelectedPage((page) => (page = page - 1));
+      toast.error("There are no more pages.");
+    }
+  }, [posts]);
 
   const renderPostsCards = (): JSX.Element => {
+    if (selectedTab === "following" && !isLoggedIn) {
+      return (
+        <main className={styles.container}>
+          <p>You are not logged in.</p>
+        </main>
+      );
+    }
+
     if (isLoadingPosts) {
       return (
         <>
@@ -76,6 +115,24 @@ const Home: NextPage = () => {
         {posts.map((post: PostInterface, index: number) => {
           return <PostCard key={index} post={post} />;
         })}
+        <div className={styles.footer}>
+          <Button
+            onClick={() => {
+              setSelectedPage((page) => (page = page - 1));
+            }}
+            disabled={selectedPage === 1}
+          >
+            Previous
+          </Button>
+          <h3>Page {selectedPage}</h3>
+          <Button
+            onClick={() => {
+              setSelectedPage((page) => (page = page + 1));
+            }}
+          >
+            Next
+          </Button>
+        </div>
       </>
     );
   };
@@ -89,8 +146,27 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.container}>
-        <h3>Posts</h3>
-        <hr></hr>
+        <div className={styles.tabs_container}>
+          <h3
+            onClick={() => setSelectedTab("all")}
+            className={
+              selectedTab === "all" ? styles.active_tab : styles.inactive_tab
+            }
+          >
+            All Posts
+          </h3>
+          <h3
+            onClick={() => setSelectedTab("following")}
+            className={
+              selectedTab === "following"
+                ? styles.active_tab
+                : styles.inactive_tab
+            }
+          >
+            Following
+          </h3>
+        </div>
+
         <div className={styles.posts_container}>{renderPostsCards()}</div>
       </main>
     </div>

@@ -34,7 +34,7 @@ hr {
 }
 
 a {
-  color: inherit;
+  color: rgb(236, 70, 64) !important;
   text-decoration: none;
 }
 
