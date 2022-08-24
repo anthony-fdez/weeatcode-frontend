@@ -167,7 +167,7 @@ const Header = (): JSX.Element => {
       <div className={styles.header_content}>
         <div className={styles.header_left_container}>
           <Link passHref href={"/"}>
-            <h4 style={{ cursor: "pointer" }}>THE BLOG</h4>
+            <h4 style={{ cursor: "pointer" }}>WeEatCode</h4>
           </Link>
           {searchBar()}
         </div>

@@ -1,16 +1,47 @@
 @media only screen and (min-width: 901px) {
   .markdown_container {
     padding: 15px;
-    background-color: rgb(20, 20, 20);
+    /* background-color: rgb(20, 20, 20); */
     margin-top: 5px;
     border-radius: 5px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  }
+  .markdown_container > h1,
+  .markdown_container > h2,
+  .markdown_container > h3,
+  .markdown_container > h4,
+  .markdown_container > h5 {
+    margin-bottom: 10px !important;
+    color: white;
+  }
+
+  .markdown_container > p {
+    color: rgb(200, 200, 200);
+    line-height: 2rem;
   }
 }
 @media only screen and (max-width: 900px) {
   .markdown_container {
-    padding: 10px;
-    background-color: rgb(20, 20, 20);
+    /* background-color: rgb(20, 20, 20); */
     margin-top: 5px;
     border-radius: 5px;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  }
+  .markdown_container > h1 {
+    font-size: 2rem;
+  }
+  .markdown_container > h1,
+  .markdown_container > h2,
+  .markdown_container > h3,
+  .markdown_container > h4,
+  .markdown_container > h5 {
+    margin-bottom: 10px !important;
+    color: white;
+  }
+  .markdown_container > p {
+    color: rgb(200, 200, 200);
+    line-height: 2rem;
   }
 }

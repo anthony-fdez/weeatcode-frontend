@@ -37,10 +37,11 @@
     font-size: 22px;
   }
   .active_tab {
-    border: 1px solid rgb(30, 30, 30);
+    /* border: 1px solid rgb(30, 30, 30); */
     border-radius: 10px 10px 0px 0px;
-    background-color: rgb(236, 70, 64);
+    /* background-color: rgb(236, 70, 64); */
     transition: 200ms;
+    border-bottom: 2px solid rgb(236, 70, 64);
   }
   .footer {
     display: flex;
