@@ -38,14 +38,11 @@ const Post: NextPage = () => {
       }
     )
       .then((response) => {
-        console.log(response);
         toast.success("Post created");
 
         router.push(`/post/${response.data.post.id}`);
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(() => setLoadingCreatingPost(false));
   };
 

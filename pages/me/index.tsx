@@ -36,15 +36,12 @@ const Home: NextPage = () => {
       }
     )
       .then((response) => {
-        console.log(response);
         setPosts(response.data.data.posts);
         setUserData(response.data.data.user);
         setFollowers(response.data.data.followers);
         setIsLoadingUserData(false);
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
   }, [user.jwtToken, user.userId]);
 
   const loadingSkeleton = (): JSX.Element => {

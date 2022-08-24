@@ -61,13 +61,10 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
       }
     )
       .then((response) => {
-        console.log(response);
         setPostCommentText("");
         toast.success("Comment posted!");
       })
-      .catch((e) => {
-        console.log(e);
-      })
+      .catch((e) => {})
       .finally(() => setLoadingPostComment(false));
   };
 
@@ -91,11 +88,8 @@ const PostCommentSection = ({ postId }: Props): JSX.Element => {
     )
       .then((response) => {
         setComments(response.data.comments);
-        console.log(response);
       })
-      .catch((e) => {
-        console.log(e);
-      })
+      .catch((e) => {})
       .finally(() => setIsLoadingComments(false));
   };
 

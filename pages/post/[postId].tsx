@@ -60,14 +60,11 @@ const Post: NextPage<Props> = ({ status, post }) => {
       }
     )
       .then((response) => {
-        console.log(response);
         setPostWithUserData(response.data);
         setUpVoted(response.data.upVoted);
         setDownVoted(response.data.downVoted);
       })
-      .catch((e) => {
-        console.log(e);
-      });
+      .catch((e) => {});
 
     Axios.post(
       `${process.env.SERVER_HOST}/posts/views/add`,
@@ -80,12 +77,8 @@ const Post: NextPage<Props> = ({ status, post }) => {
         },
       }
     )
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+      .then((response) => {})
+      .catch((e) => {});
   }, []);
 
   const editedTag = () => {

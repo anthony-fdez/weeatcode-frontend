@@ -36,12 +36,10 @@ const ConfirmDeleteCommentModal = ({
       }
     )
       .then((response) => {
-        console.log(response);
         toast.success("Comment deleted.");
         getNewComments();
       })
       .catch((e) => {
-        console.log(e);
         toast.error("Could not delete comment.");
       })
       .finally(() => {

@@ -38,11 +38,9 @@ const ConfirmDeletePostModal = ({
       }
     )
       .then((response) => {
-        console.log(response);
         toast.success("Post deleted.");
       })
       .catch((e) => {
-        console.log(e);
         toast.error("Could not delete post.");
       })
       .finally(() => {

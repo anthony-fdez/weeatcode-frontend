@@ -22,8 +22,6 @@ const Search: NextPage = () => {
 
   const { query } = router.query;
 
-  console.log(query);
-
   const token = useAppSelector((state) => state.user.jwtToken);
 
   const [posts, setPosts] = useState<PostInterface[] | null>(null);
@@ -47,13 +45,11 @@ const Search: NextPage = () => {
       }
     )
       .then((response) => {
-        console.log(response);
         setIsLoadingData(false);
         setPosts(response.data.posts);
         setUsers(response.data.users);
       })
       .catch((e) => {
-        console.log(e);
         setIsLoadingData(false);
       });
   }, [query]);
@@ -156,7 +152,6 @@ const Search: NextPage = () => {
         <h1>Users</h1>
         <br></br>
         {users.map((user: any, index: number) => {
-          console.log(user);
           return (
             <Link key={index} passHref href={`/profile/${user.user.id}`}>
               <div className={styles.user_card_container}>

@@ -31,7 +31,7 @@ const SignupPage: NextPage = () => {
 
     setIsLoading(true);
 
-    Axios.post( `${process.env.SERVER_HOST}/users/signup`, {
+    Axios.post(`${process.env.SERVER_HOST}/users/signup`, {
       name,
       email,
       password,
@@ -47,8 +47,6 @@ const SignupPage: NextPage = () => {
         router.push("/");
       })
       .catch((e) => {
-        console.log(e);
-
         toast.error(e.response.data.message);
       })
       .finally(() => {

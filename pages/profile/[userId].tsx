@@ -61,7 +61,6 @@ const Post: NextPage<Props> = ({ status, userData }) => {
         },
       }
     ).then((response) => {
-      console.log(response);
       setFollowing(response.data.data.following);
       setPosts(response.data.data.posts);
     });
@@ -90,7 +89,6 @@ const Post: NextPage<Props> = ({ status, userData }) => {
         setFollowing(!following);
       })
       .catch((e) => {
-        console.log(e);
         toast.error(`Unable to follow ${userData.user.name}.`);
       })
       .finally(() => {

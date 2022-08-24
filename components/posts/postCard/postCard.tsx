@@ -33,7 +33,6 @@ const PostCard = ({ post }: Props): JSX.Element => {
     setHeight(ref.current.clientHeight);
   }, []);
 
-  console.log(height);
 
   useEffect(() => {
     if (!post) return;

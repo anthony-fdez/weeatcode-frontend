@@ -28,14 +28,13 @@ const LoginPage: NextPage = () => {
 
     setIsLoading(true);
 
-    Axios.post( `${process.env.SERVER_HOST}/users/login`, {
+    Axios.post(`${process.env.SERVER_HOST}/users/login`, {
       name,
       email,
       password,
     })
       .then((response) => {
         toast.success("Logged in successfully!");
-        console.log(response);
 
         dispatch(setToken(response.data.token));
         dispatch(setisLoggedIn(true));
@@ -45,8 +44,6 @@ const LoginPage: NextPage = () => {
         router.push("/");
       })
       .catch((e) => {
-        console.log(e);
-
         if (e.response.data) {
           return toast.error(e.response.data.message || "Server error");
         }

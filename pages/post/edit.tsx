@@ -35,13 +35,11 @@ const Post: NextPage = () => {
       postId: postToEdit,
     })
       .then((response) => {
-        console.log(response);
         setTitle(response.data.post.title);
         setMarkDownText(response.data.post.body);
         setErrorLoadingData(false);
       })
       .catch((e) => {
-        console.log(e);
         setErrorLoadingData(true);
       })
       .finally(() => {
@@ -65,14 +63,11 @@ const Post: NextPage = () => {
       }
     )
       .then((response) => {
-        console.log(response);
         toast.success("Post edited");
 
         router.push(`/post/${postToEdit}`);
       })
-      .catch((err) => {
-        console.log(err);
-      })
+      .catch((err) => {})
       .finally(() => setLoadingCreatingPost(false));
   };
 

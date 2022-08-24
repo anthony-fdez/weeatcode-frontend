@@ -75,13 +75,11 @@ const Comment = ({
       }
     )
       .then((response) => {
-        console.log(response);
         setReplyingToComment(false);
         toast.success("Reply posted.");
         getNewComments();
       })
       .catch((e) => {
-        console.log(e);
         toast.error("Could not post reply.");
       })
       .finally(() => {
@@ -105,13 +103,11 @@ const Comment = ({
       }
     )
       .then((response) => {
-        console.log(response);
         setLoadingEdit(false);
         toast.success("Comment edited.");
         getNewComments();
       })
       .catch((e) => {
-        console.log(e);
         toast.error("Could not edit comment.");
       })
       .finally(() => {

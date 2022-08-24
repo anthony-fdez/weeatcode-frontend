@@ -42,12 +42,9 @@ export const downVoteComment = ({
     }
   )
     .then((response) => {
-      console.log(response);
       getNewComments();
     })
-    .catch((e) => {
-      console.log(e);
-    });
+    .catch((e) => {});
 
   if (downVoted) {
     setDownVoted(false);

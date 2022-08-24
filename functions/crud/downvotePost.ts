@@ -40,12 +40,8 @@ export const downVotePost = ({
       },
     }
   )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    .then((response) => {})
+    .catch((e) => {});
 
   if (downVoted) {
     setDownVoted(false);

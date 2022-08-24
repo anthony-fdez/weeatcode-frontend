@@ -40,12 +40,10 @@ const Home: NextPage = () => {
       }
     )
       .then((response) => {
-        console.log(response);
         setIsLoadingPosts(false);
         setPosts(response.data.posts);
       })
       .catch((e) => {
-        console.log(e);
         setIsLoadingPosts(false);
         toast.error("There was an error getting the posts at the moment.");
       });

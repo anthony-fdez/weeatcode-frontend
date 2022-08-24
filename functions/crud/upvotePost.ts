@@ -41,12 +41,8 @@ export const upVotePost = ({
       },
     }
   )
-    .then((response) => {
-      console.log(response);
-    })
-    .catch((e) => {
-      console.log(e);
-    });
+    .then((response) => {})
+    .catch((e) => {});
 
   if (upVoted) {
     setUpVoted(false);

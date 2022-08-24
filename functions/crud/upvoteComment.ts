@@ -42,12 +42,9 @@ export const upVoteComment = ({
     }
   )
     .then((response) => {
-      console.log(response);
       getNewComments();
     })
-    .catch((e) => {
-      console.log(e);
-    });
+    .catch((e) => {});
 
   if (upVoted) {
     setUpVoted(false);
