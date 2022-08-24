@@ -1,44 +1,104 @@
-.container {
-  max-width: 1200px;
-  margin: auto;
-  padding: 10px;
-  padding-top: 50px;
-  padding-bottom: 20px;
-}
-.avatar_name_container {
-  display: flex;
-  align-items: center;
-}
-.name_header {
-  margin-left: 20px !important;
-}
-.no_posts_image {
-  height: 300px;
-  margin-bottom: 20px;
-}
-.not_found_container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 30px;
-  margin-top: 50px;
-}
-
-.follow_button {
-  margin-top: 10px;
-  min-width: 100px;
-}
-
 @media only screen and (min-width: 901px) {
+  .container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 30px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+  }
+  .avatar_name_container {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+  }
+  .name_header {
+    margin-left: 20px !important;
+  }
+  .no_posts_image {
+    height: 300px;
+    margin-bottom: 20px;
+  }
+  .not_found_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    margin-top: 50px;
+  }
+
+  .follow_button {
+    margin-top: 10px;
+    min-width: 100px;
+  }
+
+  .followers_container {
+    display: flex;
+    background-color: rgb(20, 20, 20);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(50, 50, 50);
+    justify-content: space-around;
+    min-width: 300px;
+    max-width: 300px;
+    margin-bottom: 10px;
+  }
+  .followers_container > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 }
 @media only screen and (max-width: 900px) {
-  .container {
-    padding: 20px;
-    padding-top: 50px;
-  }
   .no_posts_image {
     height: 200px;
     max-width: 100%;
     margin-bottom: 20px;
+  }
+  .container {
+    margin: auto;
+    padding: 20px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    width: 100%;
+    overflow: hidden;
+  }
+  .avatar_name_container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .name_header {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+  }
+  .followers_container {
+    display: flex;
+    background-color: rgb(20, 20, 20);
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(50, 50, 50);
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  .followers_container > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .follow_button {
+    margin-top: 10px;
+    width: 100%;
   }
 }

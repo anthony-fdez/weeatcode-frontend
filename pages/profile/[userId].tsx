@@ -23,6 +23,7 @@ interface Props {
     followers: number;
     following: boolean;
     totalPosts: number;
+    totalFollowing: number;
     user: UserInterface;
     posts: PostInterface[];
   };
@@ -40,6 +41,7 @@ const Post: NextPage<Props> = ({ status, userData }) => {
   const [posts, setPosts] = useState<PostInterface[]>();
   const [following, setFollowing] = useState(false);
   const [loadingFollow, setLoadingFollow] = useState(false);
+  const [followingTotal, setFollowingTotal] = useState(0);
 
   useEffect(() => {
     if (userData.user.id === userId) {
@@ -164,7 +166,25 @@ const Post: NextPage<Props> = ({ status, userData }) => {
             <Avatar round={true} name={userData.user.name || "AA"} />
             <div className={styles.name_header}>
               <h1>{userData.user.name}</h1>
-              <p>{userData.followers} followers.</p>
+
+              <div className={styles.followers_container}>
+                <div>
+                  <p>{userData.totalPosts || "0"}</p>
+                  <p>posts</p>
+                </div>
+                <div>
+                  <p>{userData.followers || "0"}</p>
+                  <p>followers</p>
+                </div>
+                <div>
+                  <p>{userData.totalFollowing || "0"}</p>
+                  <p>following</p>
+                </div>
+              </div>
+              <p>
+                Member since: {parseDate({ date: userData.user.createdAt })} -{" "}
+                {moment(userData.user.createdAt).fromNow()}
+              </p>
 
               {following ? (
                 <Button
@@ -193,12 +213,6 @@ const Post: NextPage<Props> = ({ status, userData }) => {
               )}
             </div>
           </div>
-          <br></br>
-          <p>
-            Member since: {parseDate({ date: userData.user.createdAt })} -{" "}
-            {moment(userData.user.createdAt).fromNow()}
-          </p>
-          <br></br>
 
           {renderPosts()}
         </main>
