@@ -116,6 +116,7 @@ const Home: NextPage = () => {
   };
 
   if (isLoadingUserData) return loadingSkeleton();
+
   if (!userData) {
     return (
       <>
