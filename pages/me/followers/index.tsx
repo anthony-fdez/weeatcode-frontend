@@ -1,4 +1,4 @@
-import { NextPage } from "next";
+import { NextPage, NextPageContext } from "next";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { useAppSelector } from "../../../redux/hooks/hooks";
@@ -98,5 +98,13 @@ const MeFollowers: NextPage = () => {
     </main>
   );
 };
+
+export async function getStaticProps(context: NextPageContext) {
+  return {
+    props: {
+      protected: true,
+    },
+  };
+}
 
 export default MeFollowers;

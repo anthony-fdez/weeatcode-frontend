@@ -11,6 +11,11 @@
     max-width: 1200px;
     margin: auto;
   }
+  .footer_content > h1 {
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+      "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-size: 3rem;
+  }
 }
 @media only screen and (max-width: 900px) {
   .footer {

@@ -19,6 +19,8 @@ const Home: NextPage = () => {
 
   const [isLoadingUserData, setIsLoadingUserData] = useState(true);
 
+  const [selectedTab, setSelectedTab] = useState<"posts" | "history">("posts");
+
   const [posts, setPosts] = useState<PostInterface[] | null>(null);
   const [userData, setUserData] = useState<any | null>(null);
   const [followers, setFollowers] = useState(0);
