@@ -5,7 +5,6 @@ import { useAppSelector } from "../../../redux/hooks/hooks";
 import styles from "../followers.module.css";
 import Axios from "axios";
 import Skeleton from "react-loading-skeleton";
-import UserCard from "../../../components/userCard/userCard";
 import Link from "next/link";
 import { parseDate } from "../../../functions/helpers/parseDate";
 import moment from "moment";
@@ -53,15 +52,16 @@ const MeFollowers: NextPage = () => {
               <Avatar
                 size="50px"
                 round={true}
-                name={user.user.followingUserName || "AA"}
+                name={user.user.userName || "AA"}
               />
               <div className={styles.user_card_content}>
                 <div className={styles.user_card_header}>
-                  <h5>{user.user.followingUserName}</h5>
+                  <h5>{user.user.userName}</h5>
                   {user.following && <span>following</span>}
                 </div>
                 <p>
-                  Member since: {parseDate({ date: user.user.createdAt })} -{" "}
+                  Your follower since:{" "}
+                  {parseDate({ date: user.user.createdAt })} -{" "}
                   {moment(user.user.createdAt).fromNow()}
                 </p>
               </div>

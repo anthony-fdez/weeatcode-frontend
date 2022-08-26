@@ -16,9 +16,10 @@ import { PostInterface } from "../../interfaces/PostInterface";
 import { UserInterface } from "../../interfaces/UserInterface";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks/hooks";
 import { setAskToLoginPopup } from "../../redux/slices/askToLoginPopup";
+import Link from "next/link";
 
 interface Props {
-  status: boolean;
+  status: string;
   userData: {
     followers: number;
     following: boolean;
@@ -44,6 +45,10 @@ const Post: NextPage<Props> = ({ status, userData }) => {
   const [followingTotal, setFollowingTotal] = useState(0);
 
   useEffect(() => {
+    if (status === "error") {
+      return;
+    }
+
     if (userData.user.id === userId) {
       router.push("/me");
     }
@@ -80,6 +85,7 @@ const Post: NextPage<Props> = ({ status, userData }) => {
       {
         userId: userData.user.id,
         userName: userName,
+        followingUserName: userData.user.name,
       },
       {
         headers: {
@@ -145,7 +151,7 @@ const Post: NextPage<Props> = ({ status, userData }) => {
               src="/illustrations/server.svg"
             />
             <h4>There was an error.</h4>
-            <p>Please try again later.</p>
+            <p>This user might not exist anymore.</p>
           </div>
         </main>
       </>
@@ -172,14 +178,18 @@ const Post: NextPage<Props> = ({ status, userData }) => {
                   <p>{userData.totalPosts || "0"}</p>
                   <p>posts</p>
                 </div>
-                <div>
-                  <p>{userData.followers || "0"}</p>
-                  <p>followers</p>
-                </div>
-                <div>
-                  <p>{userData.totalFollowing || "0"}</p>
-                  <p>following</p>
-                </div>
+                <Link href={`/profile/followers/${userData.user.id}`} passHref>
+                  <div>
+                    <p>{userData.followers || "0"}</p>
+                    <p>followers</p>
+                  </div>
+                </Link>
+                <Link href={`/profile/following/${userData.user.id}`} passHref>
+                  <div>
+                    <p>{userData.totalFollowing || "0"}</p>
+                    <p>following</p>
+                  </div>
+                </Link>
               </div>
               <p>
                 Member since: {parseDate({ date: userData.user.createdAt })} -{" "}
@@ -237,7 +247,7 @@ export async function getServerSideProps(context: NextPageContext) {
     });
 
   if (!res) {
-    return { props: { status: "err" } };
+    return { props: { status: "error" } };
   }
 
   // Pass data to the page via props
