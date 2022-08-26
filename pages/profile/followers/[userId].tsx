@@ -47,6 +47,22 @@ const ProfileFollowers: NextPage = () => {
       );
     }
 
+    if (!users || users.length === 0) {
+      return (
+        <div>
+          <div className={styles.empty}>
+            <img
+              className={styles.image}
+              src="/illustrations/tree.svg"
+              alt="Empty"
+            />
+            <h1>So empty...</h1>
+            <p>Looks like there is nobody here.</p>
+          </div>
+        </div>
+      );
+    }
+
     if (users) {
       return users.map((user: any, index: number) => {
         return (
