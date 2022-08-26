@@ -21,7 +21,12 @@ const Footer = (): JSX.Element => {
         </ul>
       </div>
       <div className={styles.bottom}>
-        <p>Copyright by </p>
+        <p>
+          <Link href="/copyright" passHref>
+            <a>Copyright License</a>
+          </Link>{" "}
+          by Anthony Fernandez
+        </p>
       </div>
     </footer>
   );

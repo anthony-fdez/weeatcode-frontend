@@ -20,6 +20,7 @@ const Copyright: NextPage = () => {
             Anthony Fernandez
           </a>
         </p>
+        <p>MIT License</p>
         <br></br>
         <p>
           Permission is hereby granted, free of charge, to any person obtaining
