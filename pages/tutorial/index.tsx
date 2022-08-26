@@ -3,6 +3,7 @@ import { NextPage } from "next";
 import React from "react";
 import Markdown from "../../components/markdown/markdown";
 import styles from "./tutorial.module.css";
+import { NextSeo } from "next-seo";
 
 const Tutorial: NextPage = () => {
   const codeExample1 = `
@@ -65,6 +66,11 @@ const Markdown = ({ markdownText }: Props): JSX.Element => {
 
   return (
     <main>
+      <NextSeo
+        title={`Welcome to WeEatCode - WeEatCode`}
+        description={"Blog free for everyone, no ads, open source."}
+      />
+
       <div className={styles.container}>
         <h1>Welcome to WeEatCode</h1>
         <p className={styles.smaller_darker}>

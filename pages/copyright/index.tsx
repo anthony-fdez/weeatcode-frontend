@@ -3,10 +3,12 @@ import moment from "moment";
 import { NextPage } from "next";
 import React from "react";
 import styles from "./copyright.module.css";
+import { NextSeo } from "next-seo";
 
 const Copyright: NextPage = () => {
   return (
     <main>
+      <NextSeo title="Copyright - WeEatCode" />
       <div className={styles.container}>
         <h1>WeEatCode</h1>
         <br></br>

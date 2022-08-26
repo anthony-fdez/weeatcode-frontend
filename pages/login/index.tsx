@@ -14,6 +14,7 @@ import {
 import { useAppDispatch } from "../../redux/hooks/hooks";
 import { useRouter } from "next/router";
 import { seteuid } from "process";
+import { NextSeo } from "next-seo";
 
 const LoginPage: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -57,6 +58,7 @@ const LoginPage: NextPage = () => {
 
   return (
     <main>
+      <NextSeo title="Login Page - WeEatCode" />
       <div className={styles.container}>
         <div className={styles.signup_card}>
           <h3>Login</h3>

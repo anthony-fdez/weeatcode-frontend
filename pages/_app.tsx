@@ -25,6 +25,7 @@ import {
   setUserId,
   setUserName,
 } from "../redux/slices/user";
+import { DefaultSeo } from "next-seo";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -36,6 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <AskToLoginPopup />
           <Auth pageProps={pageProps}>
             <MainLayout>
+              <DefaultSeo title={"WeEatCode"} />
               <Component {...pageProps} />
             </MainLayout>
           </Auth>

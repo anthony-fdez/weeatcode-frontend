@@ -12,6 +12,7 @@ import MarkdownTutorial from "../../components/posts/markdownTutorial/markdownTu
 import { useAppSelector } from "../../redux/hooks/hooks";
 import { kMaxLength } from "buffer";
 import Skeleton from "react-loading-skeleton";
+import { NextSeo } from "next-seo";
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -99,6 +100,8 @@ const Post: NextPage = () => {
 
   return (
     <>
+      <NextSeo title={`Edit A Post - WeEatCode`} />
+
       <main className={styles.container}>
         <div className={styles.header}>
           <h5>Edit your post</h5>

@@ -20,6 +20,7 @@ import ConfirmDeletePostModal from "../../components/posts/confirmDeletePostModa
 import PostCommentSection from "../../components/posts/postCommentSection/postCommentSection";
 import { getPercentUpVoted } from "../../functions/helpers/getPercentUpvoted";
 import { setPostToEdit } from "../../redux/slices/postToEdit";
+import { NextSeo } from "next-seo";
 
 interface Props {
   status: boolean;
@@ -108,6 +109,10 @@ const Post: NextPage<Props> = ({ status, post }) => {
 
   return (
     <>
+      <NextSeo
+        title={`${post.post.title} - ${post.post.authorName} - WeEatCode`}
+      />
+
       <ConfirmDeletePostModal
         isOpen={isConfirmDeletePostModalOpen}
         postId={post.post.id}

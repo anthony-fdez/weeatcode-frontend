@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import MarkdownTutorial from "../../components/posts/markdownTutorial/markdownTutorial";
 import { useAppSelector } from "../../redux/hooks/hooks";
 import Markdown from "../../components/markdown/markdown";
+import { NextSeo } from "next-seo";
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -48,6 +49,8 @@ const Post: NextPage = () => {
 
   return (
     <>
+      <NextSeo title={`Create A Post - WeEatCode`} />
+
       <main className={styles.container}>
         <div className={styles.header}>
           <h5>Create new post</h5>
