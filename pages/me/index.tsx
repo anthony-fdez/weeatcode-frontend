@@ -151,14 +151,19 @@ const Home: NextPage = () => {
                 <p>{posts?.length || "0"}</p>
                 <p>posts</p>
               </div>
-              <div>
-                <p>{followers || "0"}</p>
-                <p>followers</p>
-              </div>
-              <div>
-                <p>{following || "0"}</p>
-                <p>following</p>
-              </div>
+
+              <Link href={`/me/followers`} passHref>
+                <div className={styles.followers_button}>
+                  <p>{followers || "0"}</p>
+                  <p>followers</p>
+                </div>
+              </Link>
+              <Link href={`/me/following`} passHref>
+                <div className={styles.followers_button}>
+                  <p>{following || "0"}</p>
+                  <p>following</p>
+                </div>
+              </Link>
             </div>
           </div>
         </div>
