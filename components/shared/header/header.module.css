@@ -8,6 +8,7 @@
     z-index: 1000;
     /* backdrop-filter: blur(10px); */
   }
+
   .header_content {
     max-width: 1200px;
     margin: auto;
@@ -24,7 +25,10 @@
     transition: 200ms;
     align-items: center;
   }
-
+  .logo {
+    width: 150px;
+    cursor: pointer;
+  }
   .up_arrow,
   .down_arrow {
     font-size: 30px;
@@ -143,6 +147,11 @@
     border-bottom: 1px solid rgb(40, 40, 40);
     z-index: 1000;
     /* backdrop-filter: blur(10px); */
+  }
+  .logo {
+    width: 150px;
+    cursor: pointer;
+    margin-left: -15px;
   }
   .header_content {
     max-width: 1200px;

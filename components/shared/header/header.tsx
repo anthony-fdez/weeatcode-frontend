@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import styles from "./header.module.css";
@@ -167,7 +168,11 @@ const Header = (): JSX.Element => {
       <div className={styles.header_content}>
         <div className={styles.header_left_container}>
           <Link passHref href={"/"}>
-            <h4 style={{ cursor: "pointer" }}>WeEatCode</h4>
+            <img
+              alt="We eat code logo"
+              className={styles.logo}
+              src="/images/logo.png"
+            />
           </Link>
           {searchBar()}
         </div>
