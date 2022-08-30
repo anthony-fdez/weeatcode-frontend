@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import React from "react";
 import styles from "./footer.module.css";
@@ -6,7 +7,11 @@ const Footer = (): JSX.Element => {
   return (
     <footer className={styles.footer}>
       <div className={styles.footer_content}>
-        <h1>WeEatCode</h1>
+        <img
+          className={styles.logo}
+          src="/images/logo.png"
+          alt="We eat code logo"
+        />
         <p>
           We love coding! we wake up coding, eat code and go to sleep coding!
         </p>
