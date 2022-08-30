@@ -33,7 +33,9 @@
     "react-syntax-highlighter": "^15.5.0",
     "react-toastify": "^9.0.5",
     "redux-persist": "^6.0.0",
-    "remark-gfm": "^3.0.1"
+    "remark-gfm": "^3.0.1",
+    "sass": "^1.54.6",
+    "scss": "^0.2.4"
   },
   "devDependencies": {
     "@types/node": "18.0.0",

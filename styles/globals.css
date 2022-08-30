@@ -35,6 +35,7 @@ hr {
 
 a {
   color: inherit;
+  color: #ff0038 !important;
   text-decoration: none !important;
 }
 

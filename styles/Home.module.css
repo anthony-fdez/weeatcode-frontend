@@ -41,7 +41,7 @@
     border-radius: 10px 10px 0px 0px;
     /* background-color: rgb(236, 70, 64); */
     transition: 200ms;
-    border-bottom: 2px solid rgb(236, 70, 64);
+    border-bottom: 2px solid #ff0038;
   }
   .footer {
     display: flex;
@@ -97,7 +97,7 @@
   .active_tab {
     border-radius: 5px 5px 0px 0px;
     transition: 200ms;
-    border-bottom: 2px solid rgb(236, 70, 64);
+    border-bottom: 2px solid #ff0038;
   }
   .footer {
     display: flex;

@@ -4,7 +4,7 @@ import MainLayout from "../components/layouts/mainLayout/mainLayout";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "react-loading-skeleton/dist/skeleton.css";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/custom.scss";
 
 import { SkeletonTheme } from "react-loading-skeleton";
 import NextNProgress from "nextjs-progressbar";
@@ -31,7 +31,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <NextNProgress color="#FF4500" />
+        <NextNProgress color="#FF0038" />
         <SkeletonTheme baseColor="rgb(20,20,20)" highlightColor="rgb(50,50,50)">
           <ToastContainer theme="colored" />
           <AskToLoginPopup />

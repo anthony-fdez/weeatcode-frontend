@@ -29,7 +29,7 @@
 }
 .input_box:focus {
   outline: none;
-  border-bottom: 2px solid royalblue;
+  border-bottom: 2px solid ff0038;
   transition: 200ms;
 }
 .box_footer {
