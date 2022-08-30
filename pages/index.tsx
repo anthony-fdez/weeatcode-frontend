@@ -116,15 +116,19 @@ const Home: NextPage = () => {
         })}
         <div className={styles.footer}>
           <Button
+            variant="outline-primary"
             onClick={() => {
               setSelectedPage((page) => (page = page - 1));
             }}
             disabled={selectedPage === 1}
           >
-            Previous
+            Prev
           </Button>
-          <h3>Page {selectedPage}</h3>
+          <span style={{ minWidth: "50px", textAlign: "center" }}>
+            Page {selectedPage}
+          </span>
           <Button
+            variant="outline-primary"
             onClick={() => {
               setSelectedPage((page) => (page = page + 1));
             }}
