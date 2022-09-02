@@ -1,0 +1,9 @@
+.editor {
+  background-color: rgb(50, 50, 50);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+}
+.editor > div:focus {
+  outline: none;
+}

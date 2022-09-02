@@ -1,32 +1,25 @@
-import "../styles/globals.css";
-import "../styles/styles.scss";
 import type { AppProps } from "next/app";
-import MainLayout from "../components/layouts/mainLayout/mainLayout";
+import "react-loading-skeleton/dist/skeleton.css";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import "react-loading-skeleton/dist/skeleton.css";
+import MainLayout from "../components/layouts/mainLayout/mainLayout";
 import "../styles/custom.scss";
+import "../styles/globals.css";
+import "../styles/editor.scss";
 
-import { SkeletonTheme } from "react-loading-skeleton";
 import NextNProgress from "nextjs-progressbar";
+import { SkeletonTheme } from "react-loading-skeleton";
 
-import { store, persistor } from "../redux/store";
+import Axios from "axios";
+import { DefaultSeo } from "next-seo";
+import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
-import { NextPage } from "next";
 import AccessDenied from "../components/helperPages/accessDenied/accessDenied";
 import AskToLoginPopup from "../components/helperPages/askToLoginPopup/askToLoginPopup";
-import { useEffect } from "react";
-import Axios from "axios";
-import {
-  setClearUserData,
-  setisLoggedIn,
-  setToken,
-  setUserId,
-  setUserName,
-} from "../redux/slices/user";
-import { DefaultSeo } from "next-seo";
+import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
+import { setClearUserData } from "../redux/slices/user";
+import { persistor, store } from "../redux/store";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
