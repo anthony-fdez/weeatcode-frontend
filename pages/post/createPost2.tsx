@@ -14,9 +14,19 @@ import Markdown from "../../components/markdown/markdown";
 import { NextSeo } from "next-seo";
 import Editor from "../../components/editor/editor";
 
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
+import { ReactNodeViewRenderer, useEditor } from "@tiptap/react";
+// load all highlight.js languages
+import lowlight from "lowlight";
+import CodeBlock from "../../components/editor/codeBlock/codeBlock";
+import StarterKit from "@tiptap/starter-kit";
+import Menu from "../../components/editor/menu/menu";
+
 const Post: NextPage = () => {
   const router = useRouter();
-
   const token = useAppSelector((state) => state.user.jwtToken);
 
   const [title, setTitle] = useState<string | null>(null);
@@ -24,28 +34,44 @@ const Post: NextPage = () => {
   const [loadingCreatingPost, setLoadingCreatingPost] =
     useState<boolean>(false);
 
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Document,
+      Paragraph,
+      Text,
+      CodeBlockLowlight.extend({
+        addNodeView() {
+          return ReactNodeViewRenderer(CodeBlock);
+        },
+      }).configure({ lowlight }),
+    ],
+    content: markdownText,
+  });
+
   useEffect(() => {
     const storageMarkdownText = localStorage.getItem("markdownText");
     const storagePostTitle = localStorage.getItem("postTitle");
 
-    if (storageMarkdownText) {
-      setMarkDownText(storageMarkdownText.slice(1, -1));
+    if (storageMarkdownText && editor) {
+      setMarkDownText(storageMarkdownText);
+      editor.commands.setContent(storageMarkdownText);
     }
 
     if (storagePostTitle) {
       setTitle(storagePostTitle.slice(1, -1));
     }
-  }, []);
+  }, [editor]);
 
-  const handleChangeMarkdownText = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setMarkDownText(e.target.value);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log("saved");
+      console.log(editor?.getHTML());
+      localStorage.setItem("markdownText", editor?.getHTML() || "");
+    }, 5000);
 
-    localStorage.setItem("markdownText", JSON.stringify(e.target.value));
-  };
-
-  useEffect(() => {}, [markdownText]);
+    return () => clearInterval(interval);
+  }, [editor]);
 
   const submitPost = () => {
     if (!title) return toast.error("Please add a title to your post");
@@ -96,7 +122,17 @@ const Post: NextPage = () => {
         </div>
         <br></br>
         <div>
-          <Editor />
+          <input
+            type="text"
+            value={title || ""}
+            onChange={(e) => {
+              localStorage.setItem("postTitle", JSON.stringify(e.target.value));
+              setTitle(e.target.value);
+            }}
+            placeholder="Enter the title of your post here"
+            className={styles.title_input}
+          />
+          <Editor editor={editor} />
         </div>
       </main>
     </>

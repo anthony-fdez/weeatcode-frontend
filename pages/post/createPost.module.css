@@ -27,13 +27,14 @@
     align-items: center;
   }
   .title_input {
-    padding: 10px;
-    background-color: rgb(20, 20, 20);
+    padding: 20px;
+    background-color: rgb(10, 10, 10);
     color: white;
     border: 1px solid rgb(50, 50, 50);
-    border-radius: 13px;
+    border-radius: 5px;
     margin-right: 10px;
     margin-bottom: 15px;
+    width: 100%;
   }
   .input {
     /* min-height: 100%; */
