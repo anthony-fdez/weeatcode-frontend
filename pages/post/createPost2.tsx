@@ -24,6 +24,7 @@ import lowlight from "lowlight";
 import CodeBlock from "../../components/editor/codeBlock/codeBlock";
 import StarterKit from "@tiptap/starter-kit";
 import Menu from "../../components/editor/menu/menu";
+import Link from "@tiptap/extension-link";
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -40,6 +41,9 @@ const Post: NextPage = () => {
       Document,
       Paragraph,
       Text,
+      Link.configure({
+        openOnClick: true,
+      }),
       CodeBlockLowlight.extend({
         addNodeView() {
           return ReactNodeViewRenderer(CodeBlock);
@@ -73,13 +77,14 @@ const Post: NextPage = () => {
 
   const submitPost = () => {
     if (!title) return toast.error("Please add a title to your post");
-    if (!markdownText) return toast.error("Please add the body of your post");
+    if (!editor?.getHTML())
+      return toast.error("Please add the body of your post");
 
     setLoadingCreatingPost(true);
 
     Axios.post(
       `${process.env.SERVER_HOST}/posts/create_post`,
-      { title: title, body: markdownText },
+      { title: title, body: editor?.getHTML() },
       {
         headers: {
           Authorization: token || "",

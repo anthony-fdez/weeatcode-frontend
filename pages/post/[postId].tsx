@@ -210,7 +210,7 @@ const Post: NextPage<Props> = ({ status, post }) => {
             )}
           </div>
           <hr></hr>
-          <Markdown markdownText={post.post.body} />
+          <div dangerouslySetInnerHTML={{ __html: post.post.body }}></div>
           <br></br>
           <PostCommentSection postId={post.post.id} />
         </div>
