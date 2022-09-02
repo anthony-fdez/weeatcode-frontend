@@ -65,8 +65,6 @@ const Post: NextPage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log("saved");
-      console.log(editor?.getHTML());
       localStorage.setItem("markdownText", editor?.getHTML() || "");
     }, 5000);
 

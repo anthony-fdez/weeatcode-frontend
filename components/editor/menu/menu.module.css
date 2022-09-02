@@ -24,7 +24,14 @@
   font-size: 22px;
   margin-right: 10px;
   width: 40px;
+  height: 40px;
+  transition: 100ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .content button:hover {
-  background-color: gray;
+  background-color: rgb(59, 59, 59);
+  border-radius: 5px;
+  transition: 100ms;
 }
