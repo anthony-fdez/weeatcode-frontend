@@ -11,6 +11,11 @@ import { useAppDispatch, useAppSelector } from "../../../redux/hooks/hooks";
 import Markdown from "../../markdown/markdown";
 import moment from "moment";
 
+// Code highlighting
+import hljs from "highlight.js";
+import javascript from "highlight.js/lib/languages/javascript";
+hljs.registerLanguage("javascript", javascript);
+
 interface Props {
   post: PostInterface;
 }
@@ -29,10 +34,11 @@ const PostCard = ({ post }: Props): JSX.Element => {
   const [postVoteScore, setPostVoteScore] = useState<number>(0);
 
   useEffect(() => {
+    hljs.initHighlighting();
+
     // @ts-ignore
     setHeight(ref.current.clientHeight);
   }, []);
-
 
   useEffect(() => {
     if (!post) return;
@@ -114,8 +120,10 @@ const PostCard = ({ post }: Props): JSX.Element => {
             <h2>{post.post.title}</h2>
           </div>
           <div>
-            <Markdown markdownText={post.post.body} />
-            {/* <p className="clamped-text">{post.post.body}</p> */}
+            <div
+              className="ProseMirror"
+              dangerouslySetInnerHTML={{ __html: post.post.body }}
+            />
           </div>
         </div>
       </Link>

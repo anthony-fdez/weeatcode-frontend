@@ -91,11 +91,11 @@
   }
   .title_input {
     padding: 10px;
-    background-color: rgb(20, 20, 20);
+    background-color: rgb(0, 0, 0);
     color: white;
     border: 1px solid rgb(50, 50, 50);
-    border-radius: 13px;
-    margin-bottom: 15px;
+    border-radius: 5px;
+    width: 100%;
   }
   .input {
     width: 100%;
