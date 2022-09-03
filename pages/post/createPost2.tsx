@@ -1,30 +1,24 @@
 import { NextPage, NextPageContext } from "next";
 import { useEffect, useState } from "react";
-import { Alert, Button, Spinner } from "react-bootstrap";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { Button, Spinner } from "react-bootstrap";
 import styles from "./createPost.module.css";
-
-import Axios from "axios";
-import { useRouter } from "next/router";
-import { toast } from "react-toastify";
-import MarkdownTutorial from "../../components/posts/markdownTutorial/markdownTutorial";
-import { useAppSelector } from "../../redux/hooks/hooks";
-import Markdown from "../../components/markdown/markdown";
-import { NextSeo } from "next-seo";
-import Editor from "../../components/editor/editor";
 
 import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import Document from "@tiptap/extension-document";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
 import { ReactNodeViewRenderer, useEditor } from "@tiptap/react";
-// load all highlight.js languages
+import Axios from "axios";
+import { NextSeo } from "next-seo";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
+import Editor from "../../components/editor/editor";
+import { useAppSelector } from "../../redux/hooks/hooks";
+import Link from "@tiptap/extension-link";
+import StarterKit from "@tiptap/starter-kit";
 import lowlight from "lowlight";
 import CodeBlock from "../../components/editor/codeBlock/codeBlock";
-import StarterKit from "@tiptap/starter-kit";
-import Menu from "../../components/editor/menu/menu";
-import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -43,6 +37,18 @@ const Post: NextPage = () => {
       Text,
       Link.configure({
         openOnClick: true,
+      }),
+      Placeholder.configure({
+        // Use a placeholder:
+        placeholder: "Start writing your post here...",
+        // Use different placeholders depending on the node type:
+        // placeholder: ({ node }) => {
+        //   if (node.type.name === 'heading') {
+        //     return 'What’s the title?'
+        //   }
+
+        //   return 'Can you add some further context?'
+        // },
       }),
       CodeBlockLowlight.extend({
         addNodeView() {
@@ -69,6 +75,7 @@ const Post: NextPage = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      console.log(editor?.getJSON());
       localStorage.setItem("markdownText", editor?.getHTML() || "");
     }, 5000);
 

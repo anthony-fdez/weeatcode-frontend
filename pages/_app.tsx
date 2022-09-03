@@ -6,6 +6,7 @@ import MainLayout from "../components/layouts/mainLayout/mainLayout";
 import "../styles/custom.scss";
 import "../styles/globals.css";
 import "../styles/editor.scss";
+import "highlight.js/styles/default.css";
 
 import NextNProgress from "nextjs-progressbar";
 import { SkeletonTheme } from "react-loading-skeleton";

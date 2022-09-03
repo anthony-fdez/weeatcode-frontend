@@ -4,6 +4,33 @@
     margin-top: 0.75em;
   }
 
+  p,
+  ul,
+  li {
+    color: rgb(200, 200, 200);
+    line-height: 2rem;
+  }
+
+  hr {
+    background-color: rgb(200, 200, 200);
+  }
+
+  blockquote {
+    border-left: 1px solid rgb(100, 100, 100);
+    margin-left: 20px;
+    padding-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  code {
+    background-color: rgb(50, 50, 50);
+    color: white;
+    padding: 5px;
+    font-family: "Courier New", Courier, monospace;
+    font-weight: normal;
+  }
+
   pre {
     background: rgb(30, 30, 30);
     color: #fff;
@@ -70,4 +97,12 @@
       font-weight: 700;
     }
   }
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }

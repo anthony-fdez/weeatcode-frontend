@@ -21,6 +21,12 @@ import PostCommentSection from "../../components/posts/postCommentSection/postCo
 import { getPercentUpVoted } from "../../functions/helpers/getPercentUpvoted";
 import { setPostToEdit } from "../../redux/slices/postToEdit";
 import { NextSeo } from "next-seo";
+import Head from "next/head";
+
+// Code highlighting
+import hljs from "highlight.js";
+import javascript from "highlight.js/lib/languages/javascript";
+hljs.registerLanguage("javascript", javascript);
 
 interface Props {
   status: boolean;
@@ -43,6 +49,10 @@ const Post: NextPage<Props> = ({ status, post }) => {
 
   const [isConfirmDeletePostModalOpen, setIsConfirmDeletePostModalOpen] =
     useState(false);
+
+  useEffect(() => {
+    hljs.initHighlighting();
+  }, []);
 
   useEffect(() => {
     if (!post) return;
@@ -210,7 +220,10 @@ const Post: NextPage<Props> = ({ status, post }) => {
             )}
           </div>
           <hr></hr>
-          <div dangerouslySetInnerHTML={{ __html: post.post.body }}></div>
+          <div
+            className="ProseMirror"
+            dangerouslySetInnerHTML={{ __html: post.post.body }}
+          ></div>
           <br></br>
           <PostCommentSection postId={post.post.id} />
         </div>
