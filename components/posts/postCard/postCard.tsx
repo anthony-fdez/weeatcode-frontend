@@ -112,7 +112,10 @@ const PostCard = ({ post }: Props): JSX.Element => {
                 <Link href={`/profile/${post.post.authorId}`}>
                   <a>{post.post.authorName}</a>
                 </Link>{" "}
-                - {moment(post.post.createdAt).fromNow()}
+                <br></br>
+                <span style={{ opacity: 0.7 }}>
+                  {moment(post.post.createdAt).fromNow()}
+                </span>
               </p>
               <EditedTag />
             </div>
