@@ -15,7 +15,7 @@
   }
   .header {
     position: sticky;
-    top: 70px;
+    top: 85px;
     height: 80px;
     padding: 20px;
     background-color: rgba(10, 10, 10, 0.7);
@@ -77,8 +77,6 @@
     flex-direction: column;
   }
   .header {
-    position: sticky;
-    top: 50px;
     height: 80px;
     padding: 10px;
     background-color: rgba(10, 10, 10, 0.7);

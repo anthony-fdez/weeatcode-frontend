@@ -13,6 +13,17 @@ import { useAppSelector } from "../../redux/hooks/hooks";
 import { kMaxLength } from "buffer";
 import Skeleton from "react-loading-skeleton";
 import { NextSeo } from "next-seo";
+import { useEditor, ReactNodeViewRenderer } from "@tiptap/react";
+import Paragraph from "@tiptap/extension-paragraph";
+import Document from "@tiptap/extension-document";
+import Link from "@tiptap/extension-link";
+import StarterKit from "@tiptap/starter-kit";
+import Placeholder from "@tiptap/extension-placeholder";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import Text from "@tiptap/extension-text";
+import CodeBlock from "../../components/editor/codeBlock/codeBlock";
+import lowlight from "lowlight";
+import Editor from "../../components/editor/editor";
 
 const Post: NextPage = () => {
   const router = useRouter();
@@ -27,8 +38,30 @@ const Post: NextPage = () => {
   const [loadingGettingPost, setLoadingGettingPost] = useState(false);
   const [errorLoadingData, setErrorLoadingData] = useState(false);
 
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Document,
+      Paragraph,
+      Text,
+      Link.configure({
+        openOnClick: true,
+      }),
+      Placeholder.configure({
+        placeholder: "Start writing your post here...",
+      }),
+      CodeBlockLowlight.extend({
+        addNodeView() {
+          return ReactNodeViewRenderer(CodeBlock);
+        },
+      }).configure({ lowlight }),
+    ],
+    content: markdownText,
+  });
+
   useEffect(() => {
     if (!postToEdit) return;
+    if (!editor) return;
 
     setLoadingGettingPost(true);
 
@@ -39,6 +72,10 @@ const Post: NextPage = () => {
         setTitle(response.data.post.title);
         setMarkDownText(response.data.post.body);
         setErrorLoadingData(false);
+
+        if (editor) {
+          editor.commands.setContent(response.data.post.body);
+        }
       })
       .catch((e) => {
         setErrorLoadingData(true);
@@ -46,7 +83,7 @@ const Post: NextPage = () => {
       .finally(() => {
         setLoadingGettingPost(false);
       });
-  }, [postToEdit]);
+  }, [postToEdit, editor]);
 
   const submitPost = () => {
     if (!title) return toast.error("Please add a title to your post");
@@ -56,7 +93,7 @@ const Post: NextPage = () => {
 
     Axios.post(
       `${process.env.SERVER_HOST}/posts/edit`,
-      { postId: postToEdit, title: title, body: markdownText },
+      { postId: postToEdit, title: title, body: editor?.getHTML() },
       {
         headers: {
           Authorization: token || "",
@@ -114,43 +151,22 @@ const Post: NextPage = () => {
           </Button>
         </div>
         <br></br>
-        <div className={styles.content_container}>
-          <div className={styles.input_container}>
-            <input
-              type="text"
-              value={title || ""}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter the title of your post here"
-              className={styles.title_input}
-            />
-            <textarea
-              value={markdownText || ""}
-              onChange={(e) => setMarkDownText(e.target.value)}
-              placeholder="Write your post here"
-              rows={30}
-              className={styles.input}
-            />
-          </div>
-
-          <div className={styles.post_preview}>
-            <h4>Post Preview:</h4>
-            <hr></hr>
-
-            {markdownText ? (
-              <>
-                <h1>{title || "'Title'"}</h1>
-                <br></br>
-                <Markdown markdownText={markdownText} />
-              </>
-            ) : (
-              <Alert>Your post preview will appear here.</Alert>
-            )}
-            <br></br>
-            <hr></hr>
-            <h5>Scroll down to learn how to write a bad ass post!</h5>
-          </div>
+        <div>
+          <input
+            type="text"
+            value={title || ""}
+            onChange={(e) => {
+              localStorage.setItem(
+                "postTitleEdit",
+                JSON.stringify(e.target.value)
+              );
+              setTitle(e.target.value);
+            }}
+            placeholder="Enter the title of your post here"
+            className={styles.title_input}
+          />
+          <Editor editor={editor} />
         </div>
-        <MarkdownTutorial />
       </main>
     </>
   );
