@@ -8,6 +8,9 @@
     display: flex;
     right: 200px;
   }
+  .content_container {
+    display: flex;
+  }
   .alert_container {
     max-width: 1200px;
     margin: auto;

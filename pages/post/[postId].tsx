@@ -26,6 +26,7 @@ import Head from "next/head";
 // Code highlighting
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
+import OnThisPage from "../../components/posts/onThisPage/onThisPage";
 hljs.registerLanguage("javascript", javascript);
 
 interface Props {
@@ -220,11 +221,15 @@ const Post: NextPage<Props> = ({ status, post }) => {
             )}
           </div>
           <hr></hr>
-          <div
-            className="ProseMirror"
-            id="post"
-            dangerouslySetInnerHTML={{ __html: post.post.body }}
-          ></div>
+          <div className={styles.content_container}>
+            <div
+              className="ProseMirror"
+              id="post"
+              dangerouslySetInnerHTML={{ __html: post.post.body }}
+            ></div>
+            <OnThisPage />
+          </div>
+
           <br></br>
           <PostCommentSection postId={post.post.id} />
         </div>

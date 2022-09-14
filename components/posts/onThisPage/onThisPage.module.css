@@ -1,0 +1,32 @@
+.container {
+  display: none;
+}
+@media only screen and (min-width: 1100px) {
+  .container {
+    display: block;
+    min-width: 300px;
+    margin-left: 20px;
+    padding: 20px;
+    height: fit-content;
+    border-radius: 5px;
+    border: 1px solid rgb(50, 50, 50);
+    position: sticky;
+    top: 100px;
+  }
+  .list {
+    margin: 0px;
+    padding: 0px;
+    list-style-type: none;
+    margin-top: 10px !important;
+  }
+  .list li {
+    padding: 5px;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+  .list li:hover {
+    background-color: rgb(30, 30, 30);
+    border-radius: 5px;
+    border: 1px solid rgb(50, 50, 50);
+  }
+}
