@@ -142,11 +142,11 @@ const Post: NextPage = () => {
       <main className={styles.container}>
         <div className={styles.header}>
           <h5>Edit your post</h5>
-          <Button style={{ width: "120px" }} onClick={() => submitPost()}>
+          <Button style={{ width: "150px" }} onClick={() => submitPost()}>
             {loadingCreatingPost ? (
               <Spinner animation="border" size="sm" />
             ) : (
-              "Edit Post"
+              "Save Changes"
             )}
           </Button>
         </div>
