@@ -19,7 +19,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/post/createPost2.tsx",
+    "pages/post/createPost.tsx",
     "components/editor/codeBlock/codeBlock.jsx"
   ],
   "exclude": ["node_modules"]
