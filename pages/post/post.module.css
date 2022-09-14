@@ -1,11 +1,12 @@
 @media only screen and (min-width: 901px) {
   .container {
-    max-width: 1000px;
+    max-width: 1200px;
     margin: auto;
     padding: 10px;
     padding-top: 50px;
     padding-bottom: 20px;
     display: flex;
+    right: 200px;
   }
   .alert_container {
     max-width: 1200px;
