@@ -1,16 +1,53 @@
-import React from "react";
+import { number } from "prop-types";
+import React, { useEffect, useState } from "react";
 import styles from "./onThisPage.module.css";
 
+interface Link {
+  text: string;
+  element: HTMLHeadingElement;
+}
+
 const OnThisPage = () => {
+  const [links, setLinks] = useState<Link[] | null>(null);
+
+  useEffect(() => {
+    const doc = document.getElementById("post")?.getElementsByTagName("h2");
+
+    const items: Link[] = [];
+
+    if (doc) {
+      for (let i = 0; i < doc.length; i++) {
+        const item = doc[i];
+
+        items.push({
+          text: item.innerText,
+          element: item,
+        });
+      }
+
+      setLinks(items);
+    }
+  }, []);
+
+  if (!links) return null;
+
   return (
     <>
       <div className={styles.container}>
         <h4>On this page</h4>
         <ul className={styles.list}>
-          <li>Header 1 with more test</li>
-          <li>Header 1</li>
-          <li>Header 1</li>
-          <li>Header 1</li>
+          {links.map((link: Link, index: number) => {
+            return (
+              <li
+                onClick={() => {
+                  window.scrollTo(0, link.element.offsetTop - 100);
+                }}
+                key={`Link Element ${index}`}
+              >
+                {link.text}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </>
