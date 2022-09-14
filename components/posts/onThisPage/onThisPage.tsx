@@ -34,7 +34,7 @@ const OnThisPage = () => {
   return (
     <>
       <div className={styles.container}>
-        <h4>On this page</h4>
+        <h4 className={styles.header}>On this page</h4>
         <ul className={styles.list}>
           {links.map((link: Link, index: number) => {
             return (
