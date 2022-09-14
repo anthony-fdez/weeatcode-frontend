@@ -40,7 +40,7 @@ const OnThisPage = () => {
             return (
               <li
                 onClick={() => {
-                  window.scrollTo(0, link.element.offsetTop - 100);
+                  window.scrollTo(0, link.element.offsetTop - 60);
                 }}
                 key={`Link Element ${index}`}
               >
