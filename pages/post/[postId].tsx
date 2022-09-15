@@ -223,6 +223,7 @@ const Post: NextPage<Props> = ({ status, post }) => {
           <hr></hr>
           <div className={styles.content_container}>
             <div
+              style={{ flex: 1 }}
               className="ProseMirror"
               id="post"
               dangerouslySetInnerHTML={{ __html: post.post.body }}
