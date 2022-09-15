@@ -21,10 +21,27 @@ import AskToLoginPopup from "../components/helperPages/askToLoginPopup/askToLogi
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { setClearUserData } from "../redux/slices/user";
 import { persistor, store } from "../redux/store";
+import Script from "next/script";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
+      <Script
+        strategy="lazyOnload"
+        src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+      />
+
+      <Script id="google-analytics" strategy="lazyOnload">
+        {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
+              page_path: window.location.pathname,
+            });
+                `}
+      </Script>
+
       <PersistGate loading={null} persistor={persistor}>
         <NextNProgress color="#FF0038" />
         <SkeletonTheme baseColor="rgb(20,20,20)" highlightColor="rgb(50,50,50)">

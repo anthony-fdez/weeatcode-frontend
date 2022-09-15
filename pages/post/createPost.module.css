@@ -123,4 +123,7 @@
   .error_image {
     height: 200px;
   }
+  .tip {
+    display: none;
+  }
 }
