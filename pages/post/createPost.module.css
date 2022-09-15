@@ -59,6 +59,10 @@
   .error_image {
     height: 200px;
   }
+  .tip {
+    color: rgb(200, 200, 200);
+    padding: 20px;
+  }
 }
 @media only screen and (max-width: 900px) {
   .container {

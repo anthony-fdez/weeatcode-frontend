@@ -144,6 +144,12 @@ const Post: NextPage = () => {
           />
           <Editor editor={editor} />
         </div>
+        <br></br>
+        <p className={styles.tip}>
+          <strong>Tip: </strong> Every HA2 you use in your post will be used as
+          a link to that section, it will be shown on the &apos;on this
+          page&apos; container to the right of the posts.
+        </p>
       </main>
     </>
   );
