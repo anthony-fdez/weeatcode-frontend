@@ -2,6 +2,7 @@
 import Link from "next/link";
 import React from "react";
 import styles from "./footer.module.css";
+import { AiFillGithub } from "react-icons/ai";
 
 const Footer = (): JSX.Element => {
   return (
@@ -32,6 +33,26 @@ const Footer = (): JSX.Element => {
           </Link>{" "}
           by Anthony Fernandez
         </p>
+      </div>
+      <div className={styles.github_container}>
+        <div>
+          <a
+            href="https://github.com/anthony-fdez/weeatcode-frontend"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Frontend Source Code
+          </a>
+        </div>
+        <div>
+          <a
+            href="https://github.com/anthony-fdez/weeatcode-backend"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Backend/Server Source Code
+          </a>
+        </div>
       </div>
     </footer>
   );
