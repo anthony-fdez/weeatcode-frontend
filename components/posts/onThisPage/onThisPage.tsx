@@ -16,6 +16,8 @@ const OnThisPage = () => {
     const items: Link[] = [];
 
     if (doc) {
+      if (doc.length === 0) return;
+
       for (let i = 0; i < doc.length; i++) {
         const item = doc[i];
 
